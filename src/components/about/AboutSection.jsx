@@ -7,7 +7,7 @@ import SplitType from "split-type";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FONT = `@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap');`;
+const FONT = `@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');`;
 
 const stats = [
   { value: "4+", label: "Years of production experience" },
@@ -21,11 +21,488 @@ const dataRows = [
   { key: "SPECIALTY", val: "Full Stack Engineering", green: false },
   {
     key: "STACK",
-    val: " Java · Phyton · JS · React · Node · Three.js",
+    val: "Java · Python · JS · React · Node · Three.js",
     green: false,
   },
   { key: "BASE", val: "Lagos, Nigeria", green: false },
 ];
+
+// ── All socials (mirrors HeroSection) ────────────────────────────────────────
+const socials = [
+  {
+    label: "GitHub",
+    href: "https://github.com/jamesking77-create/",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+      </svg>
+    ),
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/jamesasuelimen77/",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    ),
+  },
+  {
+    label: "Twitter / X",
+    href: "#",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 4l16 16M4 20L20 4" />
+      </svg>
+    ),
+  },
+  {
+    label: "Behance",
+    href: "https://www.behance.net/jamesasuelimen",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M1 6h7.5a3.5 3.5 0 0 1 0 7H1V6z" />
+        <path d="M1 13h8.5a3.5 3.5 0 0 1 0 7H1v-7z" />
+        <path d="M14 7h7" />
+        <path d="M21 12c0-2.76-2.24-5-5-5s-5 2.24-5 5 2.24 5 5 5c1.9 0 3.56-1.06 4.4-2.62" />
+      </svg>
+    ),
+  },
+  {
+    label: "Dribbble",
+    href: "https://dribbble.com/jamesking777",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72" />
+        <path d="M10.6 21.7c1.12-5.23 1.8-8.46 3.35-11.55" />
+        <path d="M2.36 13.5c5.57.63 9.13.44 13.85-1" />
+      </svg>
+    ),
+  },
+  {
+    label: "Discord",
+    href: "https://discord.com/users/jamesking8460",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z" />
+        <circle cx="9" cy="13" r="1.5" />
+        <circle cx="15" cy="13" r="1.5" />
+      </svg>
+    ),
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/08142186524",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/_jamess_kingg/",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+      </svg>
+    ),
+  },
+];
+
+// ── Social icon pill (used in quote strip on desktop, row on mobile) ───────────
+function SocialIcon({ s, light = false }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <a
+      href={s.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={s.label}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 38,
+        height: 38,
+        borderRadius: "50%",
+        border: light
+          ? `1px solid rgba(245,240,228,${hovered ? "0.45" : "0.15"})`
+          : `1px solid rgba(42,48,24,${hovered ? "0.3" : "0.1"})`,
+        background: hovered
+          ? light
+            ? "rgba(168,192,96,0.18)"
+            : "rgba(42,48,24,0.08)"
+          : "transparent",
+        color: hovered
+          ? light
+            ? "#a8c060"
+            : "#4a6020"
+          : light
+            ? "rgba(245,240,228,0.55)"
+            : "rgba(42,48,24,0.45)",
+        textDecoration: "none",
+        transition: "all 0.22s ease",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        flexShrink: 0,
+      }}
+    >
+      {s.icon}
+    </a>
+  );
+}
+
+// ── Institution badges ────────────────────────────────────────────────────────
+const institutions = [
+  {
+    name: "Semicolon Africa",
+    shortName: "SC",
+    logo: "https://semicolon.africa/favicon.ico",
+    logoFallback: null,
+    bg: "#0a0f05",
+    border: "#a8c060",
+    credential: "Problem Solving · Design Thinking · Software Engineering",
+    url: "https://semicolon.africa",
+    initials: "SC",
+    color: "#a8c060",
+  },
+  {
+    name: "Henley Business School",
+    shortName: "HBS",
+    logo: "https://www.henley.ac.uk/favicon.ico",
+    logoFallback: null,
+    bg: "#00205b",
+    border: "#d4af37",
+    credential: "Business & Enterprise · Certified",
+    url: "https://www.henley.ac.uk",
+    initials: "HB",
+    color: "#d4af37",
+  },
+];
+
+// ── Mobile: logo circle only ──────────────────────────────────────────────────
+function MobileLogoCircle({ inst, delay = 0 }) {
+  const [imgErr, setImgErr] = useState(false);
+  return (
+    <a
+      href={inst.url}
+      target="_blank"
+      rel="noreferrer"
+      title={inst.name}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 44,
+        height: 44,
+        borderRadius: "50%",
+        background: imgErr ? inst.bg : "#fff",
+        border: `2.5px solid ${inst.border}`,
+        boxShadow: `0 3px 14px rgba(0,0,0,0.35), 0 0 0 1px ${inst.border}33`,
+        overflow: "hidden",
+        flexShrink: 0,
+        animation: `badge-float 3s ease-in-out ${delay}s infinite`,
+        textDecoration: "none",
+        transition: "transform 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "scale(1.12)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+      }}
+    >
+      {!imgErr ? (
+        <img
+          src={inst.logo}
+          alt={inst.name}
+          onError={() => setImgErr(true)}
+          style={{ width: "65%", height: "65%", objectFit: "contain" }}
+        />
+      ) : (
+        <span
+          style={{
+            fontFamily: "'Space Mono',monospace",
+            fontWeight: 700,
+            fontSize: 11,
+            color: inst.color,
+            letterSpacing: "0.05em",
+          }}
+        >
+          {inst.initials}
+        </span>
+      )}
+    </a>
+  );
+}
+
+// ── Institution Badge Component ───────────────────────────────────────────────
+function InstitutionBadge({ inst, size = "md" }) {
+  const [imgErr, setImgErr] = useState(false);
+  const isLg = size === "lg";
+  const avatarSize = isLg ? 52 : 40;
+  return (
+    <a
+      href={inst.url}
+      target="_blank"
+      rel="noreferrer"
+      title={inst.name}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: isLg ? 14 : 10,
+        padding: isLg ? "10px 18px 10px 10px" : "8px 14px 8px 8px",
+        background: "rgba(245,240,228,0.92)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: `1.5px solid ${inst.border}44`,
+        borderRadius: 100,
+        textDecoration: "none",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.18)",
+        flexShrink: 0,
+        transition: "transform 0.2s, box-shadow 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-2px)";
+        e.currentTarget.style.boxShadow = "0 8px 28px rgba(0,0,0,0.28)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.18)";
+      }}
+    >
+      <div
+        style={{
+          width: avatarSize,
+          height: avatarSize,
+          borderRadius: "50%",
+          background: imgErr ? inst.bg : "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          flexShrink: 0,
+          border: `2px solid ${inst.border}66`,
+        }}
+      >
+        {!imgErr ? (
+          <img
+            src={inst.logo}
+            alt={inst.name}
+            onError={() => setImgErr(true)}
+            style={{ width: "70%", height: "70%", objectFit: "contain" }}
+          />
+        ) : (
+          <span
+            style={{
+              fontFamily: "'Space Mono',monospace",
+              fontWeight: 700,
+              fontSize: isLg ? 13 : 10,
+              color: inst.color,
+              letterSpacing: "0.05em",
+            }}
+          >
+            {inst.initials}
+          </span>
+        )}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <span
+          style={{
+            fontFamily: "'DM Sans',sans-serif",
+            fontWeight: 800,
+            fontSize: isLg ? 13 : 11,
+            color: "#1c2410",
+            whiteSpace: "nowrap",
+            lineHeight: 1.2,
+          }}
+        >
+          {inst.name}
+        </span>
+        <span
+          style={{
+            fontFamily: "'Space Mono',monospace",
+            fontWeight: 700,
+            fontSize: isLg ? 9 : 8,
+            color: inst.color,
+            letterSpacing: "0.08em",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {inst.credential}
+        </span>
+      </div>
+    </a>
+  );
+}
+
+// ── Credential card for the right panel ──────────────────────────────────────
+function CredentialCard({ inst }) {
+  const [imgErr, setImgErr] = useState(false);
+  return (
+    <a
+      href={inst.url}
+      target="_blank"
+      rel="noreferrer"
+      style={{
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 14,
+        padding: "16px 20px",
+        background: "rgba(42,48,24,0.04)",
+        border: "1px solid rgba(42,48,24,0.1)",
+        borderLeft: `3px solid ${inst.border}`,
+        borderRadius: 8,
+        textDecoration: "none",
+        transition: "background 0.2s, border-color 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = "rgba(42,48,24,0.08)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "rgba(42,48,24,0.04)";
+      }}
+    >
+      <div
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          background: imgErr ? inst.bg : "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          flexShrink: 0,
+          border: `1.5px solid ${inst.border}55`,
+        }}
+      >
+        {!imgErr ? (
+          <img
+            src={inst.logo}
+            alt={inst.name}
+            onError={() => setImgErr(true)}
+            style={{ width: "70%", height: "70%", objectFit: "contain" }}
+          />
+        ) : (
+          <span
+            style={{
+              fontFamily: "'Space Mono',monospace",
+              fontWeight: 700,
+              fontSize: 10,
+              color: inst.color,
+            }}
+          >
+            {inst.initials}
+          </span>
+        )}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <span
+          style={{
+            fontFamily: "'DM Sans',sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(13px,1.3vw,15px)",
+            color: "#1c2410",
+            lineHeight: 1.2,
+          }}
+        >
+          {inst.name}
+        </span>
+        <span
+          style={{
+            fontFamily: "'Space Mono',monospace",
+            fontWeight: 700,
+            fontSize: "clamp(9px,0.9vw,10px)",
+            color: inst.color,
+            letterSpacing: "0.1em",
+          }}
+        >
+          {inst.credential}
+        </span>
+      </div>
+    </a>
+  );
+}
 
 export default function AboutSection({ videeSrc }) {
   const secRef = useRef();
@@ -63,7 +540,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           pngRef.current,
           { y: 60, opacity: 0 },
@@ -80,7 +556,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.to(imgRef.current, {
           yPercent: -15,
           ease: "none",
@@ -91,7 +566,6 @@ export default function AboutSection({ videeSrc }) {
             scrub: 1.2,
           },
         });
-
         gsap.fromTo(
           ".about-img-wrap",
           { clipPath: "inset(100% 0 0 0)" },
@@ -106,7 +580,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           ".about-name-overlay",
           { y: 40, opacity: 0 },
@@ -123,7 +596,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         const heading = headingRef.current;
         if (heading) {
           const split = new SplitType(heading, { types: "lines" });
@@ -144,7 +616,6 @@ export default function AboutSection({ videeSrc }) {
             },
           );
         }
-
         gsap.fromTo(
           paraRef.current,
           { opacity: 0, y: 24 },
@@ -160,7 +631,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           ".about-row",
           { opacity: 0, x: 40 },
@@ -177,7 +647,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           ".about-row-border",
           { scaleX: 0, transformOrigin: "left" },
@@ -193,7 +662,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           ".about-stat",
           { opacity: 0, y: 36, scale: 0.92 },
@@ -211,7 +679,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           ".about-stat-value",
           { scale: 1.3, opacity: 0 },
@@ -228,7 +695,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           quoteRef.current,
           { opacity: 0, y: 32 },
@@ -244,7 +710,6 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
-
         gsap.fromTo(
           ".quote-scanline",
           { scaleX: 0, transformOrigin: "left" },
@@ -259,11 +724,40 @@ export default function AboutSection({ videeSrc }) {
             },
           },
         );
+        gsap.fromTo(
+          ".credentials-block",
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".credentials-block",
+              start: "top 82%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+        gsap.fromTo(
+          ".about-socials-strip",
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".about-socials-strip",
+              start: "top 88%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
       }, secRef);
-
       return () => ctx.revert();
-    }, 650); // wait for loader fade-out to complete
-
+    }, 650);
     return () => clearTimeout(timer);
   }, []);
 
@@ -295,100 +789,139 @@ export default function AboutSection({ videeSrc }) {
   return (
     <>
       <style>{`
-          ${FONT}
-          .bebas { font-family: 'Bebas Neue', sans-serif; }
-          .dm    { font-family: 'DM Sans', sans-serif; }
-          .mono  { font-family: 'Space Mono', monospace; }
+        ${FONT}
+        .bebas { font-family: 'Bebas Neue', sans-serif; }
+        .dm    { font-family: 'DM Sans', sans-serif; }
+        .mono  { font-family: 'Space Mono', monospace; }
 
-          .about-row { transition: background 0.25s, padding-left 0.25s; }
-          .about-row:hover { background: rgba(42,48,24,0.04); padding-left: 10px; }
-          .about-row:hover .about-row-val { color: #4a6020 !important; }
+        .about-row { transition: background 0.25s, padding-left 0.25s; }
+        .about-row:hover { background: rgba(42,48,24,0.05); padding-left: 10px; }
+        .about-row:hover .about-row-val { color: #4a6020 !important; }
 
-          .about-stat { transition: background 0.3s; cursor: default; }
-          .about-stat:hover { background: rgba(42,48,24,0.04); }
-          .about-stat:hover .about-stat-value {
-            color: #4a6020 !important;
-            transform: scale(1.06);
-            transition: color 0.25s, transform 0.25s;
+        .about-stat { transition: background 0.3s; cursor: default; }
+        .about-stat:hover .about-stat-value {
+          color: #4a6020 !important;
+          transform: scale(1.06);
+          transition: color 0.25s, transform 0.25s;
+        }
+
+        .about-cta { position: relative; overflow: hidden; }
+        .about-cta::after {
+          content: '';
+          position: absolute;
+          top: 0; left: -100%;
+          width: 60%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+          transition: left 0.5s ease;
+        }
+        .about-cta:hover::after { left: 150%; }
+
+        .heading-overflow { overflow: hidden; }
+
+        /* ── Institution logo circles on image (mobile) ── */
+        .inst-badges-mobile {
+          position: absolute;
+          bottom: clamp(14px,4%,22px);
+          right: clamp(12px,4%,18px);
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          z-index: 10;
+        }
+
+        /* ── Institution badges on desktop (right panel) ── */
+        .inst-badges-desktop {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        /* ── Socials strip ── */
+        .about-socials-strip {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        /* ── Quote strip socials: desktop inline, mobile below quote ── */
+        .quote-socials-desktop {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 12px;
+          flex-shrink: 0;
+        }
+        .quote-socials-row {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+        }
+
+        /* ── Responsive breakpoints ── */
+        @media (max-width: 900px) {
+          .about-split-grid {
+            grid-template-columns: 1fr !important;
+            min-height: unset !important;
           }
-
-          .about-cta { position: relative; overflow: hidden; }
-          .about-cta::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 60%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-            transition: left 0.5s ease;
+          .about-img-col {
+            height: 72vw !important;
+            min-height: 300px !important;
           }
-          .about-cta:hover::after { left: 150%; }
-
-          .heading-overflow { overflow: hidden; }
-
-          @media (max-width: 900px) {
-            .about-split-grid {
-              grid-template-columns: 1fr !important;
-              min-height: unset !important;
-            }
-            .about-img-col {
-              height: 65vw !important;
-              min-height: 280px !important;
-            }
-            .about-stats-grid {
-              grid-template-columns: repeat(2, 1fr) !important;
-            }
-            .about-stats-grid > div:nth-child(2) {
-              border-right: none !important;
-            }
-            .about-stats-grid > div:nth-child(1),
-            .about-stats-grid > div:nth-child(2) {
-              border-bottom: 1px solid rgba(42,48,24,0.1) !important;
-            }
-            .about-quote-strip {
-              flex-direction: column !important;
-              align-items: flex-start !important;
-              gap: 24px !important;
-            }
+          .about-stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
+          .about-stats-grid > div:nth-child(2) { border-right: none !important; }
+          .about-stats-grid > div:nth-child(1),
+          .about-stats-grid > div:nth-child(2) { border-bottom: 1px solid rgba(42,48,24,0.1) !important; }
+          .about-stats-grid > div:nth-child(3) { border-right: 1px solid rgba(42,48,24,0.1) !important; }
+          .about-quote-strip { flex-direction: column !important; align-items: flex-start !important; gap: 24px !important; }
+          /* On mobile: show badges on image, hide desktop block */
+          .inst-badges-desktop { display: none !important; }
+          .inst-badges-mobile { display: flex !important; }
+          /* Socials: show on quote strip stacked */
+          .quote-socials-desktop { align-items: flex-start !important; }
+          .quote-socials-row { justify-content: flex-start !important; }
+        }
 
-          @media (max-width: 520px) {
-            .about-img-col {
-              height: 80vw !important;
-              min-height: 260px !important;
-            }
-            .about-stats-grid > div {
-              padding: 28px 20px !important;
-            }
-          }
+        @media (min-width: 901px) {
+          /* On desktop: hide mobile badges on image */
+          .inst-badges-mobile { display: none !important; }
+          .inst-badges-desktop { display: flex !important; }
+        }
 
-          @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50%       { opacity: 0.4; transform: scale(1.5); }
-          }
-            
-.mypng {
-  position: absolute;
-  bottom: 0;
-  right: 43%;
-  height: 95%;
-  width: auto;
-  object-fit: contain;
-  object-position: bottom;
-  z-index: 10;
-  pointer-events: none;
-}
+        @media (max-width: 520px) {
+          .about-img-col { height: 85vw !important; min-height: 280px !important; }
+          .about-stats-grid > div { padding: 28px 18px !important; }
+          .inst-badges-mobile { bottom: 55px; right: 10px; gap: 6px; }
+        }
 
-/* On mobile: hide the grid-level PNG */
-@media (max-width: 900px) {
-  .mypng {
-    display: none;
-  }
-  /* Show the panel-level PNG */
-  .mypng-mobile {
-    display: block !important;
-  }
-}
-        `}</style>
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.4; transform: scale(1.5); }
+        }
+        @keyframes badge-float {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-4px); }
+        }
+
+        .mypng {
+          position: absolute;
+          bottom: 0;
+          right: 43%;
+          height: 95%;
+          width: auto;
+          object-fit: contain;
+          object-position: bottom;
+          z-index: 5;
+          pointer-events: none;
+        }
+        @media (max-width: 900px) {
+          .mypng { display: none; }
+          .mypng-mobile { display: block !important; }
+        }
+      `}</style>
 
       <section
         id="about"
@@ -408,17 +941,18 @@ export default function AboutSection({ videeSrc }) {
         />
 
         {/* ── SECTION LABEL ── */}
-        <div style={{ padding: "10px clamp(20px,6vw,72px) 0" }}>
+        <div style={{ padding: "14px clamp(20px,6vw,72px) 0" }}>
           <span
             ref={labelRef}
             className="mono"
             style={{
-              fontSize: 20,
-              letterSpacing: "0.1em",
-              color: "rgba(42,48,24,0.35)",
+              fontSize: "clamp(11px,1.4vw,14px)",
+              fontWeight: 700,
+              letterSpacing: "0.3em",
+              color: "rgba(42,48,24,0.45)",
               display: "inline-block",
               marginBottom: "0.5rem",
-              // ✅ FIX 3: Remove hardcoded opacity:0 — let GSAP own the initial state
+              textTransform: "uppercase",
             }}
           >
             01 / About
@@ -437,14 +971,14 @@ export default function AboutSection({ videeSrc }) {
             position: "relative",
           }}
         >
-          {/* LEFT — image/video panel */}
+          {/* LEFT — image panel */}
           <div
             className="about-img-wrap about-img-col"
             style={{
               position: "relative",
               overflow: "visible",
               background: "#2a3018",
-              minHeight: "clamp(280px,60vh,100%)",
+              minHeight: "clamp(300px,60vh,100%)",
             }}
           >
             <div
@@ -455,7 +989,6 @@ export default function AboutSection({ videeSrc }) {
                 willChange: "transform",
               }}
             >
-              {/* Real photo */}
               <img
                 src="/james.jpg"
                 alt="James Asuelimen"
@@ -470,8 +1003,6 @@ export default function AboutSection({ videeSrc }) {
                   display: "block",
                 }}
               />
-
-              {/* Video + colour grade */}
               <div
                 style={{
                   position: "absolute",
@@ -505,7 +1036,6 @@ export default function AboutSection({ videeSrc }) {
                     <source src="/bg-video.mp4" type="video/mp4" />
                   </video>
                 )}
-                {/* olive-green colour-grade overlay */}
                 <div
                   style={{
                     position: "absolute",
@@ -529,13 +1059,14 @@ export default function AboutSection({ videeSrc }) {
               }}
             />
 
+            {/* mobile PNG cutout */}
             <img
               src="/mypng.png"
               alt=""
               className="mypng-mobile"
               ref={pngRef}
               style={{
-                display: "none", // hidden by default, CSS shows it on mobile
+                display: "none",
                 position: "absolute",
                 bottom: 0,
                 right: "5%",
@@ -543,10 +1074,21 @@ export default function AboutSection({ videeSrc }) {
                 width: "auto",
                 objectFit: "contain",
                 objectPosition: "bottom",
-                zIndex: 3, // above grain(1), below name overlay(4)
+                zIndex: 3,
                 pointerEvents: "none",
               }}
             />
+
+            {/* ── MOBILE: Logo circles only, bottom-right corner ── */}
+            <div className="inst-badges-mobile" style={{ display: "none" }}>
+              {institutions.map((inst, idx) => (
+                <MobileLogoCircle
+                  key={inst.name}
+                  inst={inst}
+                  delay={idx * 0.4}
+                />
+              ))}
+            </div>
 
             {/* Name overlay */}
             <div
@@ -559,13 +1101,13 @@ export default function AboutSection({ videeSrc }) {
                 zIndex: 4,
                 padding: "clamp(20px,4vw,48px)",
                 background:
-                  "linear-gradient(0deg,rgba(20,26,12,0.9) 0%,transparent 100%)",
+                  "linear-gradient(0deg,rgba(20,26,12,0.95) 0%,transparent 100%)",
               }}
             >
               <div
                 className="bebas"
                 style={{
-                  fontSize: "clamp(1.8rem,5vw,4.5rem)",
+                  fontSize: "clamp(2rem,5vw,4.5rem)",
                   color: "#f5f0e4",
                   lineHeight: 0.95,
                   letterSpacing: "0.02em",
@@ -578,26 +1120,40 @@ export default function AboutSection({ videeSrc }) {
               <div
                 className="mono"
                 style={{
-                  fontSize: 9,
+                  fontSize: "clamp(9px,1vw,11px)",
+                  fontWeight: 700,
                   letterSpacing: "0.3em",
-                  color: "rgba(245,240,228,0.4)",
+                  color: "rgba(245,240,228,0.5)",
                   marginTop: 8,
                 }}
               >
                 SOFTWARE ENGINEER
               </div>
+
+              {/* ── MOBILE socials on image overlay ── */}
+              <div
+                className="about-socials-strip"
+                style={{
+                  marginTop: 14,
+                  display: "none", // shown via media query override below — we use inline override per breakpoint
+                }}
+              >
+                {socials.map((s) => (
+                  <SocialIcon key={s.label} s={s} light />
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* RIGHT — intro + data rows */}
+          {/* RIGHT — intro + data rows + credentials */}
           <div
             ref={rightRef}
             style={{
-              padding: "clamp(32px,6vw,80px)",
+              padding: "clamp(28px,5vw,80px)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              gap: 32,
+              gap: "clamp(20px,3vw,32px)",
               background: "#f5f0e4",
             }}
           >
@@ -607,11 +1163,11 @@ export default function AboutSection({ videeSrc }) {
                   ref={headingRef}
                   className="bebas"
                   style={{
-                    fontSize: "clamp(1.8rem,5.5vw,5.5rem)",
+                    fontSize: "clamp(2rem,5.5vw,5.5rem)",
                     color: "#1c2410",
                     lineHeight: 0.95,
                     letterSpacing: "0.02em",
-                    marginBottom: 24,
+                    marginBottom: 20,
                   }}
                 >
                   I DON'T JUST WRITE CODE <br />
@@ -624,20 +1180,79 @@ export default function AboutSection({ videeSrc }) {
                 ref={paraRef}
                 className="dm"
                 style={{
-                  fontSize: "clamp(13px,1.4vw,15px)",
-                  color: "rgba(42,48,24,0.6)",
+                  fontSize: "clamp(14px,1.5vw,17px)",
+                  fontWeight: 600,
+                  color: "rgba(42,48,24,0.72)",
                   lineHeight: 1.8,
-                  maxWidth: 460,
+                  maxWidth: 480,
                 }}
               >
                 From real-time trading platforms to e-commerce ecosystems, I
-                build software that works at the speed of business. Based in
-                Lagos, Nigeria — working globally.
+                build software that works at the speed of business. Trained in
+                problem solving, design thinking and software engineering at{" "}
+                <span style={{ color: "#4a6020", fontWeight: 800 }}>
+                  Semicolon Africa
+                </span>{" "}
+                — and certified in{" "}
+                <span style={{ color: "#1c2410", fontWeight: 800 }}>
+                  Business & Enterprise
+                </span>{" "}
+                with{" "}
+                <span style={{ fontWeight: 800, color: "#00205b" }}>
+                  Henley Business School, UK
+                </span>
+                . Based in Lagos, Nigeria — working globally.
               </p>
             </div>
 
+            {/* ── DESKTOP: Credential cards ── */}
+            <div
+              className="inst-badges-desktop credentials-block"
+              style={{ display: "none" }}
+            >
+              <div
+                className="mono"
+                style={{
+                  fontSize: "clamp(8px,0.9vw,9px)",
+                  fontWeight: 700,
+                  letterSpacing: "0.35em",
+                  color: "rgba(42,48,24,0.35)",
+                  marginBottom: 8,
+                  textTransform: "uppercase",
+                }}
+              >
+                Credentials
+              </div>
+              {institutions.map((inst) => (
+                <CredentialCard key={inst.name} inst={inst} />
+              ))}
+            </div>
+
+            {/* ── DESKTOP: Socials strip in right panel ── */}
+            <div
+              className="credentials-block"
+              style={{ display: "flex", flexDirection: "column", gap: 10 }}
+            >
+              <div
+                className="mono"
+                style={{
+                  fontSize: "clamp(8px,0.9vw,9px)",
+                  fontWeight: 700,
+                  letterSpacing: "0.35em",
+                  color: "rgba(42,48,24,0.35)",
+                  textTransform: "uppercase",
+                }}
+              >
+                Find me on
+              </div>
+              <div className="about-socials-strip">
+                {socials.map((s) => (
+                  <SocialIcon key={s.label} s={s} light={false} />
+                ))}
+              </div>
+            </div>
+
             {/* data rows */}
-            {/* ✅ FIX 3 cont: opacity removed from inline style — GSAP handles it */}
             <div>
               {dataRows.map((r) => (
                 <div
@@ -647,7 +1262,7 @@ export default function AboutSection({ videeSrc }) {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    padding: "14px 0",
+                    padding: "clamp(12px,1.5vw,16px) 0",
                     position: "relative",
                     borderRadius: 4,
                     gap: 12,
@@ -668,9 +1283,10 @@ export default function AboutSection({ videeSrc }) {
                   <span
                     className="mono"
                     style={{
-                      fontSize: "clamp(10px,1vw,20px)",
+                      fontSize: "clamp(9px,1vw,11px)",
+                      fontWeight: 700,
                       letterSpacing: "0.3em",
-                      color: "rgba(42,48,24,0.4)",
+                      color: "rgba(42,48,24,0.45)",
                       flexShrink: 0,
                     }}
                   >
@@ -679,8 +1295,8 @@ export default function AboutSection({ videeSrc }) {
                   <span
                     className="dm about-row-val"
                     style={{
-                      fontSize: "clamp(11px,1.2vw,13px)",
-                      fontWeight: 500,
+                      fontSize: "clamp(12px,1.3vw,15px)",
+                      fontWeight: 700,
                       color: r.green ? "#4a6020" : "#1c2410",
                       letterSpacing: r.green ? "0.08em" : 0,
                       transition: "color 0.25s",
@@ -691,8 +1307,8 @@ export default function AboutSection({ videeSrc }) {
                       <span
                         style={{
                           display: "inline-block",
-                          width: 6,
-                          height: 6,
+                          width: 7,
+                          height: 7,
                           borderRadius: "50%",
                           background: "#4a6020",
                           marginRight: 8,
@@ -706,6 +1322,8 @@ export default function AboutSection({ videeSrc }) {
               ))}
             </div>
           </div>
+
+          {/* desktop PNG cutout */}
           <img src="/mypng.png" alt="" className="mypng" ref={pngRef} />
         </div>
 
@@ -749,7 +1367,7 @@ export default function AboutSection({ videeSrc }) {
                 <div
                   className="bebas about-stat-value"
                   style={{
-                    fontSize: "clamp(1.8rem,6vw,6rem)",
+                    fontSize: "clamp(2rem,6vw,6rem)",
                     color: hoveredStat === i ? "#a8c060" : "#2a3818",
                     lineHeight: 0.9,
                     letterSpacing: "0.02em",
@@ -762,12 +1380,13 @@ export default function AboutSection({ videeSrc }) {
                 <div
                   className="mono"
                   style={{
-                    fontSize: "clamp(7px,0.75vw,9px)",
+                    fontSize: "clamp(8px,0.85vw,10px)",
+                    fontWeight: 700,
                     letterSpacing: "0.2em",
                     color:
                       hoveredStat === i
-                        ? "rgba(245,240,228,0.5)"
-                        : "rgba(42,48,24,0.4)",
+                        ? "rgba(245,240,228,0.6)"
+                        : "rgba(42,48,24,0.5)",
                     textTransform: "uppercase",
                     lineHeight: 1.6,
                     transition: "color 0.3s",
@@ -812,60 +1431,76 @@ export default function AboutSection({ videeSrc }) {
             ref={quoteRef}
             className="bebas"
             style={{
-              fontSize: "clamp(1.2rem,3.5vw,3rem)",
+              fontSize: "clamp(1.3rem,3.5vw,3rem)",
               color: "#f5f0e4",
               letterSpacing: "0.04em",
               maxWidth: 700,
               lineHeight: 1.15,
+              margin: 0,
             }}
           >
-            AVAILABLE FOR FULL-TIME ROLES, FREELANCE & COLLABS.
+            AVAILABLE FOR FULL-TIME ROLES, FREELANCE &amp; COLLABS.
           </p>
 
-          <motion.a
-            href="#contact"
-            className="about-cta"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "12px 28px",
-              borderRadius: 100,
-              background: "#a8c060",
-              border: "1px solid #a8c060",
-              color: "#1c2410",
-              fontFamily: "'DM Sans',sans-serif",
-              fontSize: "clamp(11px,1.2vw,13px)",
-              fontWeight: 700,
-              letterSpacing: ".04em",
-              textDecoration: "none",
-              flexShrink: 0,
-              x: springX,
-              y: springY,
-            }}
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.97 }}
-            onMouseMove={(e) => handleMagnet(e)}
-            onMouseLeave={resetMagnet}
-          >
-            <span
+          {/* Right side: CTA + socials */}
+          <div className="quote-socials-desktop">
+            <motion.a
+              href="#contact"
+              className="about-cta"
               style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "#1c2410",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "clamp(10px,1.5vw,12px) clamp(20px,2.5vw,28px)",
+                borderRadius: 100,
+                background: "#a8c060",
+                border: "1px solid #a8c060",
+                color: "#1c2410",
+                fontFamily: "'DM Sans',sans-serif",
+                fontSize: "clamp(12px,1.2vw,14px)",
+                fontWeight: 800,
+                letterSpacing: ".04em",
+                textDecoration: "none",
+                flexShrink: 0,
+                x: springX,
+                y: springY,
               }}
-            />
-            Get in touch
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "#1c2410",
-              }}
-            />
-          </motion.a>
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.97 }}
+              onMouseMove={(e) => handleMagnet(e)}
+              onMouseLeave={resetMagnet}
+            >
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: "#1c2410",
+                }}
+              />
+              Get in touch
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: "#1c2410",
+                }}
+              />
+            </motion.a>
+
+            {/* Socials row — first 4, then next 4 */}
+            <div className="quote-socials-row">
+              {socials.slice(0, 4).map((s) => (
+                <SocialIcon key={s.label} s={s} light />
+              ))}
+            </div>
+            <div className="quote-socials-row">
+              {socials.slice(4).map((s) => (
+                <SocialIcon key={s.label} s={s} light />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </>

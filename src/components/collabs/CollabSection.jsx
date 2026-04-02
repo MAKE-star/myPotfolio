@@ -7,42 +7,87 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const clients = [
-  { name: "Aristack Solutions", initials: "AS", color: "#2a3018" },
-  { name: "iBloom Decor", initials: "iB", color: "#3a4820" },
-  { name: "Bime Brand", initials: "Bm", color: "#2a3018" },
-  { name: "Client Four", initials: "C4", color: "#3a4820" },
-  { name: "Client Five", initials: "C5", color: "#2a3018" },
+  {
+    name: "Aristack Solutions",
+    logo: "https://aristack.com/wp-content/uploads/2021/09/cropped-Aristack-Logo-192x192.png",
+    initials: "AS",
+    color: "#1c2410",
+    logoBg: "#fff",
+  },
+  {
+    name: "Afrinvest",
+    logo: "https://afrinvest.com/wp-content/uploads/2024/10/logo-full.svg",
+    initials: "AF",
+    color: "#00205b",
+    logoBg: "#fff",
+  },
+  {
+    name: "NDIC",
+    logo: "https://ndic.gov.ng/wp-content/uploads/2020/07/cropped-NDIC_logo_White_bgd.png",
+    initials: "ND",
+    color: "#006633",
+    logoBg: "#fff",
+  },
+  {
+    name: "Access Bank",
+    logo: "https://www.accessbankplc.com/portals/0/access-bank-logo.png",
+    initials: "AB",
+    color: "#e2231a",
+    logoBg: "#fff",
+  },
+  {
+    name: "Union Bank",
+    logo: "https://www.unionbankng.com/wp-content/uploads/2021/04/union-bank-logo.png",
+    initials: "UB",
+    color: "#003087",
+    logoBg: "#fff",
+  },
+  {
+    name: "iBloom Decor",
+    logo: "https://ibloomrentals.com/favicon.ico",
+    initials: "iB",
+    color: "#7c3aed",
+    logoBg: "#f3e8ff",
+  },
 ];
 
-function CollabTicker({ items, reverse = false }) {
-  const [paused, setPaused] = useState(false);
+const collabs = [
+  {
+    name: "Felizdujadin999",
+    avatar: "https://github.com/Felizdujadin999.png",
+    label: "Felizdujadin",
+    url: "https://github.com/Felizdujadin999",
+  },
+  {
+    name: "Halobearer",
+    avatar: "https://github.com/Halobearer.png",
+    label: "Halobearer",
+    url: "https://github.com/Halobearer",
+  },
+  {
+    name: "EffiongTimothy",
+    avatar: "https://github.com/EffiongTimothy.png",
+    label: "EffiongTimothy",
+    url: "https://github.com/EffiongTimothy",
+  },
+  {
+    name: "MAKE-star",
+    avatar: "https://github.com/MAKE-star.png",
+    label: "MAKE-star",
+    url: "https://github.com/MAKE-star",
+  },
+  {
+    name: "Semicolon Africa",
+    avatar: "https://semicolon.africa/favicon.ico",
+    label: "Semicolon Africa",
+    url: "https://semicolon.africa",
+    isBrand: true,
+  },
+];
 
-  return (
-    <div
-      style={{ overflow: "hidden", padding: "6px 0" }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div
-        style={{
-          display: "flex",
-          width: "max-content",
-          animation: `fmMarquee 28s linear infinite`,
-          animationDirection: reverse ? "reverse" : "normal",
-          animationPlayState: paused ? "paused" : "running",
-          transition: "animation-play-state 0.2s",
-        }}
-      >
-        {[...items, ...items, ...items].map((c, i) => (
-          <TickerItem key={i} client={c} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function TickerItem({ client: c }) {
+function ClientTickerItem({ client: c }) {
   const [hovered, setHovered] = useState(false);
+  const [imgErr, setImgErr] = useState(false);
 
   return (
     <div
@@ -51,55 +96,192 @@ function TickerItem({ client: c }) {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: 14,
-        padding: "12px 28px",
-        marginRight: 12,
+        gap: 10,
+        padding: "10px 20px",
+        marginRight: 10,
         border: hovered
-          ? "1px solid rgba(42,48,24,0.3)"
-          : "1px solid rgba(42,48,24,0.12)",
+          ? "1.5px solid rgba(42,48,24,0.4)"
+          : "1.5px solid rgba(42,48,24,0.15)",
         borderRadius: 100,
-        background: hovered ? "rgba(42,48,24,0.08)" : "rgba(42,48,24,0.04)",
+        background: hovered ? "rgba(42,48,24,0.08)" : "rgba(42,48,24,0.03)",
         flexShrink: 0,
         transform: hovered
           ? "scale(1.05) translateY(-3px)"
           : "scale(1) translateY(0)",
         transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
         cursor: "default",
-        boxShadow: hovered ? "0 8px 24px rgba(42,48,24,0.1)" : "none",
+        boxShadow: hovered ? "0 8px 24px rgba(42,48,24,0.12)" : "none",
       }}
     >
       <div
         style={{
-          width: 34,
-          height: 34,
+          width: 32,
+          height: 32,
           borderRadius: "50%",
-          background: hovered ? "#4a6020" : c.color,
-          color: "#f5f0e4",
+          background: imgErr ? c.color : c.logoBg || "#fff",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "'Cabinet Grotesk',sans-serif",
-          fontWeight: 700,
-          fontSize: 11,
-          letterSpacing: "0.1em",
-          transition: "background 0.3s, transform 0.3s",
-          transform: hovered ? "rotate(10deg)" : "rotate(0deg)",
+          overflow: "hidden",
+          flexShrink: 0,
+          border: "1px solid rgba(42,48,24,0.1)",
+          transition: "transform 0.3s",
+          transform: hovered ? "rotate(8deg)" : "rotate(0deg)",
         }}
       >
-        {c.initials}
+        {!imgErr ? (
+          <img
+            src={c.logo}
+            alt={c.name}
+            onError={() => setImgErr(true)}
+            style={{ width: "70%", height: "70%", objectFit: "contain" }}
+          />
+        ) : (
+          <span
+            style={{
+              fontFamily: "'Space Mono',monospace",
+              fontWeight: 700,
+              fontSize: 10,
+              color: "#f5f0e4",
+              letterSpacing: "0.05em",
+            }}
+          >
+            {c.initials}
+          </span>
+        )}
       </div>
       <span
         style={{
           fontFamily: "'DM Sans',sans-serif",
-          fontSize: 13,
-          fontWeight: 500,
-          color: hovered ? "rgba(42,48,24,0.9)" : "rgba(42,48,24,0.7)",
+          fontSize: 14,
+          fontWeight: 700,
+          color: hovered ? "rgba(42,48,24,0.95)" : "rgba(42,48,24,0.75)",
           whiteSpace: "nowrap",
           transition: "color 0.25s",
         }}
       >
         {c.name}
       </span>
+    </div>
+  );
+}
+
+function CollabTickerItem({ collab: c }) {
+  const [hovered, setHovered] = useState(false);
+  const [imgErr, setImgErr] = useState(false);
+
+  return (
+    <a
+      href={c.url}
+      target="_blank"
+      rel="noreferrer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 10,
+        padding: "10px 20px",
+        marginRight: 10,
+        border: hovered
+          ? "1.5px solid rgba(42,48,24,0.4)"
+          : "1.5px solid rgba(42,48,24,0.15)",
+        borderRadius: 100,
+        background: hovered ? "rgba(42,48,24,0.08)" : "rgba(42,48,24,0.03)",
+        flexShrink: 0,
+        transform: hovered
+          ? "scale(1.05) translateY(-3px)"
+          : "scale(1) translateY(0)",
+        transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
+        cursor: "pointer",
+        boxShadow: hovered ? "0 8px 24px rgba(42,48,24,0.12)" : "none",
+        textDecoration: "none",
+      }}
+    >
+      <div
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: "50%",
+          overflow: "hidden",
+          flexShrink: 0,
+          border: hovered
+            ? "2px solid #a8c060"
+            : "2px solid rgba(42,48,24,0.12)",
+          transition: "border-color 0.3s",
+          background: "#2a3018",
+        }}
+      >
+        {!imgErr ? (
+          <img
+            src={c.avatar}
+            alt={c.label}
+            onError={() => setImgErr(true)}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono',monospace",
+                fontWeight: 700,
+                fontSize: 10,
+                color: "#a8c060",
+              }}
+            >
+              {c.label.slice(0, 2).toUpperCase()}
+            </span>
+          </div>
+        )}
+      </div>
+      <span
+        style={{
+          fontFamily: "'DM Sans',sans-serif",
+          fontSize: 14,
+          fontWeight: 700,
+          color: hovered ? "rgba(42,48,24,0.95)" : "rgba(42,48,24,0.75)",
+          whiteSpace: "nowrap",
+          transition: "color 0.25s",
+        }}
+      >
+        {c.label}
+      </span>
+    </a>
+  );
+}
+
+function Ticker({ items, renderItem, reverse = false }) {
+  const [paused, setPaused] = useState(false);
+  return (
+    <div
+      style={{ overflow: "hidden", padding: "6px 0" }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => setPaused(false)}
+    >
+      <div
+        style={{
+          display: "flex",
+          width: "max-content",
+          animation: "fmMarquee 32s linear infinite",
+          animationDirection: reverse ? "reverse" : "normal",
+          animationPlayState: paused ? "paused" : "running",
+          transition: "animation-play-state 0.2s",
+        }}
+      >
+        {[...items, ...items, ...items].map((item, i) => (
+          <span key={i}>{renderItem(item)}</span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -112,7 +294,6 @@ function StatCell({ value, label, index }) {
   return (
     <motion.div
       ref={ref}
-      key={label}
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
@@ -122,13 +303,14 @@ function StatCell({ value, label, index }) {
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className="stat-cell"
       style={{
-        padding: "48px 32px",
-        borderRight: index < 3 ? "1px solid rgba(42,48,24,0.1)" : undefined,
+        padding: "clamp(28px,5vw,48px) clamp(16px,3vw,32px)",
         textAlign: "center",
         background: hovered ? "#1c2410" : "transparent",
         transition: "background 0.3s",
         cursor: "default",
+        /* border-right handled via className + CSS below */
       }}
     >
       <motion.div
@@ -140,11 +322,11 @@ function StatCell({ value, label, index }) {
         }}
         style={{
           fontFamily: "'Cabinet Grotesk',sans-serif",
-          fontSize: "clamp(2.5rem,4vw,3.5rem)",
+          fontSize: "clamp(2rem,6vw,3.5rem)",
           fontWeight: 900,
           color: hovered ? "#a8c060" : "#1c2410",
           letterSpacing: "-0.03em",
-          marginBottom: 8,
+          marginBottom: 6,
           transition: "color 0.3s",
         }}
       >
@@ -153,9 +335,10 @@ function StatCell({ value, label, index }) {
       <div
         style={{
           fontFamily: "'Space Mono',monospace",
-          fontSize: 9,
-          letterSpacing: "0.35em",
-          color: hovered ? "rgba(245,240,228,0.4)" : "rgba(42,48,24,0.4)",
+          fontSize: "clamp(8px,1.5vw,10px)",
+          letterSpacing: "0.3em",
+          fontWeight: 700,
+          color: hovered ? "rgba(245,240,228,0.55)" : "rgba(42,48,24,0.5)",
           textTransform: "uppercase",
           transition: "color 0.3s",
         }}
@@ -172,7 +355,6 @@ export function CollabSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Label
       gsap.fromTo(
         ".collab-label",
         { opacity: 0, x: -20 },
@@ -188,8 +370,6 @@ export function CollabSection() {
           },
         },
       );
-
-      // Main heading lines
       gsap.fromTo(
         ".collab-heading-line",
         { y: "110%", opacity: 0 },
@@ -206,8 +386,6 @@ export function CollabSection() {
           },
         },
       );
-
-      // Right paragraph
       gsap.fromTo(
         ".collab-desc",
         { opacity: 0, x: 30 },
@@ -224,8 +402,6 @@ export function CollabSection() {
           },
         },
       );
-
-      // Ticker rows fade in from sides
       gsap.fromTo(
         ".collab-ticker-1",
         { opacity: 0, x: -60 },
@@ -270,6 +446,7 @@ export function CollabSection() {
         overflow: "hidden",
       }}
     >
+      {/* top border */}
       <div
         style={{
           position: "absolute",
@@ -281,40 +458,40 @@ export function CollabSection() {
         }}
       />
 
-      {/* header */}
+      {/* ── Header ── */}
       <div
         ref={headerRef}
-        style={{ padding: "clamp(80px,12vh,130px) clamp(24px,6vw,72px) 72px" }}
+        style={{
+          padding:
+            "clamp(60px,10vh,130px) clamp(20px,6vw,72px) clamp(36px,5vh,56px)",
+        }}
       >
         <div
           className="collab-label"
           style={{
             fontFamily: "'Space Mono',monospace",
-            fontSize: 10,
+            fontSize: "clamp(9px,1.5vw,11px)",
             letterSpacing: "0.4em",
-            color: "rgba(42,48,24,0.35)",
+            fontWeight: 700,
+            color: "rgba(42,48,24,0.45)",
             marginBottom: 20,
+            textTransform: "uppercase",
           }}
         >
           04 / Collabs
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 40,
-            alignItems: "end",
-          }}
-        >
+
+        {/* Two-column on ≥640 px, stacked below */}
+        <div className="collab-header-grid">
           <h2
             style={{
               fontFamily: "'Cabinet Grotesk',sans-serif",
-              fontSize: "clamp(2.5rem,5.5vw,5rem)",
+              fontSize: "clamp(2.4rem,7vw,5rem)",
               color: "#1c2410",
-              fontWeight: 800,
+              fontWeight: 900,
               letterSpacing: "-0.03em",
               lineHeight: 1.05,
-              overflow: "hidden",
+              margin: 0,
             }}
           >
             <div
@@ -332,42 +509,88 @@ export function CollabSection() {
               </span>
             </div>
           </h2>
+
           <p
             className="collab-desc"
             style={{
               fontFamily: "'DM Sans',sans-serif",
-              fontSize: 16,
-              color: "rgba(42,48,24,0.55)",
-              lineHeight: 1.75,
-              maxWidth: 380,
+              fontSize: "clamp(16px,2.2vw,22px)",
+              fontWeight: 700,
+              color: "rgba(42,48,24,0.65)",
+              lineHeight: 1.65,
+              margin: 0,
             }}
           >
-            Clients who trusted me with real products. People I've built
+            Clients who trusted me with real products. Engineers I've shipped
             alongside. Real work, real results.
           </p>
         </div>
       </div>
 
-      {/* tickers */}
-      <div className="collab-ticker-1" style={{ marginBottom: 4 }}>
-        <CollabTicker items={clients} />
-      </div>
-      <div className="collab-ticker-2" style={{ marginBottom: 72 }}>
-        <CollabTicker items={clients} reverse />
-      </div>
-
-      {/* stats grid */}
+      {/* ── Tickers ── */}
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
-          borderTop: "1px solid rgba(42,48,24,0.1)",
+          padding: "0 clamp(20px,6vw,72px)",
+          marginBottom: 10,
+          display: "flex",
+          flexDirection: "column",
+          gap: 28,
         }}
       >
+        {/* clients */}
+        <div>
+          <div
+            style={{
+              fontFamily: "'Space Mono',monospace",
+              fontSize: "clamp(8px,1.2vw,9px)",
+              letterSpacing: "0.4em",
+              fontWeight: 700,
+              color: "rgba(42,48,24,0.4)",
+              marginBottom: 12,
+              textTransform: "uppercase",
+            }}
+          >
+            Built for
+          </div>
+          <div className="collab-ticker-1">
+            <Ticker
+              items={clients}
+              renderItem={(c) => <ClientTickerItem client={c} />}
+            />
+          </div>
+        </div>
+
+        {/* collabs */}
+        <div style={{ marginBottom: 48 }}>
+          <div
+            style={{
+              fontFamily: "'Space Mono',monospace",
+              fontSize: "clamp(8px,1.2vw,9px)",
+              letterSpacing: "0.4em",
+              fontWeight: 700,
+              color: "rgba(42,48,24,0.4)",
+              marginBottom: 12,
+              textTransform: "uppercase",
+            }}
+          >
+            Built with
+          </div>
+          <div className="collab-ticker-2">
+            <Ticker
+              items={collabs}
+              renderItem={(c) => <CollabTickerItem collab={c} />}
+              reverse
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Stats grid ── */}
+      <div className="stats-grid">
         {[
-          ["4+", "Production Apps"],
-          ["3+", "Clients Served"],
-          ["2+", "Years Exp"],
+          ["8+", "Production Apps"],
+          ["10+", "Clients Served"],
+          ["4+", "Years Exp"],
           ["∞", "Lines of Code"],
         ].map(([v, l], i) => (
           <StatCell key={l} value={v} label={l} index={i} />
@@ -379,8 +602,65 @@ export function CollabSection() {
           from { transform: translateX(0) }
           to   { transform: translateX(-33.333%) }
         }
+
+        /* ── Header grid ── */
+        .collab-header-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+          align-items: end;
+        }
+
+        /* ── Stats grid: 4-col desktop ── */
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          border-top: 1px solid rgba(42,48,24,0.1);
+        }
+        .stat-cell:not(:last-child) {
+          border-right: 1px solid rgba(42,48,24,0.1);
+        }
+
+        /* ── Tablet (≤ 768px) ── */
+        @media (max-width: 768px) {
+          .collab-header-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+          }
+
+          /* 2×2 stats on tablet */
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .stat-cell:nth-child(2) {
+            border-right: none;
+          }
+          .stat-cell:nth-child(1),
+          .stat-cell:nth-child(2) {
+            border-bottom: 1px solid rgba(42,48,24,0.1);
+          }
+          .stat-cell:nth-child(3) {
+            border-right: 1px solid rgba(42,48,24,0.1);
+          }
+        }
+
+        /* ── Mobile (≤ 480px) ── */
+        @media (max-width: 480px) {
+          /* full-width stats stacked 1 col */
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          /* slightly smaller ticker pills */
+          .collab-ticker-1 a,
+          .collab-ticker-1 div[style],
+          .collab-ticker-2 a {
+            padding: 8px 16px !important;
+          }
+        }
       `}</style>
     </section>
   );
 }
+
 export default CollabSection;
