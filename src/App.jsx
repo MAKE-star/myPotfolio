@@ -10,7 +10,8 @@ import ProjectsSection from "./components/projects/ProjectsSection";
 import StackSection from "./components/stack/StackSection";
 import CollabSection from "./components/collabs/CollabSection";
 import ContactSection from "./components/contact/ContactSection";
-import Loader from "./components/loader/Loader";
+import Loaderss from "./components/loader/loaderss";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,7 +79,7 @@ export default function App() {
   return (
     <>
       {!loaderDone && (
-        <Loader ready={assetsReady} onComplete={() => setLoaderDone(true)} />
+        <Loaderss ready={assetsReady} onComplete={() => setLoaderDone(true)} />
       )}
 
       <main

@@ -1,4 +1,4 @@
-// src/components/loader/Loader.jsx
+  // src/components/loader/Loader.jsx
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
@@ -13,7 +13,7 @@ import gsap from "gsap";
   - Fires exit only when `ready` prop is true (assets loaded)
 */
 
-export default function Loader({ onComplete, ready }) {
+export default function Loaderss({ onComplete, ready }) {
   const rootRef = useRef();
   const barFillRef = useRef();
   const counterRef = useRef();
