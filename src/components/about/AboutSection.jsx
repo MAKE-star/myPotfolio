@@ -789,139 +789,152 @@ export default function AboutSection({ videeSrc }) {
   return (
     <>
       <style>{`
-        ${FONT}
-        .bebas { font-family: 'Bebas Neue', sans-serif; }
-        .dm    { font-family: 'DM Sans', sans-serif; }
-        .mono  { font-family: 'Space Mono', monospace; }
+  ${FONT}
+  .bebas { font-family: 'Bebas Neue', sans-serif; }
+  .dm    { font-family: 'DM Sans', sans-serif; }
+  .mono  { font-family: 'Space Mono', monospace; }
 
-        .about-row { transition: background 0.25s, padding-left 0.25s; }
-        .about-row:hover { background: rgba(42,48,24,0.05); padding-left: 10px; }
-        .about-row:hover .about-row-val { color: #4a6020 !important; }
+  .about-row { transition: background 0.25s, padding-left 0.25s; }
+  .about-row:hover { background: rgba(42,48,24,0.05); padding-left: 10px; }
+  .about-row:hover .about-row-val { color: #4a6020 !important; }
 
-        .about-stat { transition: background 0.3s; cursor: default; }
-        .about-stat:hover .about-stat-value {
-          color: #4a6020 !important;
-          transform: scale(1.06);
-          transition: color 0.25s, transform 0.25s;
-        }
+  .about-stat { transition: background 0.3s; cursor: default; }
+  .about-stat:hover .about-stat-value {
+    color: #4a6020 !important;
+    transform: scale(1.06);
+    transition: color 0.25s, transform 0.25s;
+  }
 
-        .about-cta { position: relative; overflow: hidden; }
-        .about-cta::after {
-          content: '';
-          position: absolute;
-          top: 0; left: -100%;
-          width: 60%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-          transition: left 0.5s ease;
-        }
-        .about-cta:hover::after { left: 150%; }
+  .about-cta { position: relative; overflow: hidden; }
+  .about-cta::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.5s ease;
+  }
+  .about-cta:hover::after { left: 150%; }
 
-        .heading-overflow { overflow: hidden; }
+  .heading-overflow { overflow: hidden; }
 
-        /* ── Institution logo circles on image (mobile) ── */
-        .inst-badges-mobile {
-          position: absolute;
-          bottom: clamp(14px,4%,22px);
-          right: clamp(12px,4%,18px);
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          z-index: 10;
-        }
+  /* ── Institution logo circles on image (mobile) ── */
+  .inst-badges-mobile {
+    position: absolute;
+    bottom: clamp(14px,4%,22px);
+    right: clamp(12px,4%,18px);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+  }
 
-        /* ── Institution badges on desktop (right panel) ── */
-        .inst-badges-desktop {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
+  /* ── Institution badges on desktop (right panel) ── */
+  .inst-badges-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
-        /* ── Socials strip ── */
-        .about-socials-strip {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
+  /* ── Socials strip ── */
+  .about-socials-strip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
 
-        /* ── Quote strip socials: desktop inline, mobile below quote ── */
-        .quote-socials-desktop {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 12px;
-          flex-shrink: 0;
-        }
-        .quote-socials-row {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          justify-content: flex-end;
-        }
+  /* ── Quote strip layout ── */
+  .about-quote-strip {
+    flex-wrap: nowrap;
+  }
+  .quote-socials-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .quote-socials-row {
+    display: flex;
+    gap: 8px;
+  }
 
-        /* ── Responsive breakpoints ── */
-        @media (max-width: 900px) {
-          .about-split-grid {
-            grid-template-columns: 1fr !important;
-            min-height: unset !important;
-          }
-          .about-img-col {
-            height: 72vw !important;
-            min-height: 300px !important;
-          }
-          .about-stats-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          .about-stats-grid > div:nth-child(2) { border-right: none !important; }
-          .about-stats-grid > div:nth-child(1),
-          .about-stats-grid > div:nth-child(2) { border-bottom: 1px solid rgba(42,48,24,0.1) !important; }
-          .about-stats-grid > div:nth-child(3) { border-right: 1px solid rgba(42,48,24,0.1) !important; }
-          .about-quote-strip { flex-direction: column !important; align-items: flex-start !important; gap: 24px !important; }
-          /* On mobile: show badges on image, hide desktop block */
-          .inst-badges-desktop { display: none !important; }
-          .inst-badges-mobile { display: flex !important; }
-          /* Socials: show on quote strip stacked */
-          .quote-socials-desktop { align-items: flex-start !important; }
-          .quote-socials-row { justify-content: flex-start !important; }
-        }
+  /* ── Responsive breakpoints ── */
+  @media (max-width: 900px) {
+    .about-split-grid {
+      grid-template-columns: 1fr !important;
+      min-height: unset !important;
+    }
+    .about-img-col {
+      height: 72vw !important;
+      min-height: 300px !important;
+    }
+    .about-stats-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .about-stats-grid > div:nth-child(2) { border-right: none !important; }
+    .about-stats-grid > div:nth-child(1),
+    .about-stats-grid > div:nth-child(2) { border-bottom: 1px solid rgba(42,48,24,0.1) !important; }
+    .about-stats-grid > div:nth-child(3) { border-right: 1px solid rgba(42,48,24,0.1) !important; }
 
-        @media (min-width: 901px) {
-          /* On desktop: hide mobile badges on image */
-          .inst-badges-mobile { display: none !important; }
-          .inst-badges-desktop { display: flex !important; }
-        }
+    /* Quote strip: stack vertically on mobile */
+    .about-quote-strip {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 28px !important;
+      flex-wrap: wrap !important;
+    }
+    .quote-socials-desktop {
+      width: 100%;
+    }
+    .quote-socials-row {
+      justify-content: flex-start !important;
+      flex-wrap: wrap;
+      gap: 10px !important;
+    }
 
-        @media (max-width: 520px) {
-          .about-img-col { height: 85vw !important; min-height: 280px !important; }
-          .about-stats-grid > div { padding: 28px 18px !important; }
-          .inst-badges-mobile { bottom: 55px; right: 10px; gap: 6px; }
-        }
+    /* On mobile: show badges on image, hide desktop block */
+    .inst-badges-desktop { display: none !important; }
+    .inst-badges-mobile  { display: flex !important; }
+  }
 
-        @keyframes pulse-dot {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50%       { opacity: 0.4; transform: scale(1.5); }
-        }
-        @keyframes badge-float {
-          0%, 100% { transform: translateY(0px); }
-          50%       { transform: translateY(-4px); }
-        }
+  @media (min-width: 901px) {
+    /* On desktop: hide mobile badges on image */
+    .inst-badges-mobile  { display: none !important; }
+    .inst-badges-desktop { display: flex !important; }
+  }
 
-        .mypng {
-          position: absolute;
-          bottom: 0;
-          right: 43%;
-          height: 95%;
-          width: auto;
-          object-fit: contain;
-          object-position: bottom;
-          z-index: 5;
-          pointer-events: none;
-        }
-        @media (max-width: 900px) {
-          .mypng { display: none; }
-          .mypng-mobile { display: block !important; }
-        }
-      `}</style>
+  @media (max-width: 520px) {
+    .about-img-col { height: 85vw !important; min-height: 280px !important; }
+    .about-stats-grid > div { padding: 28px 18px !important; }
+    .inst-badges-mobile { bottom: 55px; right: 10px; gap: 6px; }
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(1.5); }
+  }
+  @keyframes badge-float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-4px); }
+  }
+
+  .mypng {
+    position: absolute;
+    bottom: 0;
+    right: 43%;
+    height: 95%;
+    width: auto;
+    object-fit: contain;
+    object-position: bottom;
+    z-index: 5;
+    pointer-events: none;
+  }
+  @media (max-width: 900px) {
+    .mypng { display: none; }
+    .mypng-mobile { display: block !important; }
+  }
+`}</style>
 
       <section
         id="about"
@@ -1404,16 +1417,298 @@ export default function AboutSection({ videeSrc }) {
           className="about-quote-strip"
           style={{
             background: "#1c2410",
-            padding: "clamp(32px,6vw,80px) clamp(20px,6vw,72px)",
+            padding: "clamp(40px,6vw,80px) clamp(24px,6vw,72px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: 28,
-            flexWrap: "wrap",
+            gap: "clamp(32px,4vw,48px)",
             position: "relative",
             overflow: "hidden",
           }}
         >
+          {/* ── African pattern SVG — purely decorative, behind everything ── */}
+          <svg
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+              zIndex: 0,
+            }}
+            preserveAspectRatio="xMidYMid slice"
+            viewBox="0 0 680 240"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <style>{`
+        @keyframes zig-march  { from{stroke-dashoffset:0} to{stroke-dashoffset:-80} }
+        @keyframes zig-march2 { from{stroke-dashoffset:0} to{stroke-dashoffset:80}  }
+        @keyframes qs-pulse   { 0%,100%{opacity:.07} 50%{opacity:.15} }
+        @keyframes qs-pulse2  { 0%,100%{opacity:.05} 50%{opacity:.11} }
+        .qm1{stroke-dasharray:40 40;animation:zig-march  6s linear infinite}
+        .qm2{stroke-dasharray:40 40;animation:zig-march2 6s linear infinite}
+        .qm3{stroke-dasharray:20 20;animation:zig-march  4s linear infinite}
+        .qp1{animation:qs-pulse  5s ease-in-out infinite}
+        .qp2{animation:qs-pulse2 7s ease-in-out infinite 1.5s}
+        .qp3{animation:qs-pulse  6s ease-in-out infinite 3s}
+      `}</style>
+            </defs>
+
+            {/* base fabric grid */}
+            <g stroke="#a8c060" strokeWidth="0.35" fill="none" opacity="0.06">
+              {[40, 80, 120, 160, 200].map((y) => (
+                <line key={y} x1="0" y1={y} x2="680" y2={y} />
+              ))}
+              {[68, 136, 204, 272, 340, 408, 476, 544, 612].map((x) => (
+                <line key={x} x1={x} y1="0" x2={x} y2="240" />
+              ))}
+            </g>
+
+            {/* top border zigzag */}
+            <polyline
+              className="qp1"
+              points="0,8 17,2 34,8 51,2 68,8 85,2 102,8 119,2 136,8 153,2 170,8 187,2 204,8 221,2 238,8 255,2 272,8 289,2 306,8 323,2 340,8 357,2 374,8 391,2 408,8 425,2 442,8 459,2 476,8 493,2 510,8 527,2 544,8 561,2 578,8 595,2 612,8 629,2 646,8 663,2 680,8"
+              stroke="#a8c060"
+              strokeWidth="1.1"
+              fill="none"
+            />
+            <polyline
+              className="qp2"
+              points="0,14 17,8 34,14 51,8 68,14 85,8 102,14 119,8 136,14 153,8 170,14 187,8 204,14 221,8 238,14 255,8 272,14 289,8 306,14 323,8 340,14 357,8 374,14 391,8 408,14 425,8 442,14 459,8 476,14 493,8 510,14 527,8 544,14 561,8 578,14 595,8 612,14 629,8 646,14 663,8 680,14"
+              stroke="#d4a843"
+              strokeWidth="0.7"
+              fill="none"
+            />
+            <line
+              x1="0"
+              y1="20"
+              x2="680"
+              y2="20"
+              stroke="#d4a843"
+              strokeWidth="0.8"
+              fill="none"
+              opacity="0.2"
+            />
+
+            {/* bottom border zigzag */}
+            <polyline
+              className="qp1"
+              points="0,232 17,238 34,232 51,238 68,232 85,238 102,232 119,238 136,232 153,238 170,232 187,238 204,232 221,238 238,232 255,238 272,232 289,238 306,232 323,238 340,232 357,238 374,232 391,238 408,232 425,238 442,232 459,238 476,232 493,238 510,232 527,238 544,232 561,238 578,232 595,238 612,232 629,238 646,232 663,238 680,232"
+              stroke="#a8c060"
+              strokeWidth="1.1"
+              fill="none"
+            />
+            <line
+              x1="0"
+              y1="220"
+              x2="680"
+              y2="220"
+              stroke="#d4a843"
+              strokeWidth="0.8"
+              fill="none"
+              opacity="0.2"
+            />
+
+            {/* left border zigzag */}
+            <polyline
+              className="qp3"
+              points="8,0 2,17 8,34 2,51 8,68 2,85 8,102 2,119 8,136 2,153 8,170 2,187 8,204 2,221 8,238"
+              stroke="#a8c060"
+              strokeWidth="1.1"
+              fill="none"
+            />
+            <line
+              x1="20"
+              y1="0"
+              x2="20"
+              y2="240"
+              stroke="#d4a843"
+              strokeWidth="0.8"
+              fill="none"
+              opacity="0.2"
+            />
+
+            {/* right border zigzag */}
+            <polyline
+              className="qp3"
+              points="672,0 678,17 672,34 678,51 672,68 678,85 672,102 678,119 672,136 678,153 672,170 678,187 672,204 678,221 672,238"
+              stroke="#a8c060"
+              strokeWidth="1.1"
+              fill="none"
+            />
+            <line
+              x1="660"
+              y1="0"
+              x2="660"
+              y2="240"
+              stroke="#d4a843"
+              strokeWidth="0.8"
+              fill="none"
+              opacity="0.2"
+            />
+
+            {/* horizontal kente band — top third */}
+            <g className="qp2">
+              <line
+                x1="0"
+                y1="58"
+                x2="680"
+                y2="58"
+                stroke="#d4a843"
+                strokeWidth="1"
+                fill="none"
+              />
+              <polyline
+                points="0,64 20,56 40,64 60,56 80,64 100,56 120,64 140,56 160,64 180,56 200,64 220,56 240,64 260,56 280,64 300,56 320,64 340,56 360,64 380,56 400,64 420,56 440,64 460,56 480,64 500,56 520,64 540,56 560,64 580,56 600,64 620,56 640,64 660,56 680,64"
+                stroke="#a8c060"
+                strokeWidth="0.9"
+                fill="none"
+              />
+              <line
+                x1="0"
+                y1="70"
+                x2="680"
+                y2="70"
+                stroke="#d4a843"
+                strokeWidth="1"
+                fill="none"
+              />
+            </g>
+
+            {/* horizontal kente band — bottom third */}
+            <g className="qp3">
+              <line
+                x1="0"
+                y1="170"
+                x2="680"
+                y2="170"
+                stroke="#d4a843"
+                strokeWidth="1"
+                fill="none"
+              />
+              <polyline
+                points="0,176 20,168 40,176 60,168 80,176 100,168 120,176 140,168 160,176 180,168 200,176 220,168 240,176 260,168 280,176 300,168 320,176 340,168 360,176 380,168 400,176 420,168 440,176 460,168 480,176 500,168 520,176 540,168 560,176 580,168 600,176 620,168 640,176 660,168 680,176"
+                stroke="#a8c060"
+                strokeWidth="0.9"
+                fill="none"
+              />
+              <line
+                x1="0"
+                y1="182"
+                x2="680"
+                y2="182"
+                stroke="#d4a843"
+                strokeWidth="1"
+                fill="none"
+              />
+            </g>
+
+            {/* marching diamond chain centre */}
+            <polyline
+              className="qm1"
+              points="0,120 28,100 56,120 84,100 112,120 140,100 168,120 196,100 224,120 252,100 280,120 308,100 336,120 364,100 392,120 420,100 448,120 476,100 504,120 532,100 560,120 588,100 616,120 644,100 672,120 680,120"
+              stroke="#a8c060"
+              strokeWidth="1.2"
+              fill="none"
+              opacity="0.18"
+            />
+            <polyline
+              className="qm2"
+              points="0,120 28,140 56,120 84,140 112,120 140,140 168,120 196,140 224,120 252,140 280,120 308,140 336,120 364,140 392,120 420,140 448,120 476,140 504,120 532,140 560,120 588,140 616,120 644,140 672,120 680,120"
+              stroke="#d4a843"
+              strokeWidth="1.2"
+              fill="none"
+              opacity="0.14"
+            />
+
+            {/* marching top accent */}
+            <polyline
+              className="qm3"
+              points="0,44 15,36 30,44 45,36 60,44 75,36 90,44 105,36 120,44 135,36 150,44 165,36 180,44 195,36 210,44 225,36 240,44 255,36 270,44 285,36 300,44 315,36 330,44 345,36 360,44 375,36 390,44 405,36 420,44 435,36 450,44 465,36 480,44 495,36 510,44 525,36 540,44 555,36 570,44 585,36 600,44 615,36 630,44 645,36 660,44 680,44"
+              stroke="#d4a843"
+              strokeWidth="0.9"
+              fill="none"
+              opacity="0.18"
+            />
+
+            {/* marching bottom accent */}
+            <polyline
+              className="qm3"
+              points="0,196 15,204 30,196 45,204 60,196 75,204 90,196 105,204 120,196 135,204 150,196 165,204 180,196 195,204 210,196 225,204 240,196 255,204 270,196 285,204 300,196 315,204 330,196 345,204 360,196 375,204 390,196 405,204 420,196 435,204 450,196 465,204 480,196 495,204 510,196 525,204 540,196 555,204 570,196 585,204 600,196 615,204 630,196 645,204 660,196 680,196"
+              stroke="#d4a843"
+              strokeWidth="0.9"
+              fill="none"
+              opacity="0.18"
+            />
+
+            {/* scattered diamonds */}
+            <g fill="none" stroke="#a8c060" strokeWidth="0.8">
+              <polygon points="60,120 72,108 84,120 72,132" className="qp1" />
+              <polygon points="200,50 210,40 220,50 210,60" className="qp2" />
+              <polygon
+                points="340,120 354,106 368,120 354,134"
+                className="qp3"
+              />
+              <polygon points="480,50 490,40 500,50 490,60" className="qp1" />
+              <polygon
+                points="620,120 632,108 644,120 632,132"
+                className="qp2"
+              />
+              <polygon
+                points="200,190 210,180 220,190 210,200"
+                className="qp3"
+              />
+              <polygon
+                points="480,190 490,180 500,190 490,200"
+                className="qp1"
+              />
+            </g>
+
+            {/* corner rosettes */}
+            <g fill="none" stroke="#a8c060" strokeWidth="0.7" className="qp2">
+              <circle cx="44" cy="120" r="10" />
+              <circle cx="44" cy="120" r="5" />
+              <line x1="44" y1="110" x2="44" y2="130" />
+              <line x1="34" y1="120" x2="54" y2="120" />
+              <line x1="37" y1="113" x2="51" y2="127" />
+              <line x1="51" y1="113" x2="37" y2="127" />
+            </g>
+            <g fill="none" stroke="#d4a843" strokeWidth="0.7" className="qp3">
+              <circle cx="636" cy="120" r="10" />
+              <circle cx="636" cy="120" r="5" />
+              <line x1="636" y1="110" x2="636" y2="130" />
+              <line x1="626" y1="120" x2="646" y2="120" />
+              <line x1="629" y1="113" x2="643" y2="127" />
+              <line x1="643" y1="113" x2="629" y2="127" />
+            </g>
+
+            {/* staircase steps — left */}
+            <g
+              stroke="#a8c060"
+              strokeWidth="0.8"
+              fill="none"
+              opacity="0.13"
+              className="qp1"
+            >
+              <polyline points="30,80 50,80 50,100 70,100 70,120" />
+              <polyline points="30,160 50,160 50,140 70,140 70,120" />
+            </g>
+            {/* staircase steps — right */}
+            <g
+              stroke="#a8c060"
+              strokeWidth="0.8"
+              fill="none"
+              opacity="0.13"
+              className="qp2"
+            >
+              <polyline points="650,80 630,80 630,100 610,100 610,120" />
+              <polyline points="650,160 630,160 630,140 610,140 610,120" />
+            </g>
+          </svg>
+
+          {/* scanline — sits above pattern, below content */}
           <div
             className="quote-scanline"
             style={{
@@ -1424,78 +1719,131 @@ export default function AboutSection({ videeSrc }) {
               height: 1,
               background:
                 "linear-gradient(90deg,transparent,rgba(168,192,96,0.4),transparent)",
+              zIndex: 1,
             }}
           />
 
-          <p
-            ref={quoteRef}
-            className="bebas"
+          {/* ── CONTENT (z-index above pattern) ── */}
+          <div
             style={{
-              fontSize: "clamp(1.3rem,3.5vw,3rem)",
-              color: "#f5f0e4",
-              letterSpacing: "0.04em",
-              maxWidth: 700,
-              lineHeight: 1.15,
-              margin: 0,
+              display: "flex",
+              flexDirection: "column",
+              gap: "clamp(20px,2.5vw,28px)",
+              flex: 1,
+              minWidth: 0,
+              position: "relative",
+              zIndex: 2,
             }}
           >
-            AVAILABLE FOR FULL-TIME ROLES, FREELANCE &amp; COLLABS.
-          </p>
-
-          {/* Right side: CTA + socials */}
-          <div className="quote-socials-desktop">
-            <motion.a
-              href="#contact"
-              className="about-cta"
+            <p
+              ref={quoteRef}
+              className="bebas"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "clamp(10px,1.5vw,12px) clamp(20px,2.5vw,28px)",
-                borderRadius: 100,
-                background: "#a8c060",
-                border: "1px solid #a8c060",
-                color: "#1c2410",
-                fontFamily: "'DM Sans',sans-serif",
-                fontSize: "clamp(12px,1.2vw,14px)",
-                fontWeight: 800,
-                letterSpacing: ".04em",
-                textDecoration: "none",
-                flexShrink: 0,
-                x: springX,
-                y: springY,
+                fontSize: "clamp(1.6rem,3.8vw,3.2rem)",
+                color: "#f5f0e4",
+                letterSpacing: "0.04em",
+                lineHeight: 1.1,
+                margin: 0,
               }}
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.97 }}
-              onMouseMove={(e) => handleMagnet(e)}
-              onMouseLeave={resetMagnet}
             >
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: "#1c2410",
-                }}
-              />
-              Get in touch
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: "#1c2410",
-                }}
-              />
-            </motion.a>
+              AVAILABLE FOR FULL-TIME
+              <br />
+              ROLES, FREELANCE &amp; COLLABS.
+            </p>
 
-            {/* Socials row — first 4, then next 4 */}
-            <div className="quote-socials-row">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 16,
+                flexWrap: "wrap",
+              }}
+            >
+              <motion.a
+                href="#contact"
+                className="about-cta"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "clamp(11px,1.4vw,13px) clamp(22px,2.5vw,30px)",
+                  borderRadius: 100,
+                  background: "#a8c060",
+                  border: "1px solid #a8c060",
+                  color: "#1c2410",
+                  fontFamily: "'DM Sans',sans-serif",
+                  fontSize: "clamp(13px,1.2vw,15px)",
+                  fontWeight: 800,
+                  letterSpacing: ".04em",
+                  textDecoration: "none",
+                  flexShrink: 0,
+                  x: springX,
+                  y: springY,
+                }}
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.97 }}
+                onMouseMove={(e) => handleMagnet(e)}
+                onMouseLeave={resetMagnet}
+              >
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: "#1c2410",
+                  }}
+                />
+                Get in touch
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: "#1c2410",
+                  }}
+                />
+              </motion.a>
+
+              <span
+                className="mono"
+                style={{
+                  fontSize: "clamp(9px,0.85vw,10px)",
+                  fontWeight: 700,
+                  letterSpacing: "0.25em",
+                  color: "rgba(245,240,228,0.3)",
+                  textTransform: "uppercase",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                or reach out on
+              </span>
+            </div>
+          </div>
+
+          {/* ── Socials ── */}
+          <div
+            className="quote-socials-desktop"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+              flexShrink: 0,
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="quote-socials-row"
+              style={{ display: "flex", gap: 8 }}
+            >
               {socials.slice(0, 4).map((s) => (
                 <SocialIcon key={s.label} s={s} light />
               ))}
             </div>
-            <div className="quote-socials-row">
+            <div
+              className="quote-socials-row"
+              style={{ display: "flex", gap: 8 }}
+            >
               {socials.slice(4).map((s) => (
                 <SocialIcon key={s.label} s={s} light />
               ))}
