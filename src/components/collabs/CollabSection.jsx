@@ -9,7 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 const clients = [
   {
     name: "Aristack Solutions",
-    logo: "https://aristack.com/wp-content/uploads/2021/09/cropped-Aristack-Logo-192x192.png",
+    // Direct URL from aristack.com homepage
+    logo: "https://aristack.com/wp-content/uploads/2024/08/Screenshot-2021-02-13-at-21.32.22-removebg-preview.png",
     initials: "AS",
     color: "#1c2410",
     logoBg: "#fff",
@@ -30,21 +31,24 @@ const clients = [
   },
   {
     name: "Access Bank",
-    logo: "https://www.accessbankplc.com/portals/0/access-bank-logo.png",
+    // Nigerian bank logo CDN — bank code 000014
+    logo: "https://cdn.jsdelivr.net/gh/wovenfinance/cdn@main/logos/000014.png",
     initials: "AB",
     color: "#e2231a",
     logoBg: "#fff",
   },
   {
     name: "Union Bank",
-    logo: "https://www.unionbankng.com/wp-content/uploads/2021/04/union-bank-logo.png",
+    // Nigerian bank logo CDN — bank code 000018
+    logo: "https://cdn.jsdelivr.net/gh/wovenfinance/cdn@main/logos/000018.png",
     initials: "UB",
     color: "#003087",
     logoBg: "#fff",
   },
   {
     name: "iBloom Decor",
-    logo: "https://ibloomrentals.com/favicon.ico",
+    // Clearbit logo API — reliable fallback for brand logos
+    logo: "https://logo.clearbit.com/ibloomrentals.com",
     initials: "iB",
     color: "#7c3aed",
     logoBg: "#f3e8ff",
