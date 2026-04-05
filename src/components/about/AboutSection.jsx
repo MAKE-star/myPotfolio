@@ -1,9 +1,15 @@
 // src/components/about/AboutSection.jsx
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import ContactPopup from "../contact/ContactPopup";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,7 +33,73 @@ const dataRows = [
   { key: "BASE", val: "Lagos, Nigeria", green: false },
 ];
 
-// ── All socials (mirrors HeroSection) ────────────────────────────────────────
+const CONTACTS = [
+  {
+    id: "email",
+    label: "Send an Email",
+    sub: "jamesasuelimen77@gmail.com",
+    href: "mailto:jamesasuelimen77@gmail.com",
+    accent: "#a8c060",
+    icon: (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="M2 7l10 7 10-7" />
+      </svg>
+    ),
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp Me",
+    sub: "+234 814 218 6524",
+    href: "https://wa.me/2348142186524",
+    accent: "#25d366",
+    icon: (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      </svg>
+    ),
+  },
+  {
+    id: "call",
+    label: "Direct Call",
+    sub: "+234 814 218 6524",
+    href: "tel:+2348142186524",
+    accent: "#d4a843",
+    icon: (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
+      </svg>
+    ),
+  },
+];
+
 const socials = [
   {
     label: "GitHub",
@@ -85,27 +157,6 @@ const socials = [
       </svg>
     ),
   },
-  // {
-  //   label: "Behance",
-  //   href: "https://www.behance.net/jamesasuelimen",
-  //   icon: (
-  //     <svg
-  //       width="18"
-  //       height="18"
-  //       viewBox="0 0 24 24"
-  //       fill="none"
-  //       stroke="currentColor"
-  //       strokeWidth="1.8"
-  //       strokeLinecap="round"
-  //       strokeLinejoin="round"
-  //     >
-  //       <path d="M1 6h7.5a3.5 3.5 0 0 1 0 7H1V6z" />
-  //       <path d="M1 13h8.5a3.5 3.5 0 0 1 0 7H1v-7z" />
-  //       <path d="M14 7h7" />
-  //       <path d="M21 12c0-2.76-2.24-5-5-5s-5 2.24-5 5 2.24 5 5 5c1.9 0 3.56-1.06 4.4-2.62" />
-  //     </svg>
-  //   ),
-  // },
   {
     label: "Dribbble",
     href: "https://dribbble.com/jamesking777",
@@ -187,7 +238,6 @@ const socials = [
   },
 ];
 
-// ── Social icon pill (used in quote strip on desktop, row on mobile) ───────────
 function SocialIcon({ s, light = false }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -231,13 +281,11 @@ function SocialIcon({ s, light = false }) {
   );
 }
 
-// ── Institution badges ────────────────────────────────────────────────────────
 const institutions = [
   {
     name: "Semicolon Africa",
     shortName: "SC",
     logo: "https://semicolon.africa/favicon.ico",
-    logoFallback: null,
     bg: "#0a0f05",
     border: "#a8c060",
     credential: "Problem Solving · Design Thinking · Software Engineering",
@@ -249,7 +297,6 @@ const institutions = [
     name: "Henley Business School",
     shortName: "HBS",
     logo: "https://www.henley.ac.uk/favicon.ico",
-    logoFallback: null,
     bg: "#00205b",
     border: "#d4af37",
     credential: "Business & Enterprise · Certified",
@@ -259,7 +306,6 @@ const institutions = [
   },
 ];
 
-// ── Mobile: logo circle only ──────────────────────────────────────────────────
 function MobileLogoCircle({ inst, delay = 0 }) {
   const [imgErr, setImgErr] = useState(false);
   return (
@@ -315,7 +361,6 @@ function MobileLogoCircle({ inst, delay = 0 }) {
   );
 }
 
-// ── Institution Badge Component ───────────────────────────────────────────────
 function InstitutionBadge({ inst, size = "md" }) {
   const [imgErr, setImgErr] = useState(false);
   const isLg = size === "lg";
@@ -415,7 +460,6 @@ function InstitutionBadge({ inst, size = "md" }) {
   );
 }
 
-// ── Credential card for the right panel ──────────────────────────────────────
 function CredentialCard({ inst }) {
   const [imgErr, setImgErr] = useState(false);
   return (
@@ -504,6 +548,107 @@ function CredentialCard({ inst }) {
   );
 }
 
+// ── Inline contact card (desktop quote strip) ─────────────────────────────────
+function InlineContactCard({ c, index, visible }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <motion.a
+      href={c.href}
+      target={c.id === "email" ? "_self" : "_blank"}
+      rel="noopener noreferrer"
+      initial={{ opacity: 0, y: 32, scale: 0.94 }}
+      animate={
+        visible
+          ? { opacity: 1, y: 0, scale: 1 }
+          : { opacity: 0, y: 32, scale: 0.94 }
+      }
+      transition={{
+        duration: 0.45,
+        delay: index * 0.08,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+        padding: "20px 18px",
+        background: hovered ? `${c.accent}30` : "rgba(245,240,228,0.12)",
+        border: `1px solid ${hovered ? c.accent + "88" : "rgba(245,240,228,0.22)"}`,
+        borderBottom: `3px solid ${c.accent}`,
+        borderRadius: 12,
+        textDecoration: "none",
+        transition: "background 0.25s, border-color 0.25s, transform 0.25s",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        flex: 1,
+        minWidth: 0,
+        cursor: "pointer",
+      }}
+    >
+      {/* icon */}
+      <div
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          background: `${c.accent}18`,
+          border: `1px solid ${c.accent}33`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: c.accent,
+          flexShrink: 0,
+        }}
+      >
+        {c.icon}
+      </div>
+      {/* text */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div
+          style={{
+            fontFamily: "'DM Sans',sans-serif",
+            fontSize: "clamp(12px,1.1vw,14px)",
+            fontWeight: 800,
+            color: "#f5f0e4",
+            lineHeight: 1.2,
+            marginBottom: 4,
+          }}
+        >
+          {c.label}
+        </div>
+        <div
+          style={{
+            fontFamily: "'Space Mono',monospace",
+            fontSize: "clamp(8px,0.75vw,10px)",
+            color: "rgba(245,240,228,0.4)",
+            letterSpacing: "0.04em",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {c.sub}
+        </div>
+      </div>
+      {/* arrow */}
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={c.accent}
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ opacity: 0.7, flexShrink: 0 }}
+      >
+        <path d="M7 17L17 7M7 7h10v10" />
+      </svg>
+    </motion.a>
+  );
+}
+
 export default function AboutSection({ videeSrc }) {
   const secRef = useRef();
   const imgRef = useRef();
@@ -516,6 +661,9 @@ export default function AboutSection({ videeSrc }) {
   const pngRef = useRef();
   const [videoVisible, setVideoVisible] = useState(false);
   const [hoveredStat, setHoveredStat] = useState(null);
+  const [contactOpen, setContactOpen] = useState(false);
+  // desktop inline cards visible state
+  const [inlineOpen, setInlineOpen] = useState(false);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -786,6 +934,15 @@ export default function AboutSection({ videeSrc }) {
     my.set(0);
   };
 
+  // Toggle handler — desktop opens inline, mobile opens popup
+  const handleGetInTouch = () => {
+    if (window.innerWidth >= 900) {
+      setInlineOpen((v) => !v);
+    } else {
+      setContactOpen(true);
+    }
+  };
+
   return (
     <>
       <style>{`
@@ -799,94 +956,58 @@ export default function AboutSection({ videeSrc }) {
         .about-row:hover .about-row-val { color: #4a6020 !important; }
 
         .about-stat { transition: background 0.3s; cursor: default; }
-        .about-stat:hover .about-stat-value {
-          color: #4a6020 !important;
-          transform: scale(1.06);
-          transition: color 0.25s, transform 0.25s;
-        }
+        .about-stat:hover .about-stat-value { color: #4a6020 !important; transform: scale(1.06); transition: color 0.25s, transform 0.25s; }
 
         .about-cta { position: relative; overflow: hidden; }
-        .about-cta::after {
-          content: '';
-          position: absolute;
-          top: 0; left: -100%;
-          width: 60%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-          transition: left 0.5s ease;
-        }
+        .about-cta::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transition: left 0.5s ease; }
         .about-cta:hover::after { left: 150%; }
 
         .heading-overflow { overflow: hidden; }
 
-        /* ── Institution logo circles on image (mobile) ── */
-        .inst-badges-mobile {
-          position: absolute;
-          bottom: clamp(14px,4%,22px);
-          right: clamp(12px,4%,18px);
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          z-index: 10;
-        }
+        .inst-badges-mobile { position: absolute; bottom: clamp(14px,4%,22px); right: clamp(12px,4%,18px); display: flex; flex-direction: column; gap: 6px; z-index: 10; }
+        .inst-badges-desktop { display: flex; flex-direction: column; gap: 10px; }
+        .about-socials-strip { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .quote-socials-desktop { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
+        .quote-socials-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
-        /* ── Institution badges on desktop (right panel) ── */
-        .inst-badges-desktop {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        /* ── Socials strip ── */
-        .about-socials-strip {
+        /* ── Quote strip layout ── */
+        .about-quote-inner {
           display: flex;
           align-items: center;
-          gap: 8px;
-          flex-wrap: wrap;
+          gap: clamp(32px,5vw,64px);
+          width: 100%;
         }
-
-        /* ── Quote strip socials: desktop inline, mobile below quote ── */
-        .quote-socials-desktop {
+        .about-quote-left {
+          flex-shrink: 0;
           display: flex;
           flex-direction: column;
-          align-items: flex-end;
-          gap: 12px;
-          flex-shrink: 0;
+          gap: clamp(16px,2vw,20px);
         }
-        .quote-socials-row {
+        .about-quote-right {
+          flex: 1;
           display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          justify-content: flex-end;
+          gap: 12px;
+          align-items: stretch;
+          min-width: 0;
         }
 
-        /* ── Responsive breakpoints ── */
         @media (max-width: 900px) {
-          .about-split-grid {
-            grid-template-columns: 1fr !important;
-            min-height: unset !important;
-          }
-          .about-img-col {
-            height: 72vw !important;
-            min-height: 300px !important;
-          }
-          .about-stats-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
+          .about-split-grid { grid-template-columns: 1fr !important; min-height: unset !important; }
+          .about-img-col { height: 72vw !important; min-height: 300px !important; }
+          .about-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .about-stats-grid > div:nth-child(2) { border-right: none !important; }
-          .about-stats-grid > div:nth-child(1),
-          .about-stats-grid > div:nth-child(2) { border-bottom: 1px solid rgba(42,48,24,0.1) !important; }
+          .about-stats-grid > div:nth-child(1), .about-stats-grid > div:nth-child(2) { border-bottom: 1px solid rgba(42,48,24,0.1) !important; }
           .about-stats-grid > div:nth-child(3) { border-right: 1px solid rgba(42,48,24,0.1) !important; }
-          .about-quote-strip { flex-direction: column !important; align-items: flex-start !important; gap: 24px !important; }
-          /* On mobile: show badges on image, hide desktop block */
           .inst-badges-desktop { display: none !important; }
           .inst-badges-mobile { display: flex !important; }
-          /* Socials: show on quote strip stacked */
           .quote-socials-desktop { align-items: flex-start !important; }
           .quote-socials-row { justify-content: flex-start !important; }
+          /* On mobile quote strip: stack vertically */
+          .about-quote-inner { flex-direction: column !important; align-items: flex-start !important; gap: 24px !important; }
+          .about-quote-right { display: none !important; }
         }
 
         @media (min-width: 901px) {
-          /* On desktop: hide mobile badges on image */
           .inst-badges-mobile { display: none !important; }
           .inst-badges-desktop { display: flex !important; }
         }
@@ -897,26 +1018,10 @@ export default function AboutSection({ videeSrc }) {
           .inst-badges-mobile { bottom: 55px; right: 10px; gap: 6px; }
         }
 
-        @keyframes pulse-dot {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50%       { opacity: 0.4; transform: scale(1.5); }
-        }
-        @keyframes badge-float {
-          0%, 100% { transform: translateY(0px); }
-          50%       { transform: translateY(-4px); }
-        }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.5); } }
+        @keyframes badge-float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-4px); } }
 
-        .mypng {
-          position: absolute;
-          bottom: 0;
-          right: 43%;
-          height: 95%;
-          width: auto;
-          object-fit: contain;
-          object-position: bottom;
-          z-index: 5;
-          pointer-events: none;
-        }
+        .mypng { position: absolute; bottom: 0; right: 43%; height: 95%; width: auto; object-fit: contain; object-position: bottom; z-index: 5; pointer-events: none; }
         @media (max-width: 900px) {
           .mypng { display: none; }
           .mypng-mobile { display: block !important; }
@@ -928,7 +1033,6 @@ export default function AboutSection({ videeSrc }) {
         ref={secRef}
         style={{ background: "#f5f0e4", position: "relative" }}
       >
-        {/* top hairline */}
         <div
           style={{
             position: "absolute",
@@ -1046,8 +1150,6 @@ export default function AboutSection({ videeSrc }) {
                 />
               </div>
             </div>
-
-            {/* Grain */}
             <div
               style={{
                 position: "absolute",
@@ -1058,8 +1160,6 @@ export default function AboutSection({ videeSrc }) {
                   "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E\")",
               }}
             />
-
-            {/* mobile PNG cutout */}
             <img
               src="/mypng.png"
               alt=""
@@ -1078,8 +1178,6 @@ export default function AboutSection({ videeSrc }) {
                 pointerEvents: "none",
               }}
             />
-
-            {/* ── MOBILE: Logo circles only, bottom-right corner ── */}
             <div className="inst-badges-mobile" style={{ display: "none" }}>
               {institutions.map((inst, idx) => (
                 <MobileLogoCircle
@@ -1089,8 +1187,6 @@ export default function AboutSection({ videeSrc }) {
                 />
               ))}
             </div>
-
-            {/* Name overlay */}
             <div
               className="about-name-overlay"
               style={{
@@ -1129,14 +1225,9 @@ export default function AboutSection({ videeSrc }) {
               >
                 SOFTWARE ENGINEER
               </div>
-
-              {/* ── MOBILE socials on image overlay ── */}
               <div
                 className="about-socials-strip"
-                style={{
-                  marginTop: 14,
-                  display: "none", // shown via media query override below — we use inline override per breakpoint
-                }}
+                style={{ marginTop: 14, display: "none" }}
               >
                 {socials.map((s) => (
                   <SocialIcon key={s.label} s={s} light />
@@ -1205,7 +1296,6 @@ export default function AboutSection({ videeSrc }) {
               </p>
             </div>
 
-            {/* ── DESKTOP: Credential cards ── */}
             <div
               className="inst-badges-desktop credentials-block"
               style={{ display: "none" }}
@@ -1228,7 +1318,6 @@ export default function AboutSection({ videeSrc }) {
               ))}
             </div>
 
-            {/* ── DESKTOP: Socials strip in right panel ── */}
             <div
               className="credentials-block"
               style={{ display: "flex", flexDirection: "column", gap: 10 }}
@@ -1252,7 +1341,6 @@ export default function AboutSection({ videeSrc }) {
               </div>
             </div>
 
-            {/* data rows */}
             <div>
               {dataRows.map((r) => (
                 <div
@@ -1323,7 +1411,6 @@ export default function AboutSection({ videeSrc }) {
             </div>
           </div>
 
-          {/* desktop PNG cutout */}
           <img src="/mypng.png" alt="" className="mypng" ref={pngRef} />
         </div>
 
@@ -1398,20 +1485,18 @@ export default function AboutSection({ videeSrc }) {
             </div>
           ))}
         </div>
+
         {/* ── QUOTE STRIP ── */}
         <div
-          className="about-quote-strip"
+          ref={quoteRef}
           style={{
             background: "#1c2410",
             padding: "clamp(40px,6vw,80px) clamp(24px,6vw,72px)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "clamp(32px,4vw,48px)",
             position: "relative",
             overflow: "hidden",
           }}
         >
-          {/* ── African pattern SVG ── */}
+          {/* African pattern SVG */}
           <svg
             aria-hidden="true"
             style={{
@@ -1441,7 +1526,6 @@ export default function AboutSection({ videeSrc }) {
                 .qp3{animation:qs-pulse3 6s ease-in-out infinite 3s}
               `}</style>
             </defs>
-            {/* base fabric grid */}
             <g stroke="#a8c060" strokeWidth="0.35" fill="none" opacity="0.025">
               {[40, 80, 120, 160, 200].map((y) => (
                 <line key={y} x1="0" y1={y} x2="680" y2={y} />
@@ -1450,7 +1534,6 @@ export default function AboutSection({ videeSrc }) {
                 <line key={x} x1={x} y1="0" x2={x} y2="240" />
               ))}
             </g>
-            {/* top border */}
             <polyline
               className="qp1"
               points="0,8 17,2 34,8 51,2 68,8 85,2 102,8 119,2 136,8 153,2 170,8 187,2 204,8 221,2 238,8 255,2 272,8 289,2 306,8 323,2 340,8 357,2 374,8 391,2 408,8 425,2 442,8 459,2 476,8 493,2 510,8 527,2 544,8 561,2 578,8 595,2 612,8 629,2 646,8 663,2 680,8"
@@ -1475,7 +1558,6 @@ export default function AboutSection({ videeSrc }) {
               fill="none"
               opacity="0.2"
             />
-            {/* bottom border */}
             <polyline
               className="qp1"
               points="0,232 17,238 34,232 51,238 68,232 85,238 102,232 119,238 136,232 153,238 170,232 187,238 204,232 221,238 238,232 255,238 272,232 289,238 306,232 323,238 340,232 357,238 374,232 391,238 408,232 425,238 442,232 459,238 476,232 493,238 510,232 527,238 544,232 561,238 578,232 595,238 612,232 629,238 646,232 663,238 680,232"
@@ -1493,7 +1575,6 @@ export default function AboutSection({ videeSrc }) {
               fill="none"
               opacity="0.2"
             />
-            {/* kente bands */}
             <g className="qp2">
               <line
                 x1="0"
@@ -1546,7 +1627,6 @@ export default function AboutSection({ videeSrc }) {
                 fill="none"
               />
             </g>
-            {/* marching diamond chains */}
             <polyline
               className="qm1"
               points="0,120 28,100 56,120 84,100 112,120 140,100 168,120 196,100 224,120 252,100 280,120 308,100 336,120 364,100 392,120 420,100 448,120 476,100 504,120 532,100 560,120 588,100 616,120 644,100 672,120 680,120"
@@ -1563,7 +1643,6 @@ export default function AboutSection({ videeSrc }) {
               fill="none"
               opacity="0.14"
             />
-            {/* scattered diamonds */}
             <g fill="none" stroke="#a8c060" strokeWidth="0.8">
               <polygon points="60,120 72,108 84,120 72,132" className="qp1" />
               <polygon points="200,50 210,40 220,50 210,60" className="qp2" />
@@ -1585,7 +1664,6 @@ export default function AboutSection({ videeSrc }) {
                 className="qp1"
               />
             </g>
-            {/* corner rosettes */}
             <g fill="none" stroke="#a8c060" strokeWidth="0.7" className="qp2">
               <circle cx="44" cy="120" r="10" />
               <circle cx="44" cy="120" r="5" />
@@ -1604,7 +1682,6 @@ export default function AboutSection({ videeSrc }) {
             </g>
           </svg>
 
-          {/* scanline */}
           <div
             className="quote-scanline"
             style={{
@@ -1619,83 +1696,140 @@ export default function AboutSection({ videeSrc }) {
             }}
           />
 
-          {/* ── CONTENT ── */}
-          <div style={{ position: "relative", zIndex: 2 }}>
-            <p
-              ref={quoteRef}
-              className="bebas"
-              style={{
-                fontSize: "clamp(1.6rem,3.8vw,3.2rem)",
-                color: "#f5f0e4",
-                letterSpacing: "0.04em",
-                lineHeight: 1.1,
-                margin: "0 0 clamp(20px,2.5vw,28px)",
-              }}
-            >
-              AVAILABLE FOR FULL-TIME
-              <br />
-              ROLES, FREELANCE &amp; COLLABS.
-            </p>
-
-            {/* CTA */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 16,
-                flexWrap: "wrap",
-                marginBottom: "clamp(24px,3vw,36px)",
-              }}
-            >
-              <motion.a
-                href="#contact"
-                className="about-cta"
+          {/* ── CONTENT: side-by-side on desktop ── */}
+          <div
+            className="about-quote-inner"
+            style={{ position: "relative", zIndex: 2 }}
+          >
+            {/* LEFT: text + button */}
+            <div className="about-quote-left">
+              <p
+                className="bebas"
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 10,
-                  padding: "clamp(11px,1.4vw,13px) clamp(22px,2.5vw,30px)",
-                  borderRadius: 100,
-                  background: "#a8c060",
-                  border: "1px solid #a8c060",
-                  color: "#1c2410",
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: "clamp(13px,1.2vw,15px)",
-                  fontWeight: 800,
-                  letterSpacing: ".04em",
-                  textDecoration: "none",
-                  flexShrink: 0,
-                  x: springX,
-                  y: springY,
+                  fontSize: "clamp(1.6rem,3.8vw,3.2rem)",
+                  color: "#f5f0e4",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1.1,
+                  margin: 0,
                 }}
-                whileHover={{ scale: 1.06 }}
-                whileTap={{ scale: 0.97 }}
-                onMouseMove={(e) => handleMagnet(e)}
-                onMouseLeave={resetMagnet}
               >
-                <span
+                AVAILABLE FOR FULL-TIME
+                <br />
+                ROLES, FREELANCE &amp; COLLABS.
+              </p>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 16,
+                  flexWrap: "wrap",
+                }}
+              >
+                <motion.button
+                  onClick={handleGetInTouch}
+                  className="about-cta"
                   style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: "#1c2410",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "clamp(11px,1.4vw,13px) clamp(22px,2.5vw,30px)",
+                    borderRadius: 100,
+                    background: inlineOpen
+                      ? "rgba(168,192,96,0.15)"
+                      : "#a8c060",
+                    border: inlineOpen
+                      ? "1px solid #a8c060"
+                      : "1px solid #a8c060",
+                    color: inlineOpen ? "#a8c060" : "#1c2410",
+                    fontFamily: "'DM Sans',sans-serif",
+                    fontSize: "clamp(13px,1.2vw,15px)",
+                    fontWeight: 800,
+                    letterSpacing: ".04em",
+                    cursor: "pointer",
+                    flexShrink: 0,
+                    transition: "background 0.3s, color 0.3s",
+                    x: springX,
+                    y: springY,
                   }}
-                />
-                Get in touch
-                <span
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: "#1c2410",
-                  }}
-                />
-              </motion.a>
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.97 }}
+                  onMouseMove={(e) => handleMagnet(e)}
+                  onMouseLeave={resetMagnet}
+                >
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: inlineOpen ? "#a8c060" : "#1c2410",
+                      transition: "background 0.3s",
+                    }}
+                  />
+                  {inlineOpen ? "Close" : "Get in touch"}
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: inlineOpen ? "#a8c060" : "#1c2410",
+                      transition: "background 0.3s",
+                    }}
+                  />
+                </motion.button>
+              </div>
             </div>
 
-          
+            {/* RIGHT: inline contact cards — desktop only */}
+            <div className="about-quote-right">
+              <AnimatePresence>
+                {inlineOpen &&
+                  CONTACTS.map((c, i) => (
+                    <InlineContactCard
+                      key={c.id}
+                      c={c}
+                      index={i}
+                      visible={inlineOpen}
+                    />
+                  ))}
+              </AnimatePresence>
+
+              {/* Placeholder hint when closed */}
+              {!inlineOpen && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    opacity: 0.25,
+                  }}
+                >
+                  {[0, 1, 2].map((i) => (
+                    <div
+                      key={i}
+                      style={{
+                        flex: 1,
+                        height: 90,
+                        borderRadius: 12,
+                        border: "1px dashed rgba(245,240,228,0.2)",
+                        background: "rgba(245,240,228,0.02)",
+                      }}
+                    />
+                  ))}
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
+
+        {/* Mobile bottom-sheet popup */}
+        <ContactPopup
+          open={contactOpen}
+          onClose={() => setContactOpen(false)}
+        />
       </section>
     </>
   );

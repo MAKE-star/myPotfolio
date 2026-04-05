@@ -1,6 +1,6 @@
 // src/components/stack/StackSection.jsx
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -66,274 +66,318 @@ const stackGroups = [
   },
 ];
 
-// ─── Stack Group Card ─────────────────────────────────────────────────────────
-function StackGroupCard({ group, index }) {
-  const ref = useRef();
-  const inView = useInView(ref, { once: true, margin: "-8%" });
-  const [hovered, setHovered] = useState(false);
+// ─── Laptop SVG Mockup ────────────────────────────────────────────────────────
+function LaptopMockup() {
+  const codeLines = [
+    { text: "const stack = {", color: "#f5f0e4" },
+    { text: "  frontend: [", color: "#f5f0e4" },
+    { text: "    'React', 'Next.js',", color: "#a8c060" },
+    { text: "    'TypeScript',", color: "#a8c060" },
+    { text: "  ],", color: "#f5f0e4" },
+    { text: "  backend: [", color: "#f5f0e4" },
+    { text: "    'Spring', 'Node',", color: "#10b981" },
+    { text: "    'PostgreSQL',", color: "#10b981" },
+    { text: "  ],", color: "#f5f0e4" },
+    { text: "  cloud: [", color: "#f5f0e4" },
+    { text: "    'AWS', 'Docker',", color: "#f59e0b" },
+    { text: "  ],", color: "#f5f0e4" },
+    { text: "}", color: "#f5f0e4" },
+    { text: "", color: "transparent" },
+    { text: "// shipping with 🚀", color: "#a8c06055" },
+  ];
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 32 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        duration: 0.65,
-        delay: index * 0.12,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        position: "relative",
-        borderRadius: 14,
-        overflow: "hidden",
-        background: "#111806",
-        border: `1px solid ${hovered ? group.accent + "40" : "rgba(245,240,228,0.07)"}`,
-        padding: "clamp(18px,2.5vw,28px)",
-        cursor: "default",
-        transition: "border-color 0.35s, box-shadow 0.35s",
-        boxShadow: hovered
-          ? `0 20px 56px ${group.accent}14, 0 0 0 1px ${group.accent}18`
-          : "0 4px 24px rgba(0,0,0,0.35)",
-        display: "flex",
-        flexDirection: "column",
-        gap: 18,
-      }}
+    <svg
+      viewBox="0 0 520 360"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ width: "100%", height: "auto" }}
     >
-      {/* Subtle glow */}
-      <div
+      <defs>
+        <radialGradient id="screenGlow" cx="50%" cy="30%" r="70%">
+          <stop offset="0%" stopColor="#a8c060" stopOpacity="0.10" />
+          <stop offset="100%" stopColor="#a8c060" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#1a2010" />
+          <stop offset="100%" stopColor="#0d1008" />
+        </linearGradient>
+      </defs>
+
+      {/* Lid */}
+      <rect
+        x="30"
+        y="10"
+        width="460"
+        height="295"
+        rx="14"
+        ry="14"
+        fill="#0d1508"
+        stroke="#a8c06032"
+        strokeWidth="1.5"
+      />
+      {/* Screen */}
+      <rect
+        x="46"
+        y="24"
+        width="428"
+        height="267"
+        rx="8"
+        ry="8"
+        fill="#111806"
+      />
+      <rect
+        x="46"
+        y="24"
+        width="428"
+        height="267"
+        rx="8"
+        ry="8"
+        fill="url(#screenGlow)"
+      />
+      {/* Tab bar */}
+      <rect
+        x="46"
+        y="24"
+        width="428"
+        height="26"
+        rx="8"
+        ry="8"
+        fill="#0a1006"
+      />
+      <rect x="46" y="38" width="428" height="12" fill="#0a1006" />
+      {/* Active tab */}
+      <rect x="56" y="30" width="90" height="16" rx="4" fill="#1c2410" />
+      <text
+        x="72"
+        y="42"
+        fontFamily="'Space Mono',monospace"
+        fontSize="7"
+        fill="#a8c06090"
+      >
+        stack.ts
+      </text>
+      <circle cx="148" cy="38" r="3" fill="#a8c06060" />
+      {/* Inactive tab */}
+      <rect x="152" y="32" width="70" height="14" rx="4" fill="#111806" />
+      <text
+        x="162"
+        y="43"
+        fontFamily="'Space Mono',monospace"
+        fontSize="7"
+        fill="#f5f0e430"
+      >
+        index.tsx
+      </text>
+      {/* Sidebar */}
+      <rect x="46" y="50" width="34" height="241" fill="#0c1408" />
+      {[0, 1, 2, 3, 4].map((i) => (
+        <rect
+          key={i}
+          x="55"
+          y={65 + i * 30}
+          width="16"
+          height="16"
+          rx="3"
+          fill={i === 0 ? "#a8c06025" : "#a8c06010"}
+        />
+      ))}
+      {/* Line numbers */}
+      {codeLines.map((_, i) => (
+        <text
+          key={i}
+          x="90"
+          y={72 + i * 14.5}
+          fontFamily="'Space Mono',monospace"
+          fontSize="7.5"
+          fill="#a8c06030"
+        >
+          {String(i + 1).padStart(2, " ")}
+        </text>
+      ))}
+      {/* Code lines */}
+      {codeLines.map((line, i) => (
+        <text
+          key={i}
+          x="108"
+          y={72 + i * 14.5}
+          fontFamily="'Space Mono',monospace"
+          fontSize="7.5"
+          fill={line.color}
+          opacity={0.9}
+        >
+          {line.text}
+        </text>
+      ))}
+      {/* Blinking cursor */}
+      <rect
+        x="108"
+        y="268"
+        width="5"
+        height="9"
+        fill="#a8c060"
+        className="laptop-cursor"
+      />
+      {/* Status bar */}
+      <rect x="46" y="273" width="428" height="18" fill="#0a1006" />
+      <circle cx="60" cy="282" r="4" fill="#a8c06060" />
+      <text
+        x="70"
+        y="285"
+        fontFamily="'Space Mono',monospace"
+        fontSize="6"
+        fill="#a8c06050"
+      >
+        main
+      </text>
+      <text
+        x="420"
+        y="285"
+        fontFamily="'Space Mono',monospace"
+        fontSize="6"
+        fill="#a8c06040"
+      >
+        UTF-8
+      </text>
+      {/* Camera */}
+      <circle
+        cx="260"
+        cy="17"
+        r="3.5"
+        fill="#1a2010"
+        stroke="#a8c06020"
+        strokeWidth="1"
+      />
+      <circle cx="260" cy="17" r="1.5" fill="#a8c06030" />
+      {/* Base */}
+      <rect
+        x="8"
+        y="305"
+        width="504"
+        height="24"
+        rx="4"
+        ry="4"
+        fill="url(#baseGrad)"
+        stroke="#a8c06020"
+        strokeWidth="1"
+      />
+      <rect x="30" y="303" width="460" height="4" rx="2" fill="#1a2010" />
+      {/* Trackpad */}
+      <rect
+        x="195"
+        y="312"
+        width="130"
+        height="10"
+        rx="3"
+        ry="3"
+        fill="#1a2010"
+        stroke="#a8c06015"
+        strokeWidth="1"
+      />
+      {/* Glass shine */}
+      <path
+        d="M 60 28 Q 140 24 200 60 L 60 60 Z"
+        fill="white"
+        opacity="0.015"
+      />
+    </svg>
+  );
+}
+
+// ─── Floating badges ──────────────────────────────────────────────────────────
+function LaptopBadges() {
+  return (
+    <>
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
         style={{
           position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          background: hovered
-            ? `radial-gradient(ellipse at 20% 0%, ${group.accent}0e 0%, transparent 60%)`
-            : "none",
-          transition: "background 0.5s",
-        }}
-      />
-
-      {/* Header row */}
-      <div
-        style={{
+          bottom: "14%",
+          right: "-6%",
+          background: "#1c2410",
+          border: "1px solid #a8c06040",
+          borderRadius: 12,
+          padding: "10px 16px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          gap: 12,
-          position: "relative",
+          gap: 8,
+          boxShadow: "0 12px 36px rgba(0,0,0,0.5), 0 0 0 1px #a8c06018",
+          zIndex: 10,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              flexShrink: 0,
-              background: group.accentDim,
-              border: `1px solid ${group.accent}45`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: hovered ? `0 0 16px ${group.accent}30` : "none",
-              transition: "box-shadow 0.35s",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "'Space Mono',monospace",
-                fontSize: 10,
-                letterSpacing: "0.05em",
-                color: group.accent,
-                fontWeight: 700,
-              }}
-            >
-              {group.number}
-            </span>
-          </div>
-          <div>
-            <div
-              style={{
-                fontFamily: "'Bebas Neue',sans-serif",
-                fontSize: "clamp(1rem,2.2vw,1.45rem)",
-                color: "#f5f0e4",
-                letterSpacing: "0.06em",
-                lineHeight: 1,
-              }}
-            >
-              {group.label.toUpperCase()}
-            </div>
-            <div
-              style={{
-                fontFamily: "'Space Mono',monospace",
-                fontSize: "clamp(7px,0.9vw,9px)",
-                letterSpacing: "0.18em",
-                color: `${group.accent}80`,
-                marginTop: 4,
-              }}
-            >
-              {group.tagline}
-            </div>
-          </div>
-        </div>
         <div
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: "#a8c060",
+            boxShadow: "0 0 8px #a8c060",
+          }}
+        />
+        <span
+          style={{
+            fontFamily: "'Space Mono',monospace",
+            fontSize: 10,
+            letterSpacing: "0.15em",
+            color: "#f5f0e4",
+            whiteSpace: "nowrap",
+          }}
+        >
+          24 TOOLS
+        </span>
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, 7, 0] }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+        style={{
+          position: "absolute",
+          top: "8%",
+          left: "-5%",
+          background: "#0d1508",
+          border: "1px solid #10b98135",
+          borderRadius: 10,
+          padding: "8px 14px",
+          display: "flex",
+          alignItems: "center",
+          gap: 7,
+          boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+          zIndex: 10,
+        }}
+      >
+        <div
+          style={{
+            width: 6,
+            height: 6,
+            borderRadius: "50%",
+            background: "#10b981",
+            boxShadow: "0 0 6px #10b981",
+          }}
+        />
+        <span
           style={{
             fontFamily: "'Space Mono',monospace",
             fontSize: 9,
-            letterSpacing: "0.2em",
-            color: `${group.accent}70`,
-            background: group.accentDim,
-            border: `1px solid ${group.accent}25`,
-            borderRadius: 20,
-            padding: "3px 10px",
+            letterSpacing: "0.12em",
+            color: "#10b981cc",
             whiteSpace: "nowrap",
-            flexShrink: 0,
           }}
         >
-          {group.items.length} tools
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div
-        style={{
-          height: 1,
-          background: `linear-gradient(90deg, ${group.accent}35, transparent)`,
-          opacity: hovered ? 1 : 0.5,
-          transition: "opacity 0.35s",
-          position: "relative",
-        }}
-      />
-
-      {/* Icon grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(52px, 1fr))",
-          gap: 8,
-          position: "relative",
-        }}
-      >
-        {group.items.map((item, i) => (
-          <ToolIcon
-            key={item.name}
-            item={item}
-            accent={group.accent}
-            index={i}
-            inView={inView}
-            cardIndex={index}
-          />
-        ))}
-      </div>
-
-      {/* Bottom accent line */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 2,
-          background: `linear-gradient(90deg, ${group.accent}, transparent)`,
-          opacity: hovered ? 0.6 : 0.15,
-          transition: "opacity 0.35s",
-        }}
-      />
-    </motion.div>
-  );
-}
-
-// ─── Tool icon tile ───────────────────────────────────────────────────────────
-function ToolIcon({ item, accent, index, inView, cardIndex }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.7 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
-      transition={{
-        duration: 0.35,
-        delay: cardIndex * 0.1 + index * 0.04,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      title={item.name}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 6,
-        padding: "10px 6px",
-        borderRadius: 8,
-        background: hovered ? `${accent}14` : "rgba(245,240,228,0.04)",
-        border: `1px solid ${hovered ? accent + "35" : "rgba(245,240,228,0.07)"}`,
-        transition: "all 0.25s ease",
-        transform: hovered ? "translateY(-3px)" : "translateY(0)",
-        cursor: "default",
-      }}
-    >
-      <img
-        src={item.icon}
-        alt={item.name}
-        style={{
-          width: 26,
-          height: 26,
-          objectFit: "contain",
-          filter: hovered ? "brightness(1.1)" : "brightness(0.85)",
-          transition: "filter 0.25s",
-        }}
-        onError={(e) => {
-          e.target.style.display = "none";
-          e.target.nextSibling.style.display = "flex";
-        }}
-      />
-      <div
-        style={{
-          display: "none",
-          width: 26,
-          height: 26,
-          alignItems: "center",
-          justifyContent: "center",
-          background: accent + "20",
-          borderRadius: 6,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Bebas Neue',sans-serif",
-            fontSize: 13,
-            color: accent,
-          }}
-        >
-          {item.name[0]}
+          PROD READY
         </span>
-      </div>
-      <span
-        style={{
-          fontFamily: "'Space Mono',monospace",
-          fontSize: "clamp(6px,0.7vw,8px)",
-          letterSpacing: "0.1em",
-          color: hovered ? accent : "rgba(245,240,228,0.35)",
-          textAlign: "center",
-          transition: "color 0.25s",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          maxWidth: "100%",
-        }}
-      >
-        {item.name}
-      </span>
-    </motion.div>
+      </motion.div>
+    </>
   );
 }
 
-// ─── Logo pill (light section) ────────────────────────────────────────────────
+// ─── Logo Pill ────────────────────────────────────────────────────────────────
 function LogoPill({ item, groupColor, index }) {
   const [hovered, setHovered] = useState(false);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, scale: 0.92 }}
@@ -423,7 +467,7 @@ function LogoPill({ item, groupColor, index }) {
   );
 }
 
-// ─── Floating particles ───────────────────────────────────────────────────────
+// ─── Particles ────────────────────────────────────────────────────────────────
 function Particles() {
   const particles = Array.from({ length: 18 }, (_, i) => ({
     id: i,
@@ -433,7 +477,6 @@ function Particles() {
     dur: 4 + Math.random() * 6,
     delay: Math.random() * 4,
   }));
-
   return (
     <div
       style={{
@@ -468,10 +511,20 @@ function Particles() {
   );
 }
 
-// ─── Main Section ─────────────────────────────────────────────────────────────
+// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function StackSection() {
   const secRef = useRef();
   const headerRef = useRef();
+
+  // Scroll progress across the whole section drives the laptop position
+  const { scrollYProgress } = useScroll({
+    target: secRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Laptop travels from top of section (~0%) down to bottom (~65%)
+  // expressed as % of the sticky rail's parent height
+  const laptopY = useTransform(scrollYProgress, [0, 0.85], ["0%", "62%"]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -574,6 +627,21 @@ export default function StackSection() {
       />
       <Particles />
 
+      {/* ── LAPTOP RAIL: absolute, full height, right side ── */}
+      <div className="laptop-rail" aria-hidden="true">
+        <motion.div
+          className="laptop-float"
+          style={{ y: laptopY }}
+          initial={{ opacity: 0, scale: 0.86, rotate: -3 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
+          viewport={{ once: true, margin: "-5%" }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <LaptopMockup />
+          <LaptopBadges />
+        </motion.div>
+      </div>
+
       {/* ── HEADER ── */}
       <div
         ref={headerRef}
@@ -596,7 +664,9 @@ export default function StackSection() {
         >
           03 / Stack
         </div>
-        <div className="stack-header-inner">
+
+        {/* Left half only — laptop sits in the right half via the rail */}
+        <div className="stack-header-left">
           <h2
             style={{
               fontFamily: "'Bebas Neue',sans-serif",
@@ -627,55 +697,14 @@ export default function StackSection() {
               fontFamily: "'DM Sans',sans-serif",
               fontSize: "clamp(13px,1.3vw,15px)",
               color: "rgba(245,240,228,0.45)",
-              maxWidth: 320,
+              maxWidth: 340,
               lineHeight: 1.75,
+              marginTop: 24,
             }}
           >
             Technologies I reach for daily — from pixel-perfect UIs to
             enterprise-grade backends.
           </p>
-        </div>
-      </div>
-
-      {/* ── STACK GROUP CARDS ── */}
-      <div
-        style={{
-          padding: "0 clamp(20px,6vw,72px) clamp(48px,7vh,96px)",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            marginBottom: "clamp(24px,4vh,48px)",
-          }}
-        >
-          <div
-            style={{ flex: 1, height: 1, background: "rgba(245,240,228,0.08)" }}
-          />
-          <span
-            style={{
-              fontFamily: "'Space Mono',monospace",
-              fontSize: 8,
-              letterSpacing: "0.4em",
-              color: "rgba(245,240,228,0.2)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            EXPERTISE AREAS
-          </span>
-          <div
-            style={{ flex: 1, height: 1, background: "rgba(245,240,228,0.08)" }}
-          />
-        </div>
-
-        <div className="stack-cards-grid">
-          {stackGroups.map((g, i) => (
-            <StackGroupCard key={g.label} group={g} index={i} />
-          ))}
         </div>
       </div>
 
@@ -688,7 +717,8 @@ export default function StackSection() {
         }}
       >
         <div style={{ padding: "clamp(40px,7vh,100px) clamp(20px,6vw,72px)" }}>
-          <div className="stack-logo-grid-header">
+          {/* Header — left half only, laptop drifts in on the right */}
+          <div className="stack-light-header">
             <motion.h3
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -717,124 +747,139 @@ export default function StackSection() {
                 color: "rgba(42,48,24,0.5)",
                 maxWidth: 300,
                 lineHeight: 1.7,
+                marginTop: 12,
               }}
             >
               The full picture — from UI components to cloud infrastructure.
             </motion.p>
           </div>
 
-          {stackGroups.map((group, gi) => (
-            <div
-              key={group.label}
-              style={{
-                marginBottom:
-                  gi < stackGroups.length - 1 ? "clamp(28px,5vh,56px)" : 0,
-              }}
-            >
+          {/* Tool groups */}
+          <div style={{ marginTop: "clamp(28px,5vh,64px)" }}>
+            {stackGroups.map((group, gi) => (
               <div
-                className="stack-group-header"
+                key={group.label}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  marginBottom: 16,
+                  marginBottom:
+                    gi < stackGroups.length - 1 ? "clamp(28px,5vh,56px)" : 0,
                 }}
               >
-                <motion.div
-                  animate={{ scale: [1, 1.4, 1] }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: gi * 0.5,
-                  }}
+                <div
+                  className="stack-group-header"
                   style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: group.accent,
-                    flexShrink: 0,
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: "'Space Mono',monospace",
-                    fontSize: 10,
-                    letterSpacing: "0.35em",
-                    color: group.accent,
-                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    marginBottom: 16,
                   }}
                 >
-                  {group.label.toUpperCase()}
-                </span>
-                <div
-                  className="stack-group-line"
-                  style={{
-                    flex: 1,
-                    height: 1,
-                    background: group.accent + "25",
-                  }}
-                />
-              </div>
-              <div className="stack-pill-grid">
-                {group.items.map((item, ii) => (
-                  <LogoPill
-                    key={item.name}
-                    item={item}
-                    groupColor={group.accent}
-                    index={ii + gi * 9}
+                  <motion.div
+                    animate={{ scale: [1, 1.4, 1] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: gi * 0.5,
+                    }}
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: "50%",
+                      background: group.accent,
+                      flexShrink: 0,
+                    }}
                   />
-                ))}
+                  <span
+                    style={{
+                      fontFamily: "'Space Mono',monospace",
+                      fontSize: 10,
+                      letterSpacing: "0.35em",
+                      color: group.accent,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {group.label.toUpperCase()}
+                  </span>
+                  <div
+                    className="stack-group-line"
+                    style={{
+                      flex: 1,
+                      height: 1,
+                      background: group.accent + "25",
+                    }}
+                  />
+                </div>
+                <div className="stack-pill-grid">
+                  {group.items.map((item, ii) => (
+                    <LogoPill
+                      key={item.name}
+                      item={item}
+                      groupColor={group.accent}
+                      index={ii + gi * 9}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
       <style>{`
-        .stack-cards-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: clamp(12px, 2vw, 20px);
-        }
-        .stack-header-inner {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          align-items: end;
-          gap: 32px;
-        }
-        .stack-logo-grid-header {
+        /* ── Laptop rail: sits on right half, full section height ── */
+        .laptop-rail {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 48%;
+          pointer-events: none;
+          z-index: 20;
           display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-          margin-bottom: clamp(28px, 5vh, 64px);
-          flex-wrap: wrap;
-          gap: 20px;
+          align-items: flex-start;
+          justify-content: center;
+          padding: clamp(20px, 5vw, 60px);
+          box-sizing: border-box;
         }
+        .laptop-float {
+          width: 100%;
+          position: relative;
+          filter:
+            drop-shadow(0 16px 32px rgba(0,0,0,0.25))
+            drop-shadow(0 0 18px rgba(168,192,96,0.05));
+        }
+
+        /* ── Header left column: only takes left half ── */
+        .stack-header-left {
+          width: 48%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* ── Light section header: left half only ── */
+        .stack-light-header {
+          width: 48%;
+        }
+
         .stack-pill-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
           gap: 10px;
         }
+
+        /* Blinking cursor */
+        .laptop-cursor {
+          animation: blink 1.1s steps(1) infinite;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
+        }
+
+        /* ── Responsive ── */
         @media (max-width: 900px) {
-          .stack-cards-grid {
-            grid-template-columns: 1fr;
-            gap: 14px;
-          }
-          .stack-header-inner {
-            grid-template-columns: 1fr;
-            gap: 16px;
-          }
-          .stack-header-inner p {
-            text-align: left !important;
-            max-width: 100% !important;
-          }
-          .stack-logo-grid-header {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-          .stack-logo-grid-header p {
-            max-width: 100% !important;
-          }
+          .laptop-rail { display: none; }
+          .stack-header-left { width: 100%; }
+          .stack-light-header { width: 100%; }
           .stack-pill-grid {
             grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
           }
