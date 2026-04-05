@@ -167,7 +167,7 @@ function Badge({ isMobile }) {
 
   // On mobile, pin the badge to the right side of screen
   const fixedX = isMobile ? 0 : 2;
-  const fixedY = isMobile ? 4 : 5;
+  const fixedY = isMobile ? 5.5 : 5;
 
   useFrame((state, delta) => {
     if (dragged) {
@@ -515,7 +515,7 @@ function Badge({ isMobile }) {
 
 export default function BadgeCanvas({ isMobile }) {
   // Wider FOV on mobile so the badge fits in view
-  const fov = isMobile ? 38 : 25;
+  const fov = isMobile ? 28 : 25;
   return (
     <Canvas
       camera={{ position: [0, 0, 13], fov }}

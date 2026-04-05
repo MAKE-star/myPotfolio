@@ -422,7 +422,6 @@ export default function HeroSection() {
       <style>{`
        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;500&family=Share+Tech+Mono&family=DM+Sans:wght@300;400;500&family=Rajdhani:wght@600;700&family=Exo+2:wght@700;800;900&display=swap');
 
-
         @keyframes fmFadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
         @keyframes fmFade   { from{opacity:0} to{opacity:1} }
         .fm-up { animation: fmFadeUp .9s cubic-bezier(.16,1,.3,1) forwards; opacity:0; }
@@ -460,7 +459,6 @@ export default function HeroSection() {
           position: relative; z-index: 2;
         }
 
-        /* Desktop: canvas fills section behind content */
         .hero-canvas-wrap {
           position: absolute;
           inset: 0;
@@ -484,9 +482,7 @@ export default function HeroSection() {
           z-index: 2;
         }
 
-        /* Gradient overlay — hidden on desktop, shown on mobile */
         .hero-mobile-gradient { display: none; }
-
         .hero-drag-hint { display: none !important; }
         .hero-social-rail { transition: opacity .3s; }
 
@@ -503,18 +499,12 @@ export default function HeroSection() {
 
         /* ── MOBILE (≤ 640px) ── */
         @media (max-width: 640px) {
-          /* Hide desktop-only chrome */
           .hero-social-rail    { display: none !important; }
           .hero-bottom-socials { display: none !important; }
           .hero-nav-contact    { display: none !important; }
 
-          /* Layout stays relative — children use absolute positioning */
           .hero-layout { position: relative; }
 
-          /*
-           * NAV: floats at the top over the full-bleed canvas.
-           * z-index 10 keeps it above the gradient overlay (z:2) and text (z:3).
-           */
           .hero-nav {
             position: absolute !important;
             top: 0; left: 0; right: 0;
@@ -522,12 +512,6 @@ export default function HeroSection() {
             z-index: 10;
           }
 
-          /*
-           * CANVAS: fills the entire 100svh section.
-           * The 3D badge already renders centered — on mobile BadgeCanvas
-           * should position the badge in the upper-center of the canvas
-           * so it shows prominently above the text overlay.
-           */
           .hero-canvas-wrap {
             position: absolute !important;
             inset: 0 !important;
@@ -536,11 +520,6 @@ export default function HeroSection() {
             z-index: 0;
           }
 
-          /*
-           * GRADIENT: sits between canvas and text.
-           * Transparent in the middle so the badge reads clearly.
-           * Heavy fade at the bottom so heading + buttons stay legible.
-           */
           .hero-mobile-gradient {
             display: block;
             position: absolute;
@@ -557,29 +536,21 @@ export default function HeroSection() {
             pointer-events: none;
           }
 
-          /*
-           * CONTENT: pinned to the bottom of the section over the gradient.
-           * Not flex-centered — anchored so it never gets pushed off screen.
-           */
           .hero-content-wrap {
             position: absolute !important;
-            bottom: 48px; left: 0; right: 0;
+            bottom: 44px; left: 0; right: 0;
             top: unset !important;
             flex: unset !important;
             align-items: flex-start;
-            padding: 0 22px !important;
+            padding: 0 20px !important;
             z-index: 3;
             pointer-events: none;
           }
           .hero-content-wrap > * { pointer-events: auto; }
 
-          /*
-           * BOTTOM BAR: pinned at the very bottom, above safe area.
-           * Copyright text only — socials are hidden on mobile.
-           */
           .hero-bottom {
             position: absolute !important;
-            bottom: 16px; left: 22px; right: 22px;
+            bottom: 14px; left: 20px; right: 20px;
             top: unset !important;
             z-index: 4;
             flex-direction: row;
@@ -588,23 +559,32 @@ export default function HeroSection() {
             padding: 0;
           }
 
-          /* Typography */
-          .hero-h1 { font-size: clamp(1.7rem, 7.5vw, 2.3rem) !important; }
-          .hero-para { font-size: 12.5px !important; line-height: 1.6 !important; }
+          /* ── TYPOGRAPHY — all bumped up for readability ── */
+          .hero-h1 { font-size: clamp(1.9rem, 8vw, 2.6rem) !important; }
 
-          /* Spacing tightening */
+          .hero-para {
+            font-size: 14px !important;
+            line-height: 1.65 !important;
+            color: rgba(245,240,228,0.75) !important; /* brighter than before */
+          }
+
+          /* label row */
+          .hero-label-row span {
+            font-size: 11px !important;
+            letter-spacing: 0.3em !important;
+            color: rgba(245,240,228,0.65) !important;
+          }
+
+          /* Spacing */
           .hero-label-row { margin-bottom: 10px !important; }
-          .hero-h1-wrap   { margin-bottom: 8px !important; }
-          .hero-para-wrap { margin-bottom: 16px !important; }
+          .hero-h1-wrap   { margin-bottom: 10px !important; }
+          .hero-para-wrap { margin-bottom: 18px !important; }
 
-          /*
-           * BUTTONS: side by side, equal width, never overflow or get cut off.
-           * margin-bottom clears the copyright bar beneath.
-           */
+          /* ── BUTTONS ── */
           .hero-btn-row {
             display: flex !important;
             flex-direction: row !important;
-            gap: 8px !important;
+            gap: 10px !important;
             flex-wrap: nowrap !important;
             width: 100%;
             margin-bottom: 0 !important;
@@ -612,22 +592,41 @@ export default function HeroSection() {
           .hero-btn-row .fm-pill {
             flex: 1;
             justify-content: center;
-            padding: 11px 10px !important;
-            font-size: 9.5px !important;
-            gap: 6px !important;
+            padding: 14px 12px !important;
+            font-size: 14px !important;
+            letter-spacing: 0.08em !important;
+            gap: 7px !important;
+            border-width: 1.5px !important;
+          }
+          /* outline button — make text brighter so it pops on dark bg */
+          .hero-btn-row .fm-pill:not(.fm-pill-accent) {
+            color: #f5f0e4 !important;
+            border-color: rgba(245,240,228,0.5) !important;
+          }
+          /* accent button — ensure dark text on green is crisp */
+          .hero-btn-row .fm-pill-accent {
+            font-size: 14px !important;
+            color: #1c2410 !important;
+            letter-spacing: 0.06em !important;
           }
           .fm-dot { width: 5px !important; height: 5px !important; }
+
+          /* copyright */
+          .hero-bottom span {
+            font-size: 10px !important;
+            color: rgba(245,240,228,0.35) !important;
+          }
         }
 
         /* ── VERY SMALL (≤ 380px) ── */
         @media (max-width: 380px) {
-          .hero-h1 { font-size: 1.6rem !important; }
+          .hero-h1 { font-size: 1.7rem !important; }
           .hero-nav { padding: 18px 16px 0 !important; }
-          .hero-content-wrap { padding: 0 16px !important; bottom: 44px; }
+          .hero-content-wrap { padding: 0 16px !important; bottom: 42px; }
           .hero-bottom { left: 16px; right: 16px; }
-          .hero-btn-row .fm-pill { font-size: 8.5px !important; padding: 10px 8px !important; }
+          .hero-btn-row .fm-pill { font-size: 11px !important; padding: 13px 8px !important; }
         }
-      `}</style>
+      `}</style>  
 
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
 
