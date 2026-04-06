@@ -1825,7 +1825,7 @@ export default function AboutSection({ videeSrc }) {
           </div>
         </div>
 
-        {/* Mobile bottom-sheet popup */}
+        Mobile bottom-sheet popup
         <ContactPopup
           open={contactOpen}
           onClose={() => setContactOpen(false)}

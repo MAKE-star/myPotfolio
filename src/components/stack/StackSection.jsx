@@ -1,6 +1,12 @@
 // src/components/stack/StackSection.jsx
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  useSpring,
+} from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -90,7 +96,7 @@ function LaptopMockup() {
     <svg
       viewBox="0 0 520 360"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ width: "100%", height: "auto" }}
+      style={{ width: "100%", height: "auto", display: "block" }}
     >
       <defs>
         <radialGradient id="screenGlow" cx="50%" cy="30%" r="70%">
@@ -278,6 +284,29 @@ function LaptopMockup() {
         d="M 60 28 Q 140 24 200 60 L 60 60 Z"
         fill="white"
         opacity="0.015"
+      />
+      {/* ── Thin white outline — traces the actual laptop silhouette ── */}
+      <rect
+        x="30"
+        y="10"
+        width="460"
+        height="295"
+        rx="14"
+        ry="14"
+        fill="none"
+        stroke="rgba(255,255,255,0.5)"
+        strokeWidth="1.5"
+      />
+      <rect
+        x="8"
+        y="305"
+        width="504"
+        height="24"
+        rx="4"
+        ry="4"
+        fill="none"
+        stroke="rgba(255,255,255,0.5)"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -516,15 +545,23 @@ export default function StackSection() {
   const secRef = useRef();
   const headerRef = useRef();
 
-  // Scroll progress across the whole section drives the laptop position
+  // Scroll progress across the whole section
   const { scrollYProgress } = useScroll({
     target: secRef,
     offset: ["start end", "end start"],
   });
 
-  // Laptop travels from top of section (~0%) down to bottom (~65%)
-  // expressed as % of the sticky rail's parent height
-  const laptopY = useTransform(scrollYProgress, [0, 0.85], ["0%", "62%"]);
+  // Raw transform value — laptop travels from 0% → 62% as section scrolls through
+  const rawY = useTransform(scrollYProgress, [0, 0.85], ["0%", "62%"]);
+
+  // ── SMOOTH SPRING ──
+  // Feed the raw string value into a spring with gentle physics.
+  // stiffness + damping combo gives a slow, buttery glide with no jank.
+  const laptopY = useSpring(rawY, {
+    stiffness: 40, // low = slow to start / slow to stop
+    damping: 18, // smooths out oscillation
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -843,9 +880,6 @@ export default function StackSection() {
         .laptop-float {
           width: 100%;
           position: relative;
-          filter:
-            drop-shadow(0 16px 32px rgba(0,0,0,0.25))
-            drop-shadow(0 0 18px rgba(168,192,96,0.05));
         }
 
         /* ── Header left column: only takes left half ── */

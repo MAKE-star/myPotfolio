@@ -70,8 +70,6 @@ const CONTACTS = [
 ];
 
 export default function ContactPopup({ open, onClose }) {
-  const overlayRef = useRef();
-
   // close on Escape
   useEffect(() => {
     const handler = (e) => {
@@ -104,334 +102,370 @@ export default function ContactPopup({ open, onClose }) {
             style={{
               position: "fixed",
               inset: 0,
-              background: "rgba(10,15,5,0.78)",
-              backdropFilter: "blur(6px)",
-              WebkitBackdropFilter: "blur(6px)",
+              background: "rgba(10,15,5,0.82)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
               zIndex: 900,
               cursor: "pointer",
             }}
           />
 
-          {/* ── Panel ── */}
-          <motion.div
-            key="panel"
-            initial={{ opacity: 0, y: 48, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 32, scale: 0.97 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          {/* ── Panel wrapper — flex-centered on desktop, bottom-anchored on mobile ── */}
+          <div
             style={{
               position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
+              inset: 0,
               zIndex: 901,
               display: "flex",
+              alignItems: "center" /* vertically center on desktop */,
               justifyContent: "center",
-              alignItems: "flex-end",
-              padding: "0 0 env(safe-area-inset-bottom,0px)",
               pointerEvents: "none",
+              /* On mobile screens the panel sticks to bottom */
+              /* We override this via a <style> tag below */
             }}
           >
-            <div
+            {/* Inject one-off responsive rule without needing a CSS file */}
+            <style>{`
+              @media (max-width: 639px) {
+                .cp-wrapper {
+                  align-items: flex-end !important;
+                }
+                .cp-panel {
+                  border-radius: 20px 20px 0 0 !important;
+                  border-bottom: none !important;
+                  max-width: 100% !important;
+                  width: 100% !important;
+                }
+              }
+              @media (min-width: 640px) {
+                .cp-panel {
+                  border-radius: 20px !important;
+                }
+              }
+            `}</style>
+
+            <motion.div
+              className="cp-wrapper"
+              key="panel-outer"
               style={{
-                pointerEvents: "auto",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 width: "100%",
-                maxWidth: 520,
-                background: "#1c2410",
-                borderRadius: "20px 20px 0 0",
-                border: "1px solid rgba(168,192,96,0.18)",
-                borderBottom: "none",
-                overflow: "hidden",
-                position: "relative",
+                height: "100%",
+                pointerEvents: "none",
               }}
             >
-              {/* African pattern strip at top */}
-              <svg
-                aria-hidden="true"
+              <motion.div
+                className="cp-panel"
+                key="panel"
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 24, scale: 0.97 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
+                  pointerEvents: "auto",
                   width: "100%",
-                  height: 48,
-                  pointerEvents: "none",
-                  zIndex: 0,
-                }}
-                viewBox="0 0 520 48"
-                preserveAspectRatio="xMidYMid slice"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <polyline
-                  points="0,8 17,2 34,8 51,2 68,8 85,2 102,8 119,2 136,8 153,2 170,8 187,2 204,8 221,2 238,8 255,2 272,8 289,2 306,8 323,2 340,8 357,2 374,8 391,2 408,8 425,2 442,8 459,2 476,8 493,2 510,8 520,6"
-                  stroke="#a8c060"
-                  strokeWidth="1"
-                  fill="none"
-                  opacity="0.18"
-                />
-                <line
-                  x1="0"
-                  y1="16"
-                  x2="520"
-                  y2="16"
-                  stroke="#d4a843"
-                  strokeWidth="0.6"
-                  opacity="0.12"
-                />
-              </svg>
-
-              {/* Header */}
-              <div
-                style={{
+                  maxWidth: 480,
+                  background: "#1c2410",
+                  /* border applies on desktop; mobile overrides border-bottom via CSS */
+                  border: "1px solid rgba(168,192,96,0.2)",
+                  overflow: "hidden",
                   position: "relative",
-                  zIndex: 1,
-                  padding: "28px 28px 0",
+                  boxShadow:
+                    "0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(168,192,96,0.08)",
+                  /* margin so it doesn't hug screen edges on mid-size screens */
+                  margin: "0 16px",
                 }}
               >
-                {/* drag handle */}
-                <div
+                {/* African pattern strip */}
+                <svg
+                  aria-hidden="true"
                   style={{
-                    width: 36,
-                    height: 4,
-                    borderRadius: 2,
-                    background: "rgba(168,192,96,0.25)",
-                    margin: "0 auto 20px",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    width: "100%",
+                    height: 48,
+                    pointerEvents: "none",
+                    zIndex: 0,
                   }}
-                />
+                  viewBox="0 0 520 48"
+                  preserveAspectRatio="xMidYMid slice"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <polyline
+                    points="0,8 17,2 34,8 51,2 68,8 85,2 102,8 119,2 136,8 153,2 170,8 187,2 204,8 221,2 238,8 255,2 272,8 289,2 306,8 323,2 340,8 357,2 374,8 391,2 408,8 425,2 442,8 459,2 476,8 493,2 510,8 520,6"
+                    stroke="#a8c060"
+                    strokeWidth="1"
+                    fill="none"
+                    opacity="0.18"
+                  />
+                  <line
+                    x1="0"
+                    y1="16"
+                    x2="520"
+                    y2="16"
+                    stroke="#d4a843"
+                    strokeWidth="0.6"
+                    opacity="0.12"
+                  />
+                </svg>
 
+                {/* Header */}
                 <div
                   style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    justifyContent: "space-between",
-                    marginBottom: 6,
+                    position: "relative",
+                    zIndex: 1,
+                    padding: "28px 28px 0",
                   }}
                 >
-                  <div>
-                    <p
-                      style={{
-                        fontFamily: "'Space Mono',monospace",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        letterSpacing: "0.3em",
-                        color: "rgba(168,192,96,0.6)",
-                        margin: "0 0 6px",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Let's connect
-                    </p>
-                    <h3
-                      style={{
-                        fontFamily: "'Bebas Neue',sans-serif",
-                        fontSize: "clamp(1.6rem,5vw,2.2rem)",
-                        color: "#f5f0e4",
-                        letterSpacing: "0.04em",
-                        lineHeight: 1,
-                        margin: 0,
-                      }}
-                    >
-                      GET IN TOUCH
-                    </h3>
-                  </div>
-                  <button
-                    onClick={onClose}
+                  {/* Drag handle — shown on mobile only via CSS */}
+                  <div
                     style={{
-                      background: "rgba(245,240,228,0.06)",
-                      border: "1px solid rgba(245,240,228,0.12)",
-                      borderRadius: "50%",
                       width: 36,
-                      height: 36,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "rgba(245,240,228,0.5)",
-                      flexShrink: 0,
-                      transition: "background 0.2s, color 0.2s",
+                      height: 4,
+                      borderRadius: 2,
+                      background: "rgba(168,192,96,0.25)",
+                      margin: "0 auto 20px",
                     }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background =
-                        "rgba(245,240,228,0.12)";
-                      e.currentTarget.style.color = "#f5f0e4";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background =
-                        "rgba(245,240,228,0.06)";
-                      e.currentTarget.style.color = "rgba(245,240,228,0.5)";
-                    }}
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    >
-                      <path d="M18 6L6 18M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
+                  />
 
-                <p
-                  style={{
-                    fontFamily: "'DM Sans',sans-serif",
-                    fontSize: 14,
-                    color: "rgba(245,240,228,0.45)",
-                    margin: "10px 0 24px",
-                    lineHeight: 1.6,
-                  }}
-                >
-                  Pick your preferred channel — I'll respond within 24 hours.
-                </p>
-
-                {/* hairline */}
-                <div
-                  style={{
-                    height: 1,
-                    background: "rgba(168,192,96,0.1)",
-                    marginBottom: 20,
-                  }}
-                />
-              </div>
-
-              {/* Contact options */}
-              <div
-                style={{
-                  position: "relative",
-                  zIndex: 1,
-                  padding: "0 20px 28px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 10,
-                }}
-              >
-                {CONTACTS.map((c, i) => (
-                  <motion.a
-                    key={c.id}
-                    href={c.href}
-                    target={c.id === "email" ? "_self" : "_blank"}
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: 0.15 + i * 0.07,
-                      duration: 0.35,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
+                  <div
                     style={{
                       display: "flex",
-                      alignItems: "center",
-                      gap: 16,
-                      padding: "16px 20px",
-                      background: "rgba(245,240,228,0.04)",
-                      border: `1px solid rgba(245,240,228,0.08)`,
-                      borderLeft: `3px solid ${c.accent}`,
-                      borderRadius: 12,
-                      textDecoration: "none",
-                      transition:
-                        "background 0.2s, border-color 0.2s, transform 0.2s",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = `${c.accent}12`;
-                      e.currentTarget.style.transform = "translateX(4px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background =
-                        "rgba(245,240,228,0.04)";
-                      e.currentTarget.style.transform = "translateX(0)";
+                      alignItems: "flex-start",
+                      justifyContent: "space-between",
+                      marginBottom: 6,
                     }}
                   >
-                    {/* icon circle */}
-                    <div
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: "50%",
-                        background: `${c.accent}18`,
-                        border: `1px solid ${c.accent}33`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: c.accent,
-                        flexShrink: 0,
-                      }}
-                    >
-                      {c.icon}
-                    </div>
-
-                    {/* text */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div
-                        style={{
-                          fontFamily: "'DM Sans',sans-serif",
-                          fontSize: 15,
-                          fontWeight: 800,
-                          color: "#f5f0e4",
-                          lineHeight: 1.2,
-                          marginBottom: 3,
-                        }}
-                      >
-                        {c.label}
-                      </div>
-                      <div
+                    <div>
+                      <p
                         style={{
                           fontFamily: "'Space Mono',monospace",
                           fontSize: 11,
-                          color: "rgba(245,240,228,0.4)",
-                          letterSpacing: "0.05em",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
+                          fontWeight: 700,
+                          letterSpacing: "0.3em",
+                          color: "rgba(168,192,96,0.6)",
+                          margin: "0 0 6px",
+                          textTransform: "uppercase",
                         }}
                       >
-                        {c.sub}
-                      </div>
+                        Let's connect
+                      </p>
+                      <h3
+                        style={{
+                          fontFamily: "'Bebas Neue',sans-serif",
+                          fontSize: "clamp(1.6rem,5vw,2.2rem)",
+                          color: "#f5f0e4",
+                          letterSpacing: "0.04em",
+                          lineHeight: 1,
+                          margin: 0,
+                        }}
+                      >
+                        GET IN TOUCH
+                      </h3>
                     </div>
 
-                    {/* arrow */}
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke={c.accent}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{ flexShrink: 0, opacity: 0.7 }}
+                    {/* Close button */}
+                    <button
+                      onClick={onClose}
+                      style={{
+                        background: "rgba(245,240,228,0.06)",
+                        border: "1px solid rgba(245,240,228,0.12)",
+                        borderRadius: "50%",
+                        width: 36,
+                        height: 36,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        color: "rgba(245,240,228,0.5)",
+                        flexShrink: 0,
+                        transition: "background 0.2s, color 0.2s",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background =
+                          "rgba(245,240,228,0.12)";
+                        e.currentTarget.style.color = "#f5f0e4";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background =
+                          "rgba(245,240,228,0.06)";
+                        e.currentTarget.style.color = "rgba(245,240,228,0.5)";
+                      }}
                     >
-                      <path d="M7 17L17 7M7 7h10v10" />
-                    </svg>
-                  </motion.a>
-                ))}
-              </div>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      >
+                        <path d="M18 6L6 18M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
 
-              {/* footer note */}
-              <div
-                style={{
-                  position: "relative",
-                  zIndex: 1,
-                  padding: "0 28px 28px",
-                  textAlign: "center",
-                }}
-              >
-                <span
+                  <p
+                    style={{
+                      fontFamily: "'DM Sans',sans-serif",
+                      fontSize: 14,
+                      color: "rgba(245,240,228,0.45)",
+                      margin: "10px 0 24px",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Pick your preferred channel — I'll respond within 24 hours.
+                  </p>
+
+                  <div
+                    style={{
+                      height: 1,
+                      background: "rgba(168,192,96,0.1)",
+                      marginBottom: 20,
+                    }}
+                  />
+                </div>
+
+                {/* Contact options */}
+                <div
                   style={{
-                    fontFamily: "'Space Mono',monospace",
-                    fontSize: 10,
-                    color: "rgba(245,240,228,0.2)",
-                    letterSpacing: "0.2em",
+                    position: "relative",
+                    zIndex: 1,
+                    padding: "0 20px 28px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
                   }}
                 >
-                  © 2026 JAMES OLUWALEKE
-                </span>
-              </div>
-            </div>
-          </motion.div>
+                  {CONTACTS.map((c, i) => (
+                    <motion.a
+                      key={c.id}
+                      href={c.href}
+                      target={c.id === "email" ? "_self" : "_blank"}
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: 0.15 + i * 0.07,
+                        duration: 0.35,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 16,
+                        padding: "16px 20px",
+                        background: "rgba(245,240,228,0.04)",
+                        border: `1px solid rgba(245,240,228,0.08)`,
+                        borderLeft: `3px solid ${c.accent}`,
+                        borderRadius: 12,
+                        textDecoration: "none",
+                        transition: "background 0.2s, transform 0.2s",
+                        cursor: "pointer",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = `${c.accent}12`;
+                        e.currentTarget.style.transform = "translateX(4px)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background =
+                          "rgba(245,240,228,0.04)";
+                        e.currentTarget.style.transform = "translateX(0)";
+                      }}
+                    >
+                      {/* Icon circle */}
+                      <div
+                        style={{
+                          width: 44,
+                          height: 44,
+                          borderRadius: "50%",
+                          background: `${c.accent}18`,
+                          border: `1px solid ${c.accent}33`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: c.accent,
+                          flexShrink: 0,
+                        }}
+                      >
+                        {c.icon}
+                      </div>
+
+                      {/* Text */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontFamily: "'DM Sans',sans-serif",
+                            fontSize: 15,
+                            fontWeight: 800,
+                            color: "#f5f0e4",
+                            lineHeight: 1.2,
+                            marginBottom: 3,
+                          }}
+                        >
+                          {c.label}
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: "'Space Mono',monospace",
+                            fontSize: 11,
+                            color: "rgba(245,240,228,0.4)",
+                            letterSpacing: "0.05em",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {c.sub}
+                        </div>
+                      </div>
+
+                      {/* Arrow */}
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke={c.accent}
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        style={{ flexShrink: 0, opacity: 0.7 }}
+                      >
+                        <path d="M7 17L17 7M7 7h10v10" />
+                      </svg>
+                    </motion.a>
+                  ))}
+                </div>
+
+                {/* Footer note */}
+                <div
+                  style={{
+                    position: "relative",
+                    zIndex: 1,
+                    padding: "0 28px 28px",
+                    textAlign: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Space Mono',monospace",
+                      fontSize: 10,
+                      color: "rgba(245,240,228,0.2)",
+                      letterSpacing: "0.2em",
+                    }}
+                  >
+                    © 2026 JAMES OLUWALEKE
+                  </span>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>

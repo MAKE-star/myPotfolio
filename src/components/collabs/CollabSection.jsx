@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { label } from "framer-motion/client";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,22 +56,109 @@ const clients = [
 ];
 
 const collabs = [
-  { name: "Felizdujadin999", avatar: "https://github.com/Felizdujadin999.png", label: "Felizdujadin", url: "https://github.com/Felizdujadin999" },
-  { name: "Halobearer", avatar: "https://github.com/Halobearer.png", label: "Halobearer", url: "https://github.com/Halobearer" },
-  { name: "EffiongTimothy", avatar: "https://github.com/EffiongTimothy.png", label: "EffiongTimothy", url: "https://github.com/EffiongTimothy" },
-  { name: "MAKE-star", avatar: "https://github.com/MAKE-star.png", label: "MAKE-star", url: "https://github.com/MAKE-star" },
-  { name: "Semicolon Africa", avatar: "https://semicolon.africa/favicon.ico", label: "Semicolon Africa", url: "https://semicolon.africa", isBrand: true },
-  { name: "popsoft01", avatar: "https://github.com/popsoft01.png", label: "popsoft01", url: "https://github.com/popsoft01" },
-  { name: "dev-lab-aristack", avatar: "https://github.com/dev-lab-aristack.png", label: "dev-lab-aristack", url: "https://github.com/dev-lab-aristack" },
-  { name: "youdeenov-zik", avatar: "https://github.com/youdeenov-zik.png", label: "youdeenov-zik", url: "https://github.com/youdeenov-zik" },
-  { name: "VikitorChidi", avatar: "https://github.com/VikitorChidi.png", label: "VikitorChidi", url: "https://github.com/VikitorChidi" },
-  { name: "Ziklag-Sam", avatar: "https://github.com/Ziklag-Sam.png", label: "Ziklag-Sam", url: "https://github.com/Ziklag-Sam" },
-  { name: "rimi102", avatar: "https://github.com/rimi102.png", label: "rimi102", url: "https://github.com/rimi102" },
-  { name: "Sti1phen", avatar: "https://github.com/Sti1phen.png", label: "Sti1phen", url: "https://github.com/Sti1phen" },
-  { name: "FlorenceAs", avatar: "https://github.com/FlorenceAs.png", label: "FlorenceAs", url: "https://github.com/FlorenceAs" },
-  { name: "Successor5", avatar: "https://github.com/Successor5.png", label: "Successor5", url: "https://github.com/Successor5" },
-  { name: "thefolahan", avatar: "https://github.com/thefolahan.png", label: "thefolahan", url: "https://github.com/thefolahan" },
-  { name: "Omotinuade", avatar: "https://github.com/Omotinuade.png", label: "Omotinuade", url: "https://github.com/Omotinuade" },
+  {
+    name: "Felizdujadin999",
+    avatar: "https://github.com/Felizdujadin999.png",
+    label: "Felizdujadin",
+    url: "https://github.com/Felizdujadin999",
+  },
+  {
+    name: "Halobearer",
+    avatar: "https://github.com/Halobearer.png",
+    label: "Halobearer",
+    url: "https://github.com/Halobearer",
+  },
+  {
+    name: "EffiongTimothy",
+    avatar: "https://github.com/EffiongTimothy.png",
+    label: "EffiongTimothy",
+    url: "https://github.com/EffiongTimothy",
+  },
+  {
+    name: "MAKE-star",
+    avatar: "https://github.com/MAKE-star.png",
+    label: "MAKE-star",
+    url: "https://github.com/MAKE-star",
+  },
+  {
+    name: "Semicolon Africa",
+    avatar: "https://semicolon.africa/favicon.ico",
+    label: "Semicolon Africa",
+    url: "https://semicolon.africa",
+    isBrand: true,
+  },
+  {
+    name: "popsoft01",
+    avatar: "https://github.com/popsoft01.png",
+    label: "popsoft01",
+    url: "https://github.com/popsoft01",
+  },
+  {
+    name: "dev-lab-aristack",
+    avatar: "https://github.com/dev-lab-aristack.png",
+    label: "dev-lab-aristack",
+    url: "https://github.com/dev-lab-aristack",
+  },
+  {
+    name: "youdeenov-zik",
+    avatar: "https://github.com/youdeenov-zik.png",
+    label: "youdeenov-zik",
+    url: "https://github.com/youdeenov-zik",
+  },
+  {
+    name: "VikitorChidi",
+    avatar: "https://github.com/VikitorChidi.png",
+    label: "VikitorChidi",
+    url: "https://github.com/VikitorChidi",
+  },
+  {
+    name: "Ziklag-Sam",
+    avatar: "https://github.com/Ziklag-Sam.png",
+    label: "Ziklag-Sam",
+    url: "https://github.com/Ziklag-Sam",
+  },
+  {
+    name: "rimi102",
+    avatar: "https://github.com/rimi102.png",
+    label: "rimi102",
+    url: "https://github.com/rimi102",
+  },
+  {
+    name: "Sti1phen",
+    avatar: "https://github.com/Sti1phen.png",
+    label: "Sti1phen",
+    url: "https://github.com/Sti1phen",
+  },
+  {
+    name: "FlorenceAs",
+    avatar: "https://github.com/FlorenceAs.png",
+    label: "FlorenceAs",
+    url: "https://github.com/FlorenceAs",
+  },
+  {
+    name: "Successor5",
+    avatar: "https://github.com/Successor5.png",
+    label: "Successor5",
+    url: "https://github.com/Successor5",
+  },
+  {
+    name: "thefolahan",
+    avatar: "https://github.com/thefolahan.png",
+    label: "thefolahan",
+    url: "https://github.com/thefolahan",
+  },
+  {
+    name: "Omotinuade",
+    avatar: "https://github.com/Omotinuade.png",
+    label: "Omotinuade",
+    url: "https://github.com/Omotinuade",
+  },
+  {
+    name: "Blessing",
+    avatar: "https://github.com/blessingayo630.png",
+    label: "Blessing",
+    url: "https://github.com/blessingayo630",
+  },
 ];
 
 function ClientTickerItem({ client: c }) {
