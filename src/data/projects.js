@@ -39,33 +39,6 @@ export function getAccent(id) {
 }
 
 export const projects = [
-  // ── 01 ────────────────────────────────────────────────────────────────────
-  {
-    id: 1,
-    title: "Bime",
-    stack: "Java Spring Boot · JavaScript · Chrome Extension API",
-    url: null,
-    githubUrl: null,
-    image: bimelogo,
-    logoImage: bimeHero,
-    displacementImage: bimelogo,
-    client: "Personal Project",
-    role: "Lead Software Engineer",
-    year: "2025",
-    tags: ["Chrome Extension", "Java", "Spring Boot", "Productivity"],
-    description:
-      "Browser productivity extension that tracks time spent across websites, enforces custom blocklists, and runs structured focus sessions — turning the browser into a distraction-free work environment.",
-    color: "#0d4f3c",
-    accent: "#10b981",
-    status: "in-dev",
-    highlights: [
-      "Time tracking across domains",
-      "Blocklist & distraction filtering",
-      "Focus session mode",
-      "Stats dashboard",
-    ],
-  },
-
   // ── 02 ────────────────────────────────────────────────────────────────────
   {
     id: 2,
@@ -131,7 +104,7 @@ export const projects = [
     stack: "React · TypeScript · MUI · Tailwind · Java Spring Boot",
     url: null,
     githubUrl: null,
-    image: retailfx ,
+    image: retailfx,
     logoImage: retailfxlogo,
     displacementImage: falconlogo,
     client: "Aristack Solutions Limited",
@@ -204,6 +177,32 @@ export const projects = [
       "Cart & order system",
       "Real-time client messaging",
       "Live notification system",
+    ],
+  },
+  // ── 01 ────────────────────────────────────────────────────────────────────
+  {
+    id: 1,
+    title: "Bime",
+    stack: "Java Spring Boot · JavaScript · Chrome Extension API",
+    url: null,
+    githubUrl: null,
+    image: bimelogo,
+    logoImage: bimeHero,
+    displacementImage: bimelogo,
+    client: "Personal Project",
+    role: "Lead Software Engineer",
+    year: "2025",
+    tags: ["Chrome Extension", "Java", "Spring Boot", "Productivity"],
+    description:
+      "Browser productivity extension that tracks time spent across websites, enforces custom blocklists, and runs structured focus sessions — turning the browser into a distraction-free work environment.",
+    color: "#0d4f3c",
+    accent: "#10b981",
+    status: "in-dev",
+    highlights: [
+      "Time tracking across domains",
+      "Blocklist & distraction filtering",
+      "Focus session mode",
+      "Stats dashboard",
     ],
   },
 ];
