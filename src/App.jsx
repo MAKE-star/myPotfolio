@@ -11,6 +11,8 @@
   import CollabSection from "./components/collabs/CollabSection";
   import ContactSection from "./components/contact/ContactSection";
   import Loaderss from "./components/loader/loaderss";
+import StickyNav from "./components/nav/StickyNav";
+import ExperienceSection from "./components/experience/experienceSection";
 
 
   gsap.registerPlugin(ScrollTrigger);
@@ -76,28 +78,32 @@
     // ── Kill all scroll triggers on unmount ────────────────────────────
     useEffect(() => () => ScrollTrigger.getAll().forEach((t) => t.kill()), []);
 
-    return (
-      <>
-        {!loaderDone && (
-          <Loaderss ready={assetsReady} onComplete={() => setLoaderDone(true)} />
-        )}
+return (
+  <>
+    {!loaderDone && (
+      <Loaderss ready={assetsReady} onComplete={() => setLoaderDone(true)} />
+    )}
 
-        <main
-          className="bg-[#050a05] text-white overflow-x-hidden"
-          style={{
-            opacity: loaderDone ? 1 : 0,
-            transition: "opacity 0.6s ease 0.15s",
-            pointerEvents: loaderDone ? "all" : "none",
-          }}
-        >
-          <CustomCursor />
-          <HeroSection />
-          <AboutSection videeSrc={BG_VIDEO_SRC} />
-          <ProjectsSection />
-          <StackSection />
-          <CollabSection />
-          <ContactSection />
-        </main>
-      </>
-    );
+    {/* Nav lives outside <main> so it's never clipped or scrolled away */}
+    <StickyNav hidden={!loaderDone} />
+
+    <main
+      className="bg-[#050a05] text-white overflow-x-hidden"
+      style={{
+        opacity: loaderDone ? 1 : 0,
+        transition: "opacity 0.6s ease 0.15s",
+        pointerEvents: loaderDone ? "all" : "none",
+      }}
+    >
+      <CustomCursor />
+      <HeroSection />
+      <AboutSection videeSrc={BG_VIDEO_SRC} />
+      <ProjectsSection />
+      <ExperienceSection />
+      <StackSection />
+      <CollabSection />
+      <ContactSection />
+    </main>
+  </>
+);
   }

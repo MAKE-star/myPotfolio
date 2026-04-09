@@ -381,7 +381,7 @@ function SocialRail() {
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 export default function HeroSection() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef();
 
@@ -410,12 +410,12 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
+  // useEffect(() => {
+  //   document.body.style.overflow = menuOpen ? "hidden" : "";
+  //   return () => {
+  //     document.body.style.overflow = "";
+  //   };
+  // }, [menuOpen]);
 
   return (
     <>
@@ -451,13 +451,13 @@ export default function HeroSection() {
           flex-direction: column;
         }
 
-        .hero-nav {
-          flex-shrink: 0;
-          display: flex; align-items: center; justify-content: space-between;
-          padding: 28px 48px 0;
-          padding-right: calc(52px + 24px + 24px);
-          position: relative; z-index: 2;
-        }
+        // .hero-nav {
+        //   flex-shrink: 0;
+        //   display: flex; align-items: center; justify-content: space-between;
+        //   padding: 28px 48px 0;
+        //   padding-right: calc(52px + 24px + 24px);
+        //   position: relative; z-index: 2;
+        // }
 
         .hero-canvas-wrap {
           position: absolute;
@@ -628,7 +628,7 @@ export default function HeroSection() {
         }
       `}</style>  
 
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+      {/* <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} /> */}
 
       <section
         ref={sectionRef}
@@ -642,7 +642,7 @@ export default function HeroSection() {
       >
         <div className="hero-layout" style={{ height: "100%" }}>
           {/* ── NAV ── */}
-          <div className="hero-nav fm-in" style={{ animationDelay: "0.1s" }}>
+          {/* <div className="hero-nav fm-in" style={{ animationDelay: "0.1s" }}>
             <button
               className="fm-in"
               style={{
@@ -688,7 +688,7 @@ export default function HeroSection() {
             >
               CONTACT
             </a>
-          </div>
+          </div> */}
 
           {/* ── 3D CANVAS — full bleed on both desktop and mobile ── */}
           <div className="hero-canvas-wrap">
