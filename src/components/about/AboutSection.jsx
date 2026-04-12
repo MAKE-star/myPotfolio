@@ -238,6 +238,23 @@ const socials = [
   },
 ];
 
+// ── Download CV icon ──────────────────────────────────────────────────────────
+const DownloadIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 3v13M5 14l7 7 7-7" />
+    <path d="M3 21h18" />
+  </svg>
+);
+
 function SocialIcon({ s, light = false }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -548,7 +565,6 @@ function CredentialCard({ inst }) {
   );
 }
 
-// ── Inline contact card (desktop quote strip) ─────────────────────────────────
 function InlineContactCard({ c, index, visible }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -586,7 +602,6 @@ function InlineContactCard({ c, index, visible }) {
         cursor: "pointer",
       }}
     >
-      {/* icon */}
       <div
         style={{
           width: 40,
@@ -603,7 +618,6 @@ function InlineContactCard({ c, index, visible }) {
       >
         {c.icon}
       </div>
-      {/* text */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div
           style={{
@@ -631,7 +645,6 @@ function InlineContactCard({ c, index, visible }) {
           {c.sub}
         </div>
       </div>
-      {/* arrow */}
       <svg
         width="14"
         height="14"
@@ -662,13 +675,27 @@ export default function AboutSection({ videeSrc }) {
   const [videoVisible, setVideoVisible] = useState(false);
   const [hoveredStat, setHoveredStat] = useState(null);
   const [contactOpen, setContactOpen] = useState(false);
-  // desktop inline cards visible state
   const [inlineOpen, setInlineOpen] = useState(false);
+  // ── NEW: download CV button state ──
+  const [cvHovered, setCvHovered] = useState(false);
+  const [cvDownloading, setCvDownloading] = useState(false);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const springX = useSpring(mx, { stiffness: 200, damping: 20 });
   const springY = useSpring(my, { stiffness: 200, damping: 20 });
+
+  // ── Download CV handler ───────────────────────────────────────────────────
+  const handleDownloadCV = () => {
+    setCvDownloading(true);
+    const link = document.createElement("a");
+    link.href = "/JAMES OLUWALEKE ASUELIMEN.pdf";
+    link.download = "James_Asuelimen_CV.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => setCvDownloading(false), 1800);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -934,7 +961,6 @@ export default function AboutSection({ videeSrc }) {
     my.set(0);
   };
 
-  // Toggle handler — desktop opens inline, mobile opens popup
   const handleGetInTouch = () => {
     if (window.innerWidth >= 900) {
       setInlineOpen((v) => !v);
@@ -962,6 +988,16 @@ export default function AboutSection({ videeSrc }) {
         .about-cta::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transition: left 0.5s ease; }
         .about-cta:hover::after { left: 150%; }
 
+        /* ── CV button shimmer ── */
+        .cv-btn { position: relative; overflow: hidden; }
+        .cv-btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(168,192,96,0.18), transparent); transition: left 0.5s ease; }
+        .cv-btn:hover::after { left: 150%; }
+
+        /* ── Download spinner animation ── */
+        @keyframes cv-spin { to { transform: rotate(360deg); } }
+        @keyframes cv-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
+        .cv-dl-icon { animation: cv-bounce 0.9s ease-in-out infinite; }
+
         .heading-overflow { overflow: hidden; }
 
         .inst-badges-mobile { position: absolute; bottom: clamp(14px,4%,22px); right: clamp(12px,4%,18px); display: flex; flex-direction: column; gap: 6px; z-index: 10; }
@@ -970,25 +1006,16 @@ export default function AboutSection({ videeSrc }) {
         .quote-socials-desktop { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
         .quote-socials-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
-        /* ── Quote strip layout ── */
-        .about-quote-inner {
+        .about-quote-inner { display: flex; align-items: center; gap: clamp(32px,5vw,64px); width: 100%; }
+        .about-quote-left { flex-shrink: 0; display: flex; flex-direction: column; gap: clamp(16px,2vw,20px); }
+        .about-quote-right { flex: 1; display: flex; gap: 12px; align-items: stretch; min-width: 0; }
+
+        /* ── CTA button row ── */
+        .cta-btn-row {
           display: flex;
           align-items: center;
-          gap: clamp(32px,5vw,64px);
-          width: 100%;
-        }
-        .about-quote-left {
-          flex-shrink: 0;
-          display: flex;
-          flex-direction: column;
-          gap: clamp(16px,2vw,20px);
-        }
-        .about-quote-right {
-          flex: 1;
-          display: flex;
           gap: 12px;
-          align-items: stretch;
-          min-width: 0;
+          flex-wrap: wrap;
         }
 
         @media (max-width: 900px) {
@@ -1002,9 +1029,9 @@ export default function AboutSection({ videeSrc }) {
           .inst-badges-mobile { display: flex !important; }
           .quote-socials-desktop { align-items: flex-start !important; }
           .quote-socials-row { justify-content: flex-start !important; }
-          /* On mobile quote strip: stack vertically */
           .about-quote-inner { flex-direction: column !important; align-items: flex-start !important; gap: 24px !important; }
           .about-quote-right { display: none !important; }
+          .cta-btn-row { gap: 10px; }
         }
 
         @media (min-width: 901px) {
@@ -1016,6 +1043,9 @@ export default function AboutSection({ videeSrc }) {
           .about-img-col { height: 85vw !important; min-height: 280px !important; }
           .about-stats-grid > div { padding: 28px 18px !important; }
           .inst-badges-mobile { bottom: 55px; right: 10px; gap: 6px; }
+          /* Keep side by side but shrink padding on very small screens */
+          .cta-btn-row { flex-direction: row; align-items: center; gap: 8px; }
+          .cta-btn-row button { padding: 10px 16px !important; font-size: 12px !important; }
         }
 
         @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.5); } }
@@ -1696,12 +1726,11 @@ export default function AboutSection({ videeSrc }) {
             }}
           />
 
-          {/* ── CONTENT: side-by-side on desktop ── */}
           <div
             className="about-quote-inner"
             style={{ position: "relative", zIndex: 2 }}
           >
-            {/* LEFT: text + button */}
+            {/* LEFT: text + buttons */}
             <div className="about-quote-left">
               <p
                 className="bebas"
@@ -1718,14 +1747,9 @@ export default function AboutSection({ videeSrc }) {
                 ROLES, FREELANCE &amp; COLLABS.
               </p>
 
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                  flexWrap: "wrap",
-                }}
-              >
+              {/* ── CTA BUTTON ROW ── */}
+              <div className="cta-btn-row">
+                {/* Get in touch */}
                 <motion.button
                   onClick={handleGetInTouch}
                   className="about-cta"
@@ -1738,9 +1762,7 @@ export default function AboutSection({ videeSrc }) {
                     background: inlineOpen
                       ? "rgba(168,192,96,0.15)"
                       : "#a8c060",
-                    border: inlineOpen
-                      ? "1px solid #a8c060"
-                      : "1px solid #a8c060",
+                    border: "1px solid #a8c060",
                     color: inlineOpen ? "#a8c060" : "#1c2410",
                     fontFamily: "'DM Sans',sans-serif",
                     fontSize: "clamp(13px,1.2vw,15px)",
@@ -1754,7 +1776,7 @@ export default function AboutSection({ videeSrc }) {
                   }}
                   whileHover={{ scale: 1.06 }}
                   whileTap={{ scale: 0.97 }}
-                  onMouseMove={(e) => handleMagnet(e)}
+                  onMouseMove={handleMagnet}
                   onMouseLeave={resetMagnet}
                 >
                   <span
@@ -1777,6 +1799,48 @@ export default function AboutSection({ videeSrc }) {
                     }}
                   />
                 </motion.button>
+
+                {/* ── Download CV button ── */}
+                <motion.button
+                  onClick={handleDownloadCV}
+                  onMouseEnter={() => setCvHovered(true)}
+                  onMouseLeave={() => setCvHovered(false)}
+                  className="cv-btn"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 9,
+                    padding: "clamp(11px,1.4vw,13px) clamp(18px,2vw,26px)",
+                    borderRadius: 100,
+                    background: cvHovered
+                      ? "rgba(168,192,96,0.1)"
+                      : "transparent",
+                    border: `1px solid rgba(168,192,96,${cvHovered ? "0.7" : "0.35"})`,
+                    color: cvHovered ? "#a8c060" : "rgba(245,240,228,0.75)",
+                    fontFamily: "'DM Sans',sans-serif",
+                    fontSize: "clamp(13px,1.2vw,15px)",
+                    fontWeight: 800,
+                    letterSpacing: ".04em",
+                    cursor: "pointer",
+                    flexShrink: 0,
+                    transition:
+                      "background 0.3s, border-color 0.3s, color 0.3s",
+                  }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span
+                    className={cvDownloading ? "cv-dl-icon" : ""}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "inherit",
+                    }}
+                  >
+                    <DownloadIcon />
+                  </span>
+                  {cvDownloading ? "Downloading…" : "Download CV"}
+                </motion.button>
               </div>
             </div>
 
@@ -1793,8 +1857,6 @@ export default function AboutSection({ videeSrc }) {
                     />
                   ))}
               </AnimatePresence>
-
-              {/* Placeholder hint when closed */}
               {!inlineOpen && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -1825,7 +1887,7 @@ export default function AboutSection({ videeSrc }) {
           </div>
         </div>
 
-        Mobile bottom-sheet popup
+        {/* Mobile bottom-sheet popup */}
         <ContactPopup
           open={contactOpen}
           onClose={() => setContactOpen(false)}

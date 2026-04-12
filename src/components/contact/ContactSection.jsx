@@ -18,11 +18,30 @@ const socialLinks = [
   ["Email", "mailto:jamesasuelimen77@gmail.com"],
 ];
 
+// ── Download CV icon ──────────────────────────────────────────────────────────
+const DownloadIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 3v13M5 14l7 7 7-7" />
+    <path d="M3 21h18" />
+  </svg>
+);
+
 export function ContactSection() {
   const secRef = useRef();
   const hRef = useRef();
   const glowRef = useRef();
   const [ctaHover, setCtaHover] = useState(false);
+  const [cvHovered, setCvHovered] = useState(false);
+  const [cvDownloading, setCvDownloading] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [popupOpen, setPopupOpen] = useState(false);
 
@@ -31,6 +50,24 @@ export function ContactSection() {
   const my = useMotionValue(0);
   const springX = useSpring(mx, { stiffness: 180, damping: 18 });
   const springY = useSpring(my, { stiffness: 180, damping: 18 });
+
+  // Magnetic CV button (separate spring)
+  const cvMx = useMotionValue(0);
+  const cvMy = useMotionValue(0);
+  const cvSpringX = useSpring(cvMx, { stiffness: 180, damping: 18 });
+  const cvSpringY = useSpring(cvMy, { stiffness: 180, damping: 18 });
+
+  // ── Download CV handler ───────────────────────────────────────────────────
+  const handleDownloadCV = () => {
+    setCvDownloading(true);
+    const link = document.createElement("a");
+    link.href = "/JAMES OLUWALEKE ASUELIMEN.pdf";
+    link.download = "James_Asuelimen_CV.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => setCvDownloading(false), 1800);
+  };
 
   useEffect(() => {
     const onMouseMove = (e) => {
@@ -56,7 +93,6 @@ export function ContactSection() {
           },
         },
       );
-
       gsap.fromTo(
         hRef.current,
         { scale: 0.65, opacity: 0, y: 40 },
@@ -73,7 +109,6 @@ export function ContactSection() {
           },
         },
       );
-
       gsap.to(glowRef.current, {
         scale: 1.3,
         opacity: 0.5,
@@ -82,9 +117,8 @@ export function ContactSection() {
         yoyo: true,
         repeat: -1,
       });
-
       gsap.fromTo(
-        ".contact-cta",
+        ".contact-cta-group",
         { opacity: 0, y: 30, scale: 0.9 },
         {
           opacity: 1,
@@ -99,7 +133,6 @@ export function ContactSection() {
           },
         },
       );
-
       gsap.fromTo(
         ".contact-social-link",
         { opacity: 0, y: 16 },
@@ -116,7 +149,6 @@ export function ContactSection() {
           },
         },
       );
-
       gsap.fromTo(
         ".contact-footer-text",
         { opacity: 0 },
@@ -132,7 +164,6 @@ export function ContactSection() {
           },
         },
       );
-
       gsap.fromTo(
         ".contact-word",
         { y: "110%", opacity: 0 },
@@ -168,8 +199,40 @@ export function ContactSection() {
     my.set(0);
   };
 
+  const handleCvMagnet = (e) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    cvMx.set((e.clientX - rect.left - rect.width / 2) * 0.35);
+    cvMy.set((e.clientY - rect.top - rect.height / 2) * 0.35);
+  };
+  const resetCvMagnet = () => {
+    cvMx.set(0);
+    cvMy.set(0);
+  };
+
   return (
     <>
+      <style>{`
+        @keyframes cv-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
+        .cv-dl-icon { animation: cv-bounce 0.9s ease-in-out infinite; }
+
+        /* CTA button group: side by side, wraps on small screens */
+        .contact-cta-group {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          flex-wrap: wrap;
+          margin-bottom: 56px;
+          position: relative;
+          z-index: 1;
+        }
+
+        @media (max-width: 480px) {
+          .contact-cta-group { flex-direction: column; gap: 12px; }
+        }
+      `}</style>
+
       <section
         id="contact"
         ref={secRef}
@@ -330,82 +393,128 @@ export function ContactSection() {
           </motion.p>
         </div>
 
-        {/* CTA button — now opens popup */}
-        <motion.button
-          type="button"
-          className="contact-cta"
-          onClick={() => setPopupOpen(true)}
-          onMouseMove={handleMagnet}
-          onMouseLeave={() => {
-            resetMagnet();
-            setCtaHover(false);
-          }}
-          onMouseEnter={() => setCtaHover(true)}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 12,
-            padding: "16px 40px",
-            borderRadius: 100,
-            background: ctaHover ? "#bcd470" : "#a8c060",
-            border: "1px solid #a8c060",
-            color: "#1c2410",
-            fontFamily: "'Cabinet Grotesk',sans-serif",
-            fontSize: 15,
-            fontWeight: 700,
-            letterSpacing: ".02em",
-            cursor: "pointer",
-            marginBottom: 56,
-            x: springX,
-            y: springY,
-            position: "relative",
-            zIndex: 1,
-            overflow: "hidden",
-            transition: "background 0.3s",
-          }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.96 }}
-        >
-          {/* Shimmer sweep */}
-          <motion.div
-            animate={ctaHover ? { x: ["-100%", "200%"] } : { x: "-100%" }}
-            transition={{ duration: 0.6, ease: "linear" }}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "50%",
-              height: "100%",
-              background:
-                "linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)",
-              pointerEvents: "none",
+        {/* ── CTA BUTTON GROUP ── */}
+        <div className="contact-cta-group">
+          {/* Get in touch */}
+          <motion.button
+            type="button"
+            onClick={() => setPopupOpen(true)}
+            onMouseMove={handleMagnet}
+            onMouseLeave={() => {
+              resetMagnet();
+              setCtaHover(false);
             }}
-          />
-          <span
+            onMouseEnter={() => setCtaHover(true)}
             style={{
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: "#1c2410",
-              flexShrink: 0,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 12,
+              padding: "16px 40px",
+              borderRadius: 100,
+              background: ctaHover ? "#bcd470" : "#a8c060",
+              border: "1px solid #a8c060",
+              color: "#1c2410",
+              fontFamily: "'Cabinet Grotesk',sans-serif",
+              fontSize: 15,
+              fontWeight: 700,
+              letterSpacing: ".02em",
+              cursor: "pointer",
+              x: springX,
+              y: springY,
+              position: "relative",
+              overflow: "hidden",
+              transition: "background 0.3s",
             }}
-          />
-          Get in touch
-          <motion.span
-            animate={{ rotate: ctaHover ? 360 : 0 }}
-            transition={{ duration: 0.5 }}
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: "#1c2410",
-              flexShrink: 0,
-              display: "block",
-            }}
-          />
-        </motion.button>
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.96 }}
+          >
+            {/* Shimmer sweep */}
+            <motion.div
+              animate={ctaHover ? { x: ["-100%", "200%"] } : { x: "-100%" }}
+              transition={{ duration: 0.6, ease: "linear" }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "50%",
+                height: "100%",
+                background:
+                  "linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)",
+                pointerEvents: "none",
+              }}
+            />
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: "50%",
+                background: "#1c2410",
+                flexShrink: 0,
+              }}
+            />
+            Get in touch
+            <motion.span
+              animate={{ rotate: ctaHover ? 360 : 0 }}
+              transition={{ duration: 0.5 }}
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: "50%",
+                background: "#1c2410",
+                flexShrink: 0,
+                display: "block",
+              }}
+            />
+          </motion.button>
 
-        {/* Social links — larger, readable on all screens */}
+          {/* ── Download CV ── */}
+          <motion.button
+            type="button"
+            onClick={handleDownloadCV}
+            onMouseEnter={() => setCvHovered(true)}
+            onMouseLeave={() => {
+              setCvHovered(false);
+              resetCvMagnet();
+            }}
+            onMouseMove={handleCvMagnet}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 9,
+              padding: "16px 32px",
+              borderRadius: 100,
+              background: cvHovered ? "rgba(168,192,96,0.1)" : "transparent",
+              border: `1px solid rgba(168,192,96,${cvHovered ? "0.7" : "0.3"})`,
+              color: cvHovered ? "#a8c060" : "rgba(245,240,228,0.65)",
+              fontFamily: "'Cabinet Grotesk',sans-serif",
+              fontSize: 15,
+              fontWeight: 700,
+              letterSpacing: ".02em",
+              cursor: "pointer",
+              x: cvSpringX,
+              y: cvSpringY,
+              position: "relative",
+              overflow: "hidden",
+              transition: "background 0.3s, border-color 0.3s, color 0.3s",
+            }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <span
+              className={cvDownloading ? "cv-dl-icon" : ""}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "inherit",
+              }}
+            >
+              <DownloadIcon />
+            </span>
+            {cvDownloading ? "Downloading…" : "Download CV"}
+          </motion.button>
+        </div>
+
+        {/* Social links */}
         <div
           className="contact-socials"
           style={{
@@ -458,7 +567,6 @@ export function ContactSection() {
         </div>
       </section>
 
-      {/* Contact popup */}
       <ContactPopup open={popupOpen} onClose={() => setPopupOpen(false)} />
     </>
   );
@@ -466,7 +574,6 @@ export function ContactSection() {
 
 function SocialLink({ label, href }) {
   const [hovered, setHovered] = useState(false);
-
   return (
     <motion.a
       href={href}
@@ -477,7 +584,6 @@ function SocialLink({ label, href }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         fontFamily: "'Space Mono',monospace",
-        /* Responsive font: 13px on mobile → 15px on desktop */
         fontSize: "clamp(13px,1.8vw,15px)",
         color: hovered ? "#a8c060" : "rgba(245,240,228,0.55)",
         letterSpacing: "0.22em",
@@ -498,7 +604,6 @@ function SocialLink({ label, href }) {
         ↗
       </motion.span>
       {label.toUpperCase()}
-      {/* Animated underline */}
       <span
         style={{
           position: "absolute",

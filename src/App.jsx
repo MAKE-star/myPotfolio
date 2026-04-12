@@ -99,7 +99,7 @@ return (
       <HeroSection />
       <AboutSection videeSrc={BG_VIDEO_SRC} />
       <ProjectsSection />
-      <ExperienceSection />
+      {/* <ExperienceSection /> */}
       <StackSection />
       <CollabSection />
       <ContactSection />
