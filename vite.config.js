@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     sitemap({
       hostname: "https://james-oluwaleke.netlify.app/",
+      exclude: ["/google5921cadfbba8dd3d"],
     }),
   ],
   assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.bin"],
