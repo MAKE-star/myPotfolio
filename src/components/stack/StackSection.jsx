@@ -123,11 +123,11 @@ const stackGroups = [
     tagline: "Intelligence & delivery",
     number: "04",
     items: [
-      // AI models — custom inline SVG icons
+      
       { name: "Claude", icon: null, CustomIcon: AnthropicIcon },
       { name: "Claude Sonnet", icon: null, CustomIcon: AnthropicIcon },
       { name: "Claude Opus", icon: null, CustomIcon: AnthropicIcon },
-      // Deployment & domain
+      
 
       {
         name: "Namecheap",
