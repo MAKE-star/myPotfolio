@@ -709,7 +709,7 @@ export function CollabSection() {
             }}
           >
             Clients who trusted me with real products. Engineers I've shipped
-            alongside. Real work, real results.
+            alongside. Real work. Real results.
           </p>
         </div>
       </div>
