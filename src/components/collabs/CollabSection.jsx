@@ -7,9 +7,6 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 // ─── Route every image through images.weserv.nl ───────────────────────────
-// This proxy fetches the image server-side and re-serves it with open CORS
-// headers, so mobile browsers never hit a blocked origin. The &n=-1 param
-// disables caching on the proxy side so stale images never appear.
 function proxied(url) {
   return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&n=-1`;
 }
@@ -184,7 +181,7 @@ const collabs = [
   },
 ];
 
-// ─── LogoImage — brand logo inside a pill ─────────────────────────────────
+// ─── LogoImage ────────────────────────────────────────────────────────────
 function LogoImage({ src, alt, initials, color, logoBg, size = 32 }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -196,7 +193,6 @@ function LogoImage({ src, alt, initials, color, logoBg, size = 32 }) {
         width: size,
         height: size,
         borderRadius: "50%",
-        // Brand color while loading/error; white bg once the logo is in
         background: showFallback ? color : logoBg || "#fff",
         display: "flex",
         alignItems: "center",
@@ -207,7 +203,6 @@ function LogoImage({ src, alt, initials, color, logoBg, size = 32 }) {
         transition: "background 0.2s",
       }}
     >
-      {/* Image is always mounted. Invisible until loaded, removed on error. */}
       {!error && (
         <img
           src={src}
@@ -228,7 +223,6 @@ function LogoImage({ src, alt, initials, color, logoBg, size = 32 }) {
           }}
         />
       )}
-      {/* Initials shown while image is in-flight OR if it failed */}
       {showFallback && (
         <span
           style={{
@@ -250,7 +244,7 @@ function LogoImage({ src, alt, initials, color, logoBg, size = 32 }) {
   );
 }
 
-// ─── AvatarImage — GitHub/brand avatar ────────────────────────────────────
+// ─── AvatarImage ───────────────────────────────────────────────────────────
 function AvatarImage({ src, alt, initials, size = 32 }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -265,7 +259,7 @@ function AvatarImage({ src, alt, initials, size = 32 }) {
         overflow: "hidden",
         flexShrink: 0,
         position: "relative",
-        background: "#2a3018",
+        background: "rgba(57,255,106,0.1)",
       }}
     >
       {!error && (
@@ -302,7 +296,7 @@ function AvatarImage({ src, alt, initials, size = 32 }) {
               fontFamily: "'Space Mono', monospace",
               fontWeight: 700,
               fontSize: Math.floor(size * 0.3),
-              color: "#a8c060",
+              color: "#39ff6a",
               lineHeight: 1,
               userSelect: "none",
             }}
@@ -330,22 +324,23 @@ function ClientTickerItem({ client: c }) {
         padding: "10px 20px",
         marginRight: 10,
         border: hovered
-          ? "1.5px solid rgba(42,48,24,0.4)"
-          : "1.5px solid rgba(42,48,24,0.15)",
+          ? "1.5px solid rgba(57,255,106,0.5)"
+          : "1.5px solid rgba(255,255,255,0.15)",
         borderRadius: 100,
-        background: hovered ? "rgba(42,48,24,0.08)" : "rgba(42,48,24,0.03)",
+        background: hovered ? "rgba(57,255,106,0.12)" : "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(4px)",
         flexShrink: 0,
         transform: hovered
-          ? "scale(1.05) translateY(-3px)"
+          ? "scale(1.04) translateY(-2px)"
           : "scale(1) translateY(0)",
         transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
         cursor: "default",
-        boxShadow: hovered ? "0 8px 24px rgba(42,48,24,0.12)" : "none",
+        boxShadow: hovered ? "0 8px 24px rgba(57,255,106,0.08)" : "none",
       }}
     >
       <div
         style={{
-          border: "1px solid rgba(42,48,24,0.1)",
+          border: "1px solid rgba(255,255,255,0.15)",
           borderRadius: "50%",
           overflow: "hidden",
           flexShrink: 0,
@@ -367,7 +362,7 @@ function ClientTickerItem({ client: c }) {
           fontFamily: "'DM Sans', sans-serif",
           fontSize: 14,
           fontWeight: 700,
-          color: hovered ? "rgba(42,48,24,0.95)" : "rgba(42,48,24,0.75)",
+          color: hovered ? "#39ff6a" : "rgba(255,255,255,0.85)",
           whiteSpace: "nowrap",
           transition: "color 0.25s",
         }}
@@ -396,17 +391,18 @@ function CollabTickerItem({ collab: c }) {
         padding: "10px 20px",
         marginRight: 10,
         border: hovered
-          ? "1.5px solid rgba(42,48,24,0.4)"
-          : "1.5px solid rgba(42,48,24,0.15)",
+          ? "1.5px solid rgba(57,255,106,0.5)"
+          : "1.5px solid rgba(255,255,255,0.15)",
         borderRadius: 100,
-        background: hovered ? "rgba(42,48,24,0.08)" : "rgba(42,48,24,0.03)",
+        background: hovered ? "rgba(57,255,106,0.12)" : "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(4px)",
         flexShrink: 0,
         transform: hovered
-          ? "scale(1.05) translateY(-3px)"
+          ? "scale(1.04) translateY(-2px)"
           : "scale(1) translateY(0)",
         transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
         cursor: "pointer",
-        boxShadow: hovered ? "0 8px 24px rgba(42,48,24,0.12)" : "none",
+        boxShadow: hovered ? "0 8px 24px rgba(57,255,106,0.08)" : "none",
         textDecoration: "none",
       }}
     >
@@ -416,8 +412,8 @@ function CollabTickerItem({ collab: c }) {
           overflow: "hidden",
           flexShrink: 0,
           border: hovered
-            ? "2px solid #a8c060"
-            : "2px solid rgba(42,48,24,0.12)",
+            ? "2px solid #39ff6a"
+            : "2px solid rgba(255,255,255,0.2)",
           transition: "border-color 0.3s",
         }}
       >
@@ -433,7 +429,7 @@ function CollabTickerItem({ collab: c }) {
           fontFamily: "'DM Sans', sans-serif",
           fontSize: 14,
           fontWeight: 700,
-          color: hovered ? "rgba(42,48,24,0.95)" : "rgba(42,48,24,0.75)",
+          color: hovered ? "#39ff6a" : "rgba(255,255,255,0.85)",
           whiteSpace: "nowrap",
           transition: "color 0.25s",
         }}
@@ -496,9 +492,11 @@ function StatCell({ value, label, index }) {
       style={{
         padding: "clamp(28px,5vw,48px) clamp(16px,3vw,32px)",
         textAlign: "center",
-        background: hovered ? "#1c2410" : "transparent",
+        background: hovered ? "rgba(57,255,106,0.06)" : "transparent",
+        backdropFilter: hovered ? "blur(4px)" : "none",
         transition: "background 0.3s",
         cursor: "default",
+        zIndex: 2,
       }}
     >
       <motion.div
@@ -512,7 +510,7 @@ function StatCell({ value, label, index }) {
           fontFamily: "'Cabinet Grotesk', sans-serif",
           fontSize: "clamp(2rem,6vw,3.5rem)",
           fontWeight: 900,
-          color: hovered ? "#a8c060" : "#1c2410",
+          color: hovered ? "#39ff6a" : "#ffffff",
           letterSpacing: "-0.03em",
           marginBottom: 6,
           transition: "color 0.3s",
@@ -526,7 +524,7 @@ function StatCell({ value, label, index }) {
           fontSize: "clamp(8px,1.5vw,10px)",
           letterSpacing: "0.3em",
           fontWeight: 700,
-          color: hovered ? "rgba(245,240,228,0.55)" : "rgba(42,48,24,0.5)",
+          color: hovered ? "rgba(57,255,106,0.7)" : "rgba(255,255,255,0.45)",
           textTransform: "uppercase",
           transition: "color 0.3s",
         }}
@@ -541,8 +539,16 @@ function StatCell({ value, label, index }) {
 export function CollabSection() {
   const secRef = useRef();
   const headerRef = useRef();
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Guard execution until hydration completes cleanly on the client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".collab-label",
@@ -623,18 +629,65 @@ export function CollabSection() {
       );
     }, secRef);
     return () => ctx.revert();
-  }, []);
+  }, [isMounted]);
+
+  // Static shell version matching the baseline markup perfectly during SSR/Hydration pass
+  if (!isMounted) {
+    return (
+      <section
+        id="collabs"
+        style={{
+          background: "#0c140c",
+          minHeight: "80vh",
+          position: "relative",
+        }}
+      />
+    );
+  }
 
   return (
     <section
       id="collabs"
       ref={secRef}
       style={{
-        background: "#f5f0e4",
+        background: "#0c140c",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      {/* Background Handshake Video Implementation with active CDN video */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          overflow: "hidden",
+          pointerEvents: "none",
+        }}
+      >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.08,
+          }}
+        >
+          <source src="https://player.vimeo.com/external/435649343.sd.mp4?s=456b3e70cf273d6d035f68b3356fc832d2b56e6d&profile_id=165&oauth2_token_id=57447761" type="video/mp4" />
+        </video>
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to bottom, #0c140c 0%, transparent 15%, transparent 85%, #0c140c 100%)",
+          }}
+        />
+      </div>
+
       <div
         style={{
           position: "absolute",
@@ -642,144 +695,148 @@ export function CollabSection() {
           left: 0,
           right: 0,
           height: 1,
-          background: "rgba(42,48,24,0.1)",
+          background: "rgba(57,255,106,0.12)",
+          zIndex: 1,
         }}
       />
 
-      {/* Header */}
-      <div
-        ref={headerRef}
-        style={{
-          padding:
-            "clamp(60px,10vh,130px) clamp(20px,6vw,72px) clamp(36px,5vh,56px)",
-        }}
-      >
+      {/* Content Wrapper */}
+      <div style={{ position: "relative", zIndex: 1 }} suppressHydrationWarning>
+        {/* Header */}
         <div
-          className="collab-label"
+          ref={headerRef}
           style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: "clamp(9px,1.5vw,11px)",
-            letterSpacing: "0.4em",
-            fontWeight: 700,
-            color: "rgba(42,48,24,0.45)",
-            marginBottom: 20,
-            textTransform: "uppercase",
+            padding:
+              "clamp(60px,10vh,130px) clamp(20px,6vw,72px) clamp(36px,5vh,56px)",
           }}
         >
-          04 / Collabs
-        </div>
-
-        <div className="collab-header-grid">
-          <h2
-            style={{
-              fontFamily: "'Cabinet Grotesk', sans-serif",
-              fontSize: "clamp(2.4rem,7vw,5rem)",
-              color: "#1c2410",
-              fontWeight: 900,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.05,
-              margin: 0,
-            }}
-          >
-            <div
-              className="collab-heading-line"
-              style={{ display: "block", overflow: "hidden" }}
-            >
-              Built with &amp;
-            </div>
-            <div
-              className="collab-heading-line"
-              style={{ display: "block", overflow: "hidden" }}
-            >
-              <span style={{ color: "#4a6020", fontStyle: "italic" }}>
-                built for.
-              </span>
-            </div>
-          </h2>
-
-          <p
-            className="collab-desc"
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "clamp(16px,2.2vw,22px)",
-              fontWeight: 700,
-              color: "rgba(42,48,24,0.65)",
-              lineHeight: 1.65,
-              margin: 0,
-            }}
-          >
-            Clients who trusted me with real products. Engineers I've shipped
-            alongside. Real work. Real results.
-          </p>
-        </div>
-      </div>
-
-      {/* Tickers */}
-      <div
-        style={{
-          padding: "0 clamp(20px,6vw,72px)",
-          marginBottom: 10,
-          display: "flex",
-          flexDirection: "column",
-          gap: 28,
-        }}
-      >
-        <div>
           <div
+            className="collab-label"
             style={{
               fontFamily: "'Space Mono', monospace",
-              fontSize: "clamp(9px,1.2vw,11px)",
+              fontSize: "clamp(9px,1.5vw,11px)",
               letterSpacing: "0.4em",
               fontWeight: 700,
-              color: "rgba(42,48,24,0.4)",
-              marginBottom: 12,
+              color: "rgba(57,255,106,0.6)",
+              marginBottom: 20,
               textTransform: "uppercase",
             }}
           >
-            Built for
+            04 / Collabs
           </div>
-          <div className="collab-ticker-1">
-            <Ticker
-              items={clients}
-              renderItem={(c) => <ClientTickerItem client={c} />}
-            />
+
+          <div className="collab-header-grid">
+            <h2
+              style={{
+                fontFamily: "'Cabinet Grotesk', sans-serif",
+                fontSize: "clamp(2.4rem,7vw,5rem)",
+                color: "#ffffff",
+                fontWeight: 900,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.05,
+                margin: 0,
+              }}
+            >
+              <div
+                className="collab-heading-line"
+                style={{ display: "block", overflow: "hidden" }}
+              >
+                Built with &amp;
+              </div>
+              <div
+                className="collab-heading-line"
+                style={{ display: "block", overflow: "hidden" }}
+              >
+                <span style={{ color: "#39ff6a", fontStyle: "italic" }}>
+                  built for.
+                </span>
+              </div>
+            </h2>
+
+            <p
+              className="collab-desc"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "clamp(16px,2.2vw,22px)",
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.55)",
+                lineHeight: 1.65,
+                margin: 0,
+              }}
+            >
+              Clients who trusted me with real products. Engineers I've shipped
+              alongside. Real work. Real results.
+            </p>
           </div>
         </div>
 
-        <div style={{ marginBottom: 48 }}>
-          <div
-            style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: "clamp(9px,1.2vw,11px)",
-              letterSpacing: "0.4em",
-              fontWeight: 700,
-              color: "rgba(42,48,24,0.4)",
-              marginBottom: 12,
-              textTransform: "uppercase",
-            }}
-          >
-            Built with
+        {/* Tickers */}
+        <div
+          style={{
+            padding: "0 clamp(20px,6vw,72px)",
+            marginBottom: 10,
+            display: "flex",
+            flexDirection: "column",
+            gap: 28,
+          }}
+        >
+          <div>
+            <div
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "clamp(9px,1.2vw,11px)",
+                letterSpacing: "0.4em",
+                fontWeight: 700,
+                color: "rgba(57,255,106,0.45)",
+                marginBottom: 12,
+                textTransform: "uppercase",
+              }}
+            >
+              Built for
+            </div>
+            <div className="collab-ticker-1">
+              <Ticker
+                items={clients}
+                renderItem={(c) => <ClientTickerItem client={c} />}
+              />
+            </div>
           </div>
-          <div className="collab-ticker-2">
-            <Ticker
-              items={collabs}
-              renderItem={(c) => <CollabTickerItem collab={c} />}
-              reverse
-            />
+
+          <div style={{ marginBottom: 48 }}>
+            <div
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "clamp(9px,1.2vw,11px)",
+                letterSpacing: "0.4em",
+                fontWeight: 700,
+                color: "rgba(57,255,106,0.45)",
+                marginBottom: 12,
+                textTransform: "uppercase",
+              }}
+            >
+              Built with
+            </div>
+            <div className="collab-ticker-2">
+              <Ticker
+                items={collabs}
+                renderItem={(c) => <CollabTickerItem collab={c} />}
+                reverse
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Stats */}
-      <div className="stats-grid">
-        {[
-          ["8+", "Production Apps"],
-          ["10+", "Clients Served"],
-          ["4+", "Years Exp"],
-          ["∞", "Lines of Code"],
-        ].map(([v, l], i) => (
-          <StatCell key={l} value={v} label={l} index={i} />
-        ))}
+        {/* Stats */}
+        <div className="stats-grid">
+          {[
+            ["15+", "Production Apps"],
+            ["10+", "Clients Served"],
+            ["5+", "Years Exp"],
+            ["∞", "Lines of Code"],
+          ].map(([v, l], i) => (
+            <StatCell key={l} value={v} label={l} index={i} />
+          ))}
+        </div>
       </div>
 
       <style>{`
@@ -792,22 +849,26 @@ export function CollabSection() {
           grid-template-columns: 1fr 1fr;
           gap: 40px;
           align-items: end;
+          position: relative;
         }
         .stats-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          border-top: 1px solid rgba(42,48,24,0.1);
+          border-top: 1px solid rgba(57,255,106,0.12);
+          position: relative;
+          background: rgba(12, 20, 12, 0.4);
+          backdrop-filter: blur(2px);
         }
         .stat-cell:not(:last-child) {
-          border-right: 1px solid rgba(42,48,24,0.1);
+          border-right: 1px solid rgba(57,255,106,0.12);
         }
         @media (max-width: 768px) {
           .collab-header-grid { grid-template-columns: 1fr; gap: 20px; }
           .stats-grid { grid-template-columns: repeat(2, 1fr); }
           .stat-cell:nth-child(2) { border-right: none; }
           .stat-cell:nth-child(1),
-          .stat-cell:nth-child(2) { border-bottom: 1px solid rgba(42,48,24,0.1); }
-          .stat-cell:nth-child(3) { border-right: 1px solid rgba(42,48,24,0.1); }
+          .stat-cell:nth-child(2) { border-bottom: 1px solid rgba(57,255,106,0.12); }
+          .stat-cell:nth-child(3) { border-right: 1px solid rgba(57,255,106,0.12); }
         }
         @media (max-width: 480px) {
           .stats-grid { grid-template-columns: repeat(2, 1fr); }

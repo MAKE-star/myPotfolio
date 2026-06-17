@@ -6,8 +6,8 @@ const CONTACTS = [
   {
     id: "email",
     label: "Send an Email",
-    sub: "jamesasuelimen77@gmail.com",
-    href: "mailto:jamesasuelimen77@gmail.com",
+    sub: "adeoyemayopoelijah@gmail.com",
+    href: "mailto:adeoyemayopoelijah@gmail.com",
     accent: "#a8c060",
     icon: (
       <svg
@@ -28,8 +28,8 @@ const CONTACTS = [
   {
     id: "whatsapp",
     label: "WhatsApp Me",
-    sub: "+234 814 218 6524",
-    href: "https://wa.me/2348142186524",
+    sub: "+234 905 236 8651",
+    href: "https://wa.me/23489052368651",
     accent: "#25d366",
     icon: (
       <svg
@@ -49,8 +49,8 @@ const CONTACTS = [
   {
     id: "call",
     label: "Direct Call",
-    sub: "+234 814 218 6524",
-    href: "tel:+2348142186524",
+    sub: "+234 905 236 8651",
+    href: "tel:+2349052368651",
     accent: "#d4a843",
     icon: (
       <svg
@@ -460,7 +460,7 @@ export default function ContactPopup({ open, onClose }) {
                       letterSpacing: "0.2em",
                     }}
                   >
-                    © 2026 JAMES OLUWALEKE
+                    © 2026 MAYOPO ADEOYE
                   </span>
                 </div>
               </motion.div>

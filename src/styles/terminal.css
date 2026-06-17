@@ -1,0 +1,408 @@
+/* ─────────────────────────────────────────────
+   terminal.css
+   Import this in main.jsx or App.css AFTER
+   your base styles.
+   ───────────────────────────────────────────── */
+
+/* ── Fonts ─────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+/* ── Design tokens ──────────────────────────── */
+:root {
+  /* Brand */
+  --clr-bg:        #050a05;
+  --clr-surface:   #0c130c;
+  --clr-surface-2: #111911;
+  --clr-border:    rgba(255, 255, 255, 0.08);
+  --clr-border-hi: rgba(255, 255, 255, 0.18);
+
+  /* Accent — single neon-green pulse, used sparingly */
+  --clr-accent:    #39ff6a;
+  --clr-accent-dim:#1e8c3a;
+
+  /* Text */
+  --clr-text-primary:   #e8ede8;
+  --clr-text-secondary: #7a8c7a;
+  --clr-text-muted:     #3d4d3d;
+
+  /* Typography */
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --font-sans: system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --section-pad: clamp(5rem, 10vw, 8rem);
+
+  /* Terminal chrome characters */
+  --bracket-tl: "┌";
+  --bracket-tr: "┐";
+  --bracket-bl: "└";
+  --bracket-br: "┘";
+  --prompt:     "❯";
+  --divider:    "└──╼";
+}
+
+/* ── Base overrides ─────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Utility: prompt line ───────────────────── */
+/* <span class="t-prompt">some text</span>       */
+.t-prompt {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--clr-accent);
+  letter-spacing: 0.04em;
+}
+
+.t-prompt::before {
+  content: "❯ ";
+  opacity: 0.6;
+}
+
+/* ── Utility: section eyebrow label ────────── */
+/* <p class="t-eyebrow">WORK LOGS</p>           */
+.t-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--clr-text-secondary);
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+.t-eyebrow::before {
+  content: "❯ ";
+  color: var(--clr-accent);
+  opacity: 0.7;
+}
+
+/* ── Utility: mono label (nav links, tags) ── */
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+/* ── Status bar ─────────────────────────────── */
+/* <div class="status-bar">                      */
+/*   <span class="status-bar__label">UPTIME</span>*/
+/*   <span class="status-bar__track">            */
+/*     <span class="status-bar__fill" style="--pct:99%"/> */
+/*   </span>                                     */
+/*   <span class="status-bar__value">99.9%</span>*/
+/* </div>                                        */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--clr-text-secondary);
+}
+
+.status-bar__label {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  min-width: 7ch;
+}
+
+.status-bar__track {
+  position: relative;
+  width: 80px;
+  height: 4px;
+  background: var(--clr-border-hi);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.status-bar__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--pct, 100%);
+  background: var(--clr-accent);
+  border-radius: 2px;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.status-bar__value {
+  color: var(--clr-text-primary);
+  min-width: 4ch;
+}
+
+/* ── Corner bracket box ─────────────────────── */
+/*   Wrap any element in .bracket-box to get     */
+/*   Tushar's ┌ ┐ └ ┘ corner treatment          */
+.bracket-box {
+  position: relative;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--clr-border);
+  border-radius: 0;
+}
+
+.bracket-box::before,
+.bracket-box::after {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--clr-accent);
+  position: absolute;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.bracket-box::before {
+  content: "┌─";
+  top: -0.55rem;
+  left: -0.1rem;
+}
+
+.bracket-box::after {
+  content: "─┐";
+  top: -0.55rem;
+  right: -0.1rem;
+}
+
+/* Bottom corners via a wrapper pseudo — use .bracket-box-outer */
+.bracket-box-outer {
+  position: relative;
+}
+
+.bracket-box-outer::before,
+.bracket-box-outer::after {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--clr-accent);
+  position: absolute;
+  line-height: 1;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.bracket-box-outer::before {
+  content: "└─";
+  bottom: -0.55rem;
+  left: -0.1rem;
+}
+
+.bracket-box-outer::after {
+  content: "─┘";
+  bottom: -0.55rem;
+  right: -0.1rem;
+}
+
+/* ── Skill / stack tag ──────────────────────── */
+/* <span class="skill-tag">React</span>          */
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--clr-text-secondary);
+  border: 1px solid var(--clr-border);
+  padding: 0.3rem 0.6rem;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.skill-tag::before {
+  content: "┌ ";
+  color: var(--clr-accent);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.skill-tag::after {
+  content: " ┐";
+  color: var(--clr-accent);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.skill-tag:hover {
+  color: var(--clr-text-primary);
+  border-color: var(--clr-border-hi);
+}
+
+.skill-tag:hover::before,
+.skill-tag:hover::after {
+  opacity: 1;
+}
+
+/* ── Nav link style ─────────────────────────── */
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--clr-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--clr-text-primary);
+}
+
+.nav-link.active {
+  color: var(--clr-accent);
+}
+
+/* ── Terminal panel (used in AboutSection) ── */
+.terminal-panel {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  padding: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--clr-text-secondary);
+}
+
+.terminal-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.terminal-panel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.terminal-panel__dot--red    { background: #ff5f57; }
+.terminal-panel__dot--yellow { background: #febc2e; }
+.terminal-panel__dot--green  { background: #28c840; }
+
+.terminal-panel__title {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  margin-left: 0.25rem;
+}
+
+/* ── Caret blink ────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  background: var(--clr-accent);
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* ── Divider with label ─────────────────────── */
+/* <div class="t-divider"><span>SECTION</span></div> */
+.t-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+}
+
+.t-divider::before,
+.t-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--clr-border);
+}
+
+/* ── Accent underline for headings ──────────── */
+.accent-line {
+  display: inline-block;
+  position: relative;
+}
+
+.accent-line::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--clr-accent);
+  opacity: 0.4;
+}
+
+/* ── Project card corner marks ──────────────── */
+.card-corner {
+  position: relative;
+}
+
+.card-corner::before,
+.card-corner::after,
+.card-corner > .card-corner__bl,
+.card-corner > .card-corner__br {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--clr-accent);
+  position: absolute;
+  line-height: 1;
+  opacity: 0.45;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+.card-corner::before {
+  content: "+";
+  top: -0.4rem;
+  left: -0.4rem;
+}
+
+.card-corner::after {
+  content: "+";
+  top: -0.4rem;
+  right: -0.4rem;
+}
+
+.card-corner > .card-corner__bl {
+  content: "+";
+  bottom: -0.4rem;
+  left: -0.4rem;
+}
+
+.card-corner > .card-corner__br {
+  content: "+";
+  bottom: -0.4rem;
+  right: -0.4rem;
+}
+
+.card-corner:hover::before,
+.card-corner:hover::after,
+.card-corner:hover > .card-corner__bl,
+.card-corner:hover > .card-corner__br {
+  opacity: 1;
+}
+
+/* ── Reduced motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none;
+    opacity: 1;
+  }
+}

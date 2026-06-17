@@ -1111,7 +1111,7 @@ export function ProjectsSection() {
     <section
       id="projects"
       ref={secRef}
-      style={{ background: "#f5f0e4", position: "relative" }}
+      style={{ background: "#ffffff", position: "relative" }}
     >
       <div style={{ height: 1, background: "rgba(42,48,24,0.1)" }} />
 
@@ -1384,7 +1384,7 @@ export function ProjectsSection() {
             right: 0,
             height: 1,
             background:
-              "linear-gradient(90deg,transparent,rgba(168,192,96,0.4),transparent)",
+              "linear-gradient(90deg,transparent,rgba(57,255,106,0.35),transparent)",
             zIndex: 1,
           }}
         />
@@ -1404,7 +1404,7 @@ export function ProjectsSection() {
           MORE WORK AVAILABLE ON REQUEST.
         </p>
         <a
-          href="https://github.com/jamesking77-create/"
+          href="https://github.com/MAKE-star"
           target="_blank"
           rel="noreferrer"
           style={{

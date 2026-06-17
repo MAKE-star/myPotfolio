@@ -13,9 +13,9 @@ import ContactPopup from "./ContactPopup";
 gsap.registerPlugin(ScrollTrigger);
 
 const socialLinks = [
-  ["GitHub", "https://github.com/jamesking77-create/"],
-  ["LinkedIn", "https://www.linkedin.com/in/jamesasuelimen77/"],
-  ["Email", "mailto:jamesasuelimen77@gmail.com"],
+  ["GitHub", "https://github.com/MAKE-star"],
+  ["LinkedIn", "https://www.linkedin.com/in/mayopo-adeoye/"],
+  ["Email", "mailto:adeoyemayopoelijah@gmail.com"],
 ];
 
 // ── Download CV icon ──────────────────────────────────────────────────────────
@@ -61,8 +61,8 @@ export function ContactSection() {
   const handleDownloadCV = () => {
     setCvDownloading(true);
     const link = document.createElement("a");
-    link.href = "/JAMES OLUWALEKE ASUELIMEN.pdf";
-    link.download = "James_Asuelimen_CV.pdf";
+    link.href = "/Mayopo.pdf";
+    link.download = "Mayopo_Adeoye_CV.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -238,7 +238,7 @@ export function ContactSection() {
         ref={secRef}
         style={{
           minHeight: "100vh",
-          background: "#141a0c",
+          background: "#050a05", // Re-skinned to match About Section's deep matrix background[cite: 5]
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -256,7 +256,7 @@ export function ContactSection() {
             left: 0,
             right: 0,
             height: 1,
-            background: "rgba(245,240,228,0.06)",
+            background: "rgba(57,255,106,0.08)", // Re-skinned border token lines[cite: 5]
           }}
         />
 
@@ -270,7 +270,7 @@ export function ContactSection() {
             height: 600,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle,rgba(168,192,96,0.07) 0%,transparent 65%)",
+              "radial-gradient(circle,rgba(57,255,106,0.06) 0%,transparent 65%)", // Re-skinned to vivid matrix aura[cite: 5]
             pointerEvents: "none",
             transition: "top 0.8s ease, left 0.8s ease",
           }}
@@ -288,7 +288,7 @@ export function ContactSection() {
             height: 500,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle,rgba(168,192,96,0.05) 0%,transparent 60%)",
+              "radial-gradient(circle,rgba(57,255,106,0.04) 0%,transparent 60%)", // Re-skinned to match about stats/ambient layer configurations[cite: 5]
             pointerEvents: "none",
           }}
         />
@@ -307,7 +307,7 @@ export function ContactSection() {
               width: size,
               height: size,
               borderRadius: "50%",
-              border: "1px solid rgba(168,192,96,0.08)",
+              border: "1px solid rgba(57,255,106,0.08)", // Updated border accents to match About section structure[cite: 5]
               pointerEvents: "none",
             }}
           />
@@ -320,7 +320,7 @@ export function ContactSection() {
             fontFamily: "'Space Mono',monospace",
             fontSize: 10,
             letterSpacing: "0.4em",
-            color: "rgba(245,240,228,0.25)",
+            color: "rgba(57,255,106,0.45)", // Elevated opacity for Matrix variant text legibility[cite: 5]
             marginBottom: 48,
             position: "relative",
             zIndex: 1,
@@ -366,7 +366,7 @@ export function ContactSection() {
                 className="contact-word"
                 style={{
                   display: "inline-block",
-                  color: "#a8c060",
+                  color: "#39ff6a", // Swapped to primary accent neon emerald[cite: 5]
                   fontStyle: "italic",
                 }}
               >
@@ -411,9 +411,9 @@ export function ContactSection() {
               gap: 12,
               padding: "16px 40px",
               borderRadius: 100,
-              background: ctaHover ? "#bcd470" : "#a8c060",
-              border: "1px solid #a8c060",
-              color: "#1c2410",
+              background: ctaHover ? "rgba(57,255,106,0.85)" : "#39ff6a", // Shifted values matching About primary interactive accents[cite: 5]
+              border: "1px solid #39ff6a",
+              color: "#050a05", // Swapped button text container contrast baseline[cite: 5]
               fontFamily: "'Cabinet Grotesk',sans-serif",
               fontSize: 15,
               fontWeight: 700,
@@ -439,7 +439,7 @@ export function ContactSection() {
                 width: "50%",
                 height: "100%",
                 background:
-                  "linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)",
+                  "linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)",
                 pointerEvents: "none",
               }}
             />
@@ -448,7 +448,7 @@ export function ContactSection() {
                 width: 7,
                 height: 7,
                 borderRadius: "50%",
-                background: "#1c2410",
+                background: "#050a05",
                 flexShrink: 0,
               }}
             />
@@ -460,7 +460,7 @@ export function ContactSection() {
                 width: 7,
                 height: 7,
                 borderRadius: "50%",
-                background: "#1c2410",
+                background: "#050a05",
                 flexShrink: 0,
                 display: "block",
               }}
@@ -483,9 +483,9 @@ export function ContactSection() {
               gap: 9,
               padding: "16px 32px",
               borderRadius: 100,
-              background: cvHovered ? "rgba(168,192,96,0.1)" : "transparent",
-              border: `1px solid rgba(168,192,96,${cvHovered ? "0.7" : "0.3"})`,
-              color: cvHovered ? "#a8c060" : "rgba(245,240,228,0.65)",
+              background: cvHovered ? "rgba(57,255,106,0.1)" : "transparent",
+              border: `1px solid rgba(57,255,106,${cvHovered ? "0.7" : "0.3"})`, // Normalized border tokens across cross-component views[cite: 5]
+              color: cvHovered ? "#39ff6a" : "rgba(245,240,228,0.65)",
               fontFamily: "'Cabinet Grotesk',sans-serif",
               fontSize: 15,
               fontWeight: 700,
@@ -547,7 +547,7 @@ export function ContactSection() {
           }}
         >
           {[
-            "© 2026 JAMES ASUELIMEN",
+            "© 2026 MAYOPO ADEOYE",
             "BUILT WITH REACT + GSAP + THREE.JS",
             "LAGOS, NIGERIA",
           ].map((t) => (
@@ -557,7 +557,7 @@ export function ContactSection() {
               style={{
                 fontFamily: "'Space Mono',monospace",
                 fontSize: "clamp(8px,1.5vw,10px)",
-                color: "rgba(245,240,228,0.15)",
+                color: "rgba(57,255,106,0.2)", // Subtle grid color blending[cite: 5]
                 letterSpacing: "0.3em",
               }}
             >
@@ -585,7 +585,7 @@ function SocialLink({ label, href }) {
       style={{
         fontFamily: "'Space Mono',monospace",
         fontSize: "clamp(13px,1.8vw,15px)",
-        color: hovered ? "#a8c060" : "rgba(245,240,228,0.55)",
+        color: hovered ? "#39ff6a" : "rgba(245,240,228,0.55)", // Standardized fallback parameters match About's interactive states[cite: 5]
         letterSpacing: "0.22em",
         textDecoration: "none",
         transition: "color 0.25s",
@@ -611,7 +611,7 @@ function SocialLink({ label, href }) {
           left: 0,
           height: 1,
           width: hovered ? "100%" : "0%",
-          background: "#a8c060",
+          background: "#39ff6a", // Aligned target indicators[cite: 5]
           transition: "width 0.3s ease",
         }}
       />

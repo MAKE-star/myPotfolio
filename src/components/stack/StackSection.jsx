@@ -69,6 +69,9 @@ const stackGroups = [
     items: [
       { name: "React", icon: ic("react/react-original.svg") },
       { name: "Next.js", icon: ic("nextjs/nextjs-original.svg") },
+      { name: "Vue", icon: ic("vuejs/vuejs-original.svg") },
+      { name: "Quasar", icon: ic("quasar/quasar-original.svg") },
+      { name: "Capacitor", icon: ic("capacitor/capacitor-original.svg") },
       { name: "TypeScript", icon: ic("typescript/typescript-original.svg") },
       { name: "JavaScript", icon: ic("javascript/javascript-original.svg") },
       { name: "Tailwind", icon: ic("tailwindcss/tailwindcss-original.svg") },
@@ -86,11 +89,15 @@ const stackGroups = [
     items: [
       { name: "Java", icon: ic("java/java-original.svg") },
       { name: "Spring", icon: ic("spring/spring-original.svg") },
+      { name: "C#", icon: ic("csharp/csharp-original.svg") },
+      { name: "Oracle SQL", icon: ic("oracle/oracle-original.svg") },
       { name: "Node.js", icon: ic("nodejs/nodejs-original.svg") },
       { name: "Express", icon: ic("express/express-original.svg") },
       { name: "Python", icon: ic("python/python-original.svg") },
       { name: "Flask", icon: ic("flask/flask-original.svg") },
       { name: "PostgreSQL", icon: ic("postgresql/postgresql-original.svg") },
+      { name: "OracleDB", icon: ic("oracle/oracle-original.svg") },
+      { name: "MySQL", icon: ic("mysql/mysql-original.svg") },
       { name: "MongoDB", icon: ic("mongodb/mongodb-original.svg") },
       { name: "Redis", icon: ic("redis/redis-original.svg") },
     ],
@@ -123,12 +130,9 @@ const stackGroups = [
     tagline: "Intelligence & delivery",
     number: "04",
     items: [
-      
       { name: "Claude", icon: null, CustomIcon: AnthropicIcon },
       { name: "Claude Sonnet", icon: null, CustomIcon: AnthropicIcon },
       { name: "Claude Opus", icon: null, CustomIcon: AnthropicIcon },
-      
-
       {
         name: "Namecheap",
         icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Namecheap_logo.svg/320px-Namecheap_logo.svg.png",
