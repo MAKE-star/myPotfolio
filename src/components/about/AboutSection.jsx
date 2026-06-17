@@ -142,7 +142,7 @@ const institutions = [
   },
 ];
 
-// ── Number matrix generator (James's signature left-panel effect) ─────────────
+// ── Number matrix generator (Mayopo's signature left-panel effect) ─────────────
 function NumberMatrix() {
   const canvasRef = useRef(null);
 

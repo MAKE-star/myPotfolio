@@ -134,7 +134,7 @@ export default function MenuPage({ onBack, onNavigate }) {
           className={`absolute top-4 sm:top-8 left-6 sm:left-16 z-30 ${pageLoaded ? "animate-fadeIn" : "opacity-0"}`}
         >
           <div className="text-white/60 text-xs sm:text-sm tracking-wider font-light">
-            sharlee / james asuelimen
+            sharlee / mayopo adeoye
           </div>
         </div>
 

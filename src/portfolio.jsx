@@ -13,7 +13,7 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import { Text, RoundedBox } from "@react-three/drei";
 import QRCode from "qrcode";
 import { ChevronRight } from "lucide-react";
-import jamesking from "./assets/jamesKing.svg";
+import mayopo from "./assets/mayopo.svg";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
@@ -140,7 +140,7 @@ function Badge({ onLoad, showTerminal }) {
     const loadImages = async () => {
       const loader = new THREE.TextureLoader();
       loader.load(
-        "/james.jpg",
+        "/mayopo.jpg",
         (texture) => {
           texture.colorSpace = THREE.SRGBColorSpace;
           texture.minFilter = THREE.LinearFilter;
@@ -148,12 +148,12 @@ function Badge({ onLoad, showTerminal }) {
           setProfileImage(texture);
         },
         undefined,
-        (error) => console.error("Error loading james.jpg:", error)
+        (error) => console.error("Error loading mayopo.jpg:", error)
       );
 
       try {
         const canvas = document.createElement("canvas");
-        await QRCode.toCanvas(canvas, "https://github.com/jamesking77-create", {
+        await QRCode.toCanvas(canvas, "https://github.com/MAKE-star/", {
           width: 512,
           margin: 1,
         });
@@ -395,7 +395,7 @@ function Badge({ onLoad, showTerminal }) {
                 fontWeight={900}
                 letterSpacing={0.02}
               >
-                JAMES ASUELIMEN
+                MAYOPO ADEOYE
               </Text>
               <Text
                 position={[0, 0.19, 0]}
@@ -493,7 +493,7 @@ function Badge({ onLoad, showTerminal }) {
                 anchorX="center"
                 anchorY="middle"
               >
-                github.com/jamesking77-create
+                github.com/MAKE-star/
               </Text>
               <mesh position={[0, -0.42, 0.001]}>
                 <planeGeometry args={[0.5, 0.001]} />
@@ -535,7 +535,7 @@ function Badge({ onLoad, showTerminal }) {
         fontWeight={300}
         letterSpacing={0.15}
       >
-        JAMES ASUELIMEN
+        MAYOPO ADEOYE
       </Text>
     </>
   );
@@ -586,7 +586,7 @@ function BadgeCanvas({ onLoad, showTerminal }) {
 function TerminalPanel({ isVisible }) {
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
-  const PROMPT = "PS C:\\Users\\james>";
+  const PROMPT = "PS C:\\Users\\mayopo>";
   const [lines, setLines] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -614,8 +614,8 @@ BIME Chrome Extension
 Enterprise FX Trading Platform`,
     education: `ND Business Administration
 Semicolon Africa — Software Engineering`,
-    contact: `Email: jamesasuelimen77@gmail.com
-GitHub: github.com/jamesking77-create`,
+    contact: `Email: adeoyemayopoelijah@gmail.com
+GitHub: github.com/MAKE-star`,
   };
 
   const scrollToBottom = () => {
@@ -695,7 +695,7 @@ GitHub: github.com/jamesking77-create`,
       setLines([
         {
           content:
-            "Windows JAMES_KING_Shell\nCopyright (C) JAMES KING Corporation.\n\nType 'start' to get started.\n",
+            "Windows MAKE_D_GREAT_Shell\nCopyright (C) MAYOPO ADEOYE Corporation.\n\nType 'start' to get started.\n",
           type: "output",
         },
       ]);
@@ -858,7 +858,7 @@ export default function App() {
         <>
           <div className="absolute top-0 left-32 z-10">
             <img
-              src={jamesking}
+              src={mayopo}
               alt="Logo"
               className="h-40 w-auto"
               onError={(e) => {

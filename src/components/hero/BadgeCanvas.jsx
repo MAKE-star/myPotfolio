@@ -1,13 +1,13 @@
 // src/components/hero/BadgeCanvas.jsx
 //
-// James's original Three.js physics lanyard — fully preserved.
+// Mayopo's original Three.js physics lanyard — fully preserved.
 // Only the card FACE content is updated to Mayopo's terminal aesthetic:
 //
 //   FRONT:  ┌MA┐ header · photo slot · MAYOPO ADEOYE · 4.85/5.00 badge · barcode · ● Available
 //   BACK:   QR → mayopo.netlify.app · terminal info block · scanlines
 //
 // Everything else (rope physics, RigidBody joints, drag, GradientBackground,
-// LanyardClip, materials, Canvas setup) is James's code untouched.
+// LanyardClip, materials, Canvas setup) is Mayopo's code untouched.
 
 import { useState, useRef, useEffect, Suspense } from "react";
 import * as THREE from "three";
@@ -23,7 +23,7 @@ import {
 import { Text, RoundedBox, shaderMaterial } from "@react-three/drei";
 import QRCode from "qrcode";
 
-// ── James's gradient background shader — unchanged ───────────────────────────
+// ── Mayopo's gradient background shader — unchanged ───────────────────────────
 const LiquidGradientMaterial = shaderMaterial(
   {},
   `varying vec2 vUv;
@@ -58,7 +58,7 @@ function GradientBackground() {
   );
 }
 
-// ── James's lanyard texture — updated text to Mayopo ────────────────────────
+// ── Mayopo's lanyard texture — updated text to Mayopo ────────────────────────
 function createLanyardTexture() {
   const c = document.createElement("canvas");
   c.width = 256; c.height = 1024;
@@ -94,7 +94,7 @@ function createLanyardTexture() {
   return t;
 }
 
-// ── James's LanyardClip — unchanged ─────────────────────────────────────────
+// ── Mayopo's LanyardClip — unchanged ─────────────────────────────────────────
 function LanyardClip() {
   return (
     <group position={[0, 0.1, 0]}>
@@ -153,7 +153,7 @@ function createScanlineTexture() {
   return t;
 }
 
-// ── Badge — James's physics intact, card faces replaced ─────────────────────
+// ── Badge — Mayopo's physics intact, card faces replaced ─────────────────────
 function Badge({ isMobile }) {
   const ropeMesh  = useRef();
   const ropeTexture = useRef(createLanyardTexture());
@@ -197,7 +197,7 @@ function Badge({ isMobile }) {
       .catch(console.error);
   }, []);
 
-  // ── James's rope joints — unchanged ──────────────────────────────────────
+  // ── Mayopo's rope joints — unchanged ──────────────────────────────────────
   useRopeJoint(fixed, j1, [[0,0,0],[0,0,0],1]);
   useRopeJoint(j1,   j2, [[0,0,0],[0,0,0],1]);
   useRopeJoint(j2,   j3, [[0,0,0],[0,0,0],1]);
@@ -206,7 +206,7 @@ function Badge({ isMobile }) {
   const fixedX = isMobile ? 0  : 2;
   const fixedY = isMobile ? 5.5 : 5;
 
-  // ── James's useFrame — unchanged ──────────────────────────────────────────
+  // ── Mayopo's useFrame — unchanged ──────────────────────────────────────────
   useFrame((state, delta) => {
     if (dragged) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
@@ -529,7 +529,7 @@ function Badge({ isMobile }) {
   );
 }
 
-// ── Canvas — James's setup with updated lighting for terminal palette ─────────
+// ── Canvas — Mayopo's setup with updated lighting for terminal palette ─────────
 export default function BadgeCanvas({ isMobile }) {
   const fov = isMobile ? 28 : 25;
   return (

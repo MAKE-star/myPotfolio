@@ -8,7 +8,7 @@ import assettext from "./assets/assettext.svg";
 function Terminal({ onNavigate }) {
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
-  const PROMPT = "C:\\Users\\james>";
+  const PROMPT = "C:\\Users\\mayopo>";
   const [lines, setLines] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -37,8 +37,8 @@ BIME Chrome Extension
 Enterprise FX Trading Platform`,
     education: `ND Business Administration
 Semicolon Africa — Software Engineering`,
-    contact: `Email: jamesasuelimen77@gmail.com
-GitHub: github.com/jamesking77-create`,
+    contact: `Email: adeoyemayopoelijah@gmail.com
+GitHub: github.com/MAKE-star`,
   };
 
   const scrollToBottom = () => {
@@ -124,8 +124,8 @@ GitHub: github.com/jamesking77-create`,
   useEffect(() => {
     setLines([
       {
-        content: `Jamessoft Windows [Version 10.0.19045.3803]
-(c) Jamessoft Corporation. All rights reserved.
+        content: `Mayopo Windows [Version 10.0.19045.3803]
+(c) Mayopo Corporation. All rights reserved.
 
 Type 'start' to get started.
 `,

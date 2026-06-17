@@ -1,11 +1,11 @@
 // src/components/hero/HeroSection.jsx
 //
 // Final merged version:
-//   • James's full structure: African SVG pattern, BadgeCanvas (lazy),
+//   • Mayopo's full structure: African SVG pattern, BadgeCanvas (lazy),
 //     vertical social rail, GSAP scroll-out, bottom bar, mobile layout
 //   • Our terminal content: prompt line, MAYOPO / ADEOYE_ name,
 //     typewriter cycling role, status bars, terminal CTAs
-//   • BadgeCanvas replaces James's Three.js lanyard with our ID card + QR flip
+//   • BadgeCanvas replaces Mayopo's Three.js lanyard with our ID card + QR flip
 //
 // App.jsx needs zero changes — same export, same props (none).
 
@@ -161,7 +161,7 @@ export default function HeroSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // GSAP scroll-out (James's effect — section scales + blurs as user scrolls away)
+  // GSAP scroll-out (Mayopo's effect — section scales + blurs as user scrolls away)
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(sectionRef.current, {
@@ -304,7 +304,7 @@ export default function HeroSection() {
       >
         <div className="hero-layout" style={{ height: "100%" }}>
 
-          {/* ── African SVG pattern + ambient glow (James's) ── */}
+          {/* ── African SVG pattern + ambient glow (Mayopo's) ── */}
           <div className="hero-canvas-wrap">
             {/* Ambient glow */}
             <div style={{

@@ -60,7 +60,7 @@ export default function App() {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
     Promise.all([
-      preloadImage("/james.jpg"),
+      preloadImage("/mayopo.jpg"),
       preloadVideo(BG_VIDEO_SRC, 5000),
     ]).then(() => setAssetsReady(true));
   }, []);

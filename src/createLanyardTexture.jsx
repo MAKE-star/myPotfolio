@@ -30,7 +30,7 @@ function createLanyardTexture() {
   ctx.textBaseline = "middle";
 
   for (let y = -600; y <= 600; y += 160) {
-    ctx.fillText("JAMES_KING", 0, y);
+    ctx.fillText("MAKE_D_GREAT", 0, y);
   }
   ctx.restore();
 

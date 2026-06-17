@@ -1,6 +1,6 @@
 // src/components/nav/StickyNav.jsx
 //
-// Replaces James's StickyNav exactly — same props, same export.
+// Replaces Mayopo's StickyNav exactly — same props, same export.
 //
 // Props:
 //   hidden  bool  — passed from App.jsx, hides nav until loader completes
@@ -8,7 +8,7 @@
 // Behaviour:
 //   • Sticky bar at top with ┌MA┐ logo + hamburger
 //   • On menu open: fullscreen dark overlay with giant nav links (left)
-//     and ambient code text (right) — matching James's layout
+//     and ambient code text (right) — matching Mayopo's layout
 //   • Terminal touches: bracket logo, ❯ prefix on links, mono font accents
 //   • GSAP animates links in on open, out on close
 //   • Active section tracked via IntersectionObserver

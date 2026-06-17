@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     sitemap({
-      hostname: "https://james-oluwaleke.netlify.app/",
+      hostname: "https://mayopoadeoye.netlify.app/",
       exclude: ["/google5921cadfbba8dd3d"],
     }),
   ],
