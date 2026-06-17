@@ -12,7 +12,7 @@ import CollabSection from "./components/collabs/CollabSection";
 import ContactSection from "./components/contact/ContactSection";
 import Loaderss from "./components/loader/loaderss";
 import StickyNav from "./components/nav/StickyNav";
-import ExperienceSection from "./components/experience/ExperienceSection";
+import ExperienceSection from "./components/experience/experienceSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
