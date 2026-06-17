@@ -242,8 +242,8 @@ export default function ExperienceSection() {
           }}
         >
           <a
-            href="/cv.pdf"
-            download
+            href="/Mayopo_Adeoye_CV.pdf"
+            download="Mayopo_Adeoye_CV.pdf"
             style={{
               display: "inline-flex",
               alignItems: "center",

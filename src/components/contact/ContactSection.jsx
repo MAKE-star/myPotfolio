@@ -238,7 +238,7 @@ export function ContactSection() {
         ref={secRef}
         style={{
           minHeight: "100vh",
-          background: "#050a05", // Re-skinned to match About Section's deep matrix background[cite: 5]
+          background: "#050a05", 
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -256,7 +256,7 @@ export function ContactSection() {
             left: 0,
             right: 0,
             height: 1,
-            background: "rgba(57,255,106,0.08)", // Re-skinned border token lines[cite: 5]
+            background: "rgba(57,255,106,0.08)", 
           }}
         />
 
@@ -270,7 +270,7 @@ export function ContactSection() {
             height: 600,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle,rgba(57,255,106,0.06) 0%,transparent 65%)", // Re-skinned to vivid matrix aura[cite: 5]
+              "radial-gradient(circle,rgba(57,255,106,0.06) 0%,transparent 65%)", 
             pointerEvents: "none",
             transition: "top 0.8s ease, left 0.8s ease",
           }}
@@ -288,7 +288,7 @@ export function ContactSection() {
             height: 500,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle,rgba(57,255,106,0.04) 0%,transparent 60%)", // Re-skinned to match about stats/ambient layer configurations[cite: 5]
+              "radial-gradient(circle,rgba(57,255,106,0.04) 0%,transparent 60%)", 
             pointerEvents: "none",
           }}
         />
@@ -307,7 +307,7 @@ export function ContactSection() {
               width: size,
               height: size,
               borderRadius: "50%",
-              border: "1px solid rgba(57,255,106,0.08)", // Updated border accents to match About section structure[cite: 5]
+              border: "1px solid rgba(57,255,106,0.08)", 
               pointerEvents: "none",
             }}
           />
@@ -320,7 +320,7 @@ export function ContactSection() {
             fontFamily: "'Space Mono',monospace",
             fontSize: 10,
             letterSpacing: "0.4em",
-            color: "rgba(57,255,106,0.45)", // Elevated opacity for Matrix variant text legibility[cite: 5]
+            color: "rgba(57,255,106,0.45)", 
             marginBottom: 48,
             position: "relative",
             zIndex: 1,
@@ -366,7 +366,7 @@ export function ContactSection() {
                 className="contact-word"
                 style={{
                   display: "inline-block",
-                  color: "#39ff6a", // Swapped to primary accent neon emerald[cite: 5]
+                  color: "#39ff6a", 
                   fontStyle: "italic",
                 }}
               >
@@ -411,9 +411,9 @@ export function ContactSection() {
               gap: 12,
               padding: "16px 40px",
               borderRadius: 100,
-              background: ctaHover ? "rgba(57,255,106,0.85)" : "#39ff6a", // Shifted values matching About primary interactive accents[cite: 5]
+              background: ctaHover ? "rgba(57,255,106,0.85)" : "#39ff6a", 
               border: "1px solid #39ff6a",
-              color: "#050a05", // Swapped button text container contrast baseline[cite: 5]
+              color: "#050a05", 
               fontFamily: "'Cabinet Grotesk',sans-serif",
               fontSize: 15,
               fontWeight: 700,
@@ -484,7 +484,7 @@ export function ContactSection() {
               padding: "16px 32px",
               borderRadius: 100,
               background: cvHovered ? "rgba(57,255,106,0.1)" : "transparent",
-              border: `1px solid rgba(57,255,106,${cvHovered ? "0.7" : "0.3"})`, // Normalized border tokens across cross-component views[cite: 5]
+              border: `1px solid rgba(57,255,106,${cvHovered ? "0.7" : "0.3"})`, 
               color: cvHovered ? "#39ff6a" : "rgba(245,240,228,0.65)",
               fontFamily: "'Cabinet Grotesk',sans-serif",
               fontSize: 15,
@@ -557,7 +557,7 @@ export function ContactSection() {
               style={{
                 fontFamily: "'Space Mono',monospace",
                 fontSize: "clamp(8px,1.5vw,10px)",
-                color: "rgba(57,255,106,0.2)", // Subtle grid color blending[cite: 5]
+                color: "rgba(57,255,106,0.2)", 
                 letterSpacing: "0.3em",
               }}
             >
@@ -567,7 +567,11 @@ export function ContactSection() {
         </div>
       </section>
 
-      <ContactPopup open={popupOpen} onClose={() => setPopupOpen(false)} />
+      <AnimatePresence>
+        {popupOpen && (
+          <ContactPopup open={popupOpen} onClose={() => setPopupOpen(false)} />
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -585,7 +589,7 @@ function SocialLink({ label, href }) {
       style={{
         fontFamily: "'Space Mono',monospace",
         fontSize: "clamp(13px,1.8vw,15px)",
-        color: hovered ? "#39ff6a" : "rgba(245,240,228,0.55)", // Standardized fallback parameters match About's interactive states[cite: 5]
+        color: hovered ? "#39ff6a" : "rgba(245,240,228,0.55)", 
         letterSpacing: "0.22em",
         textDecoration: "none",
         transition: "color 0.25s",
@@ -611,7 +615,7 @@ function SocialLink({ label, href }) {
           left: 0,
           height: 1,
           width: hovered ? "100%" : "0%",
-          background: "#39ff6a", // Aligned target indicators[cite: 5]
+          background: "#39ff6a", 
           transition: "width 0.3s ease",
         }}
       />

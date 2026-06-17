@@ -458,7 +458,7 @@ function Badge({ isMobile }) {
               </mesh>
               <Text position={[0, 0.44, 0.002]} fontSize={0.024} color="#39ff6a"
                 anchorX="center" anchorY="middle" letterSpacing={0.14} fontWeight={700}>
-                ❯ SCAN TO VISIT PORTFOLIO
+                ❯ SCAN TO VISIT FINTECH PORTFOLIO
               </Text>
               <mesh position={[0, 0.395, 0.002]}>
                 <planeGeometry args={[0.71, 0.002]} />
